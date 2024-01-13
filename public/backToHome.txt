@@ -1,0 +1,7 @@
+    <div>
+        <a
+          href="/"
+          className="block mr-6 mb-3  transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12">
+          <i class="fa-solid fa-arrow-left text-white text-2xl"></i>
+        </a>
+    </div>
