@@ -1,7 +1,6 @@
 import React from "react";
-import bannerHouse from "../../assets/img/banner_house.jpg";
-import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Divider, Button, theme } from "antd";
+import "../Header/Header.css";
 const { useToken } = theme;
 const items = [
   {
@@ -56,26 +55,29 @@ const Header = () => {
 
         <div>
           <a
-            className=""
+            className="link"
             href="#"
             style={{
               textDecoration: "none",
               color: "#fff",
               fontSize: "20px",
+              marginRight: "15px",
             }}>
             Nơi ở
           </a>
           <a
-            className=""
+            className="link"
             href="#"
             style={{
               textDecoration: "none",
               color: "#fff",
               fontSize: "20px",
+              marginRight: "15px",
             }}>
             Trải nghiệm
           </a>
           <a
+            className="link"
             href="#"
             style={{
               textDecoration: "none",
@@ -87,6 +89,7 @@ const Header = () => {
         </div>
         <div className="fs-4">
           <a
+            className="link"
             href="#"
             style={{
               textDecoration: "none",
@@ -121,23 +124,6 @@ const Header = () => {
             </a>
           </Dropdown>
         </div>
-      </div>
-      <div>
-        <img
-          src={bannerHouse}
-          alt="banner_house"
-          style={{
-            margin: "auto",
-            display: "block",
-            width: "1600px",
-            height: "645px",
-            marginTop: "20px",
-            objectFit: "cover",
-          }}
-        />
-        <h3 className="text-center text-white text-2xl mt-8 pb-8">
-          Nhờ có Host, mọi điều đều có thể{" "}
-        </h3>
       </div>
     </div>
   );

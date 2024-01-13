@@ -1,10 +1,66 @@
 import React from "react";
 import Footer from "../../templates/UserTemplates/Footer";
-import Header from "../../templates/UserTemplates/Header";
+import Header from "../../templates/UserTemplates/Header/Header";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { listAPI } from "../../services/API";
+import { message } from "antd";
 
 const Register = () => {
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  const [messageApi, contextHolder] = message.useMessage();
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    errors,
+    touched,
+    isValid,
+    dirty,
+  } = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+    },
+    onSubmit: (values) => {
+      listAPI
+        .register(values)
+        .then((res) => {
+          console.log(res);
+          message.success("Đăng ký thành công");
+          setTimeout(() => {
+            Navigate("/");
+          }, 1000);
+        })
+        .catch((err) => {
+          messageApi.open({
+            type: "error",
+            content: err.response.data.content,
+          });
+          console.log(err);
+        });
+    },
+
+    validationSchema: Yup.object({
+      name: Yup.string().required("*Vui lòng không bỏ trống!*"),
+      email: Yup.string()
+        .required("*Vui lòng không bỏ trống!*")
+        .email("*Vui lòng nhập đúng định dạng!*"),
+      phone: Yup.number()
+        // .matches(phoneRegExp, "*Vui lòng nhập đúng định dạng!*")
+        .required("*Vui lòng không bỏ trống*"),
+      password: Yup.string()
+        .min(6, "*Mật khẩu quá ngắn, tối thiểu 6 ký tự!*")
+        .required("*Vui lòng không bỏ trống!*"),
+    }),
+  });
   return (
     <div>
+      {contextHolder}
       <Header />
       <div className="h-screen md:flex">
         <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center hidden">
@@ -14,7 +70,7 @@ const Register = () => {
           <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8" />
         </div>
         <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
-          <form className="bg-white">
+          <form className="bg-white" onSubmit={handleSubmit}>
             <h1 className="text-4xl mb-10 font-semibold text-center">
               Đăng ký
             </h1>
@@ -33,10 +89,16 @@ const Register = () => {
               <input
                 className="pl-2 outline-none border-none"
                 type="text"
-                name
-                id
-                placeholder="Vui lòng nhập tài khoản"
+                name="name"
+                id="name"
+                placeholder="Vui lòng nhập họ tên"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.name}
               />
+              {errors.name && touched.name ? (
+                <p className=" text-red-500 text-lg mt-1">{errors.name}</p>
+              ) : null}
             </div>
 
             <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
@@ -44,30 +106,48 @@ const Register = () => {
               <input
                 className="pl-2 outline-none border-none"
                 type="text"
-                name
-                id
+                name="email"
+                id="email"
                 placeholder="Vui lòng nhập E-mail"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
               />
+              {errors.email && touched.email ? (
+                <p className=" text-red-500 text-lg mt-1">{errors.email}</p>
+              ) : null}
             </div>
             <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
               <i class="fa-solid fa-phone text-xl me-3"></i>
               <input
                 className="pl-2 outline-none border-none"
                 type="text"
-                name
-                id
-                placeholder="Vui lòng nhập E-mail"
+                name="phone"
+                id="phone"
+                placeholder="Vui lòng nhập số điện thoại"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.phone}
               />
+              {errors.phone && touched.phone ? (
+                <p className=" text-red-500 text-lg mt-1">{errors.phone}</p>
+              ) : null}
             </div>
             <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
               <i class="fa-solid fa-lock text-xl me-3"></i>
               <input
                 className="pl-2 outline-none border-none"
                 type="password"
-                name
-                id
+                name="password"
+                id="password"
                 placeholder="Vui lòng nhập mật khẩu"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
               />
+              {errors.password && touched.password ? (
+                <p className=" text-red-500 text-lg mt-1">{errors.password}</p>
+              ) : null}
             </div>
             <div className="checkbox-wrapper-28 ms-3 mt-3">
               <input

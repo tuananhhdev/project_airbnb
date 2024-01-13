@@ -1,11 +1,12 @@
 import React from "react";
 import Footer from "../../templates/UserTemplates/Footer";
-import Header from "../../templates/UserTemplates/Header";
+import Header from "../../templates/UserTemplates/Header/Header";
 import "./Login.css";
-
+import loginHouse from "../../assets/img/login_house.jpg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { message } from "antd";
+import { HeartOutlined } from "@ant-design/icons";
 import { listAPI } from "../../services/API";
 import { Navigate } from "react-router-dom";
 const Login = () => {
@@ -13,7 +14,7 @@ const Login = () => {
   const { handleSubmit, handleChange, handleBlur, values, errors, touched } =
     useFormik({
       initialValues: {
-        email: "",
+        taiKhoan: "",
         matKhau: "",
       },
       onSubmit: (values) => {
@@ -34,10 +35,10 @@ const Login = () => {
             console.log(err);
           });
       },
+
       validationSchema: Yup.object({
-        email: Yup.string()
-          .required("*Vui lòng không bỏ trống!*")
-          .email("*Vui lòng nhập đúng dạng E-mail*"),
+        taiKhoan: Yup.string().required("*Vui lòng không bỏ trống!*"),
+
         matKhau: Yup.string().required("*Vui lòng không bỏ trống!*"),
       }),
     });
@@ -46,11 +47,19 @@ const Login = () => {
       {contextHolder}
       <Header />
       <div className="h-screen md:flex">
-        <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center hidden">
-          <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8" />
-          <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8" />
-          <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8" />
-          <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8" />
+        <div className=" relative overflow-hidden md:flex w-1/2 bg-black justify-around items-center hidden">
+          <img src={loginHouse} alt="" className=" object-cover" />
+          {/* <h2 className="absolute top-10 right-80 text-3xl text-white ">
+            Welcome to Airbnb
+          </h2> */}
+          <div className="absolute bottom-36 right-5 text-2xl ">
+            <HeartOutlined
+              className="cursor-pointer hover:text-pink-600 duration-500"
+              style={{
+                color: "white",
+              }}
+            />
+          </div>
         </div>
         <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
           <form onSubmit={handleSubmit} className="bg-white">
@@ -61,25 +70,17 @@ const Login = () => {
               <i class="fa-solid fa-envelope text-xl me-3"></i>
               <input
                 className="pl-2 outline-none border-none mb-3"
-                type="email"
-                name="email"
-                id="email"
+                type="text"
+                name="taiKhoan"
+                id="taiKhoan"
                 placeholder="Vui lòng nhập E-mail"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.email}
+                value={values.taiKhoan}
               />
 
-              {errors.email && touched.email ? (
-                <p
-                  className=" text-red-500 text-lg mt-1"
-                  style={{
-                    display: "table-cell",
-                    textAlign: "center",
-                    verticalAlign: "middle",
-                  }}>
-                  {errors.email}
-                </p>
+              {errors.taiKhoan && touched.taiKhoan ? (
+                <p className=" text-red-500 text-lg mt-1">{errors.taiKhoan}</p>
               ) : null}
             </div>
 
