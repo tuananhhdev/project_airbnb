@@ -40,7 +40,6 @@ const PageLocation = () => {
                     className="h-36 object-cover rounded-tl-md rounded-tr-md"
                   />
                   <div className="px-3 py-2">
-                    <h1 className="font-semibold">{item.tenViTri}</h1>
                     <p className="text-sm">{item.tinhThanh}</p>
                   </div>
                 </a>

@@ -2,7 +2,7 @@ import React from "react";
 import Footer from "../../templates/UserTemplates/Footer";
 import Header from "../../templates/UserTemplates/Header/Header";
 import "./Login.css";
-import loginHouse from "../../assets/img/login_house.jpg";
+import registerHouse from "../../assets/img/register_house.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { message } from "antd";
@@ -37,7 +37,12 @@ const Login = () => {
       },
 
       validationSchema: Yup.object({
-        taiKhoan: Yup.string().required("*Vui lòng không bỏ trống!*"),
+        taiKhoan: Yup.string()
+          .required("*Vui lòng không bỏ trống!*")
+          .matches(
+            /^[a-zA-ZÀ-ÖÙ-öù-ÿĀ-žḀ-ỿ0-9\s\-\/.]+$/,
+            "*Vui lòng nhập đúng định dạng!*"
+          ),
 
         matKhau: Yup.string().required("*Vui lòng không bỏ trống!*"),
       }),
@@ -46,20 +51,20 @@ const Login = () => {
     <div>
       {contextHolder}
       <Header />
-      <div className="h-screen md:flex">
-        <div className=" relative overflow-hidden md:flex w-1/2 bg-black justify-around items-center hidden">
-          <img src={loginHouse} alt="" className=" object-cover" />
+      <div className="h-screen md:flex ">
+        <div className=" relative overflow-hidden md:flex w-1/2 bg-black  justify-around items-center hidden ">
+          <img src={registerHouse} alt="" className=" object-cover rounded-lg" />
           {/* <h2 className="absolute top-10 right-80 text-3xl text-white ">
             Welcome to Airbnb
           </h2> */}
-          <div className="absolute bottom-36 right-5 text-2xl ">
+          {/* <div className="absolute bottom-36 right-5 text-2xl ">
             <HeartOutlined
               className="cursor-pointer hover:text-pink-600 duration-500"
               style={{
                 color: "white",
               }}
             />
-          </div>
+          </div> */}
         </div>
         <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
           <form onSubmit={handleSubmit} className="bg-white">
@@ -67,13 +72,13 @@ const Login = () => {
               Đăng nhập
             </h1>
             <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-              <i class="fa-solid fa-envelope text-xl me-3"></i>
+              <i class="fa-solid fa-user text-xl me-3"></i>
               <input
-                className="pl-2 outline-none border-none mb-3"
+                className="pl-2 outline-none border-none "
                 type="text"
                 name="taiKhoan"
                 id="taiKhoan"
-                placeholder="Vui lòng nhập E-mail"
+                placeholder="Vui lòng nhập tài khoản"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.taiKhoan}

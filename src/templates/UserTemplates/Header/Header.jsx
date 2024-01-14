@@ -6,7 +6,10 @@ const items = [
   {
     key: "1",
     label: (
-      <a rel="noopener noreferrer" href="/login">
+      <a
+        rel="noopener noreferrer"
+        href="/login"
+        className="font-semibold text-lg">
         Login
       </a>
     ),
@@ -14,7 +17,10 @@ const items = [
   {
     key: "2",
     label: (
-      <a rel="noopener noreferrer" href="/register">
+      <a
+        rel="noopener noreferrer"
+        href="/register"
+        className="font-semibold text-lg">
         Register
       </a>
     ),

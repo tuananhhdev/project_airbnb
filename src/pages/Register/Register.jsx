@@ -1,6 +1,7 @@
 import React from "react";
 import Footer from "../../templates/UserTemplates/Footer";
 import Header from "../../templates/UserTemplates/Header/Header";
+import registerHouse from "../../assets/img/register_house.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { listAPI } from "../../services/API";
@@ -21,7 +22,7 @@ const Register = () => {
     dirty,
   } = useFormik({
     initialValues: {
-      name: "",
+      taiKhoan: "",
       email: "",
       phone: "",
       password: "",
@@ -46,15 +47,24 @@ const Register = () => {
     },
 
     validationSchema: Yup.object({
-      name: Yup.string().required("*Vui lòng không bỏ trống!*"),
+      taiKhoan: Yup.string()
+        .required("*Vui lòng không bỏ trống!*")
+        .matches(
+          /^[a-zA-ZÀ-ÖÙ-öù-ÿĀ-žḀ-ỿ0-9\s\-\/.]+$/,
+          "*Vui lòng nhập đúng định dạng!*"
+        ),
       email: Yup.string()
         .required("*Vui lòng không bỏ trống!*")
         .email("*Vui lòng nhập đúng định dạng!*"),
-      phone: Yup.number()
-        // .matches(phoneRegExp, "*Vui lòng nhập đúng định dạng!*")
-        .required("*Vui lòng không bỏ trống*"),
+      phone: Yup.string()
+        .matches(
+          /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+          "*Vui lòng nhập đúng định dạng!*"
+        )
+        .required("*Vui lòng không bỏ trống!*"),
       password: Yup.string()
         .min(6, "*Mật khẩu quá ngắn, tối thiểu 6 ký tự!*")
+        .max(20, "*Mật khẩu chỉ chứa tối đa 20 ký tự!*")
         .required("*Vui lòng không bỏ trống!*"),
     }),
   });
@@ -63,11 +73,8 @@ const Register = () => {
       {contextHolder}
       <Header />
       <div className="h-screen md:flex">
-        <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center hidden">
-          <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8" />
-          <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8" />
-          <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8" />
-          <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8" />
+        <div className="relative overflow-hidden md:flex w-1/2 bg-black  justify-around items-center hidden">
+          <img src={registerHouse} alt="" className="object-cover" />
         </div>
         <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
           <form className="bg-white" onSubmit={handleSubmit}>
@@ -89,15 +96,15 @@ const Register = () => {
               <input
                 className="pl-2 outline-none border-none"
                 type="text"
-                name="name"
-                id="name"
+                name="taiKhoan"
+                id="taiKhoan"
                 placeholder="Vui lòng nhập họ tên"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.name}
+                value={values.taiKhoan}
               />
-              {errors.name && touched.name ? (
-                <p className=" text-red-500 text-lg mt-1">{errors.name}</p>
+              {errors.taiKhoan && touched.taiKhoan ? (
+                <p className=" text-red-500 text-lg mt-1">{errors.taiKhoan}</p>
               ) : null}
             </div>
 

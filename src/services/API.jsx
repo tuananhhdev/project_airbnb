@@ -11,7 +11,7 @@ export const listAPI = {
   searchLocation: () => API.get("/api/vi-tri"),
 
   // page location
-  pageLocation: () => API.get("/api/vi-tri/phan-trang-tim-kiem"),
+  pageLocation: () => API.get("/api/vi-tri/phan-trang-tim-kiem?pageIndex=3&pageSize=1"),
 
   // get room location
   getRoomLocation: () => API.get("/api/phong-thue/lay-phong-theo-vi-tri"),
