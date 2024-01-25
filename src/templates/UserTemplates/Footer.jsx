@@ -10,7 +10,7 @@ const Footer = () => {
               <h2 className="mb-6 text-sm font-semibold text-black uppercase ">
                 GIỚI THIỆU
               </h2>
-              <ul className="text-black font-medium">
+              <ul className="text-gray-700 font-normal">
                 <li className="mb-4">
                   <a href="#" className=" hover:underline">
                     Phương thức hoạt động của Airbnb
@@ -67,7 +67,7 @@ const Footer = () => {
               <h2 className="mb-6 text-sm font-semibold text-black uppercase ">
                 CỘNG ĐỒNG
               </h2>
-              <ul className="text-black font-medium">
+              <ul className="text-gray-700 font-normal">
                 <li className="mb-4">
                   <a href="#" className="hover:underline">
                     Sự đa dạng và Cảm giác thân thuộc
@@ -104,7 +104,7 @@ const Footer = () => {
               <h2 className="mb-6 text-sm font-semibold text-black uppercase ">
                 ĐÓN TIẾP KHÁCH
               </h2>
-              <ul className="text-black font-medium">
+              <ul className="text-gray-700 font-normal">
                 <li className="mb-4">
                   <a href="#" className="hover:underline">
                     Cho thuê nhà
@@ -141,7 +141,7 @@ const Footer = () => {
               <h2 className="mb-6 text-sm font-semibold text-black uppercase ">
                 HỖ TRỢ
               </h2>
-              <ul className="text-black font-medium">
+              <ul className="text-gray-700 font-normal">
                 <li className="mb-4">
                   <a href="#" className="hover:underline">
                     Biện pháp ứng phó với đại dịch COVID-19 của chúng tôi
@@ -170,8 +170,8 @@ const Footer = () => {
               </ul>
             </div>
           </div>
-          <div className="px-4 py-6 border-t-2 border-t-gray-300 md:flex md:items-center md:justify-between">
-            <span className="flex text-sm text-black sm:text-center ">
+          <div className="px-4 py-6 border-t-2 border-t-gray-300 md:flex md:items-center md:justify-between text-sm">
+            <span className="flex  text-black sm:text-center ">
               &copy; 2021 Airbnb, Inc. All rights reserved
               <ul className="flex ml-10">
                 <li className="mr-7 list-disc">Quyền riêng tư</li>
