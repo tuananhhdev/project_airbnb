@@ -64,7 +64,7 @@ export default function RoomList() {
                     <img src={room.hinhAnh} alt="" />
                   </div> */}
                   <button className="absolute top-3 right-3 z-30 ">
-                    <i class="fa-sharp fa-regular fa-heart text-2xl hover:text-red-500 duration-500 cursor-pointer"></i>
+                  <i class="fa-solid fa-star text-xl text-yellow-500 hover:text-yellow-600 duration-500"></i>
                   </button>
                 </div>
                 <div>

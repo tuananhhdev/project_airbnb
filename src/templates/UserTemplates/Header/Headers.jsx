@@ -160,7 +160,7 @@ const Headers = () => {
               }}>
               <div className="font-medium border-r pr-2">Địa điểm bất kỳ</div>
               <div className="font-medium border-r pr-2 pl-2">tuần bất kỳ</div>
-              <div className="font-normal pr-2 pl-2">Thêm khách</div>
+              <div className="font-medium pr-2 pl-2">Thêm khách</div>
               <div className="inline-flex w-8 h-8 justify-center items-center bg-rose-500 rounded-full text-white">
                 <svg
                   viewBox="0 0 32 32"
