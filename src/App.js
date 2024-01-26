@@ -14,6 +14,7 @@ import AddMovie from "./templates/AdminTemplate/PageChild/RoomInfoManage";
 import UserInfoLocation from "./templates/AdminTemplate/PageChild/UserInfoLocation";
 import RoomInfoManage from "./templates/AdminTemplate/PageChild/RoomInfoManage";
 import AddUser from "./templates/AdminTemplate/PageChild/AddUser";
+import BookingRoomManage from "./templates/AdminTemplate/PageChild/BookingRoomManage";
 
 function App() {
   return (
@@ -32,8 +33,15 @@ function App() {
         <Route path="/admin" element={<AdminTemplate />}>
           <Route index element={<UserManage />} />
           <Route element={<AddUser />} path="/admin/add-user" />
-          <Route element={<UserInfoLocation />} path="user-info-location" />
-          <Route element={<RoomInfoManage />} path="room-info-manage" />
+          <Route
+            element={<UserInfoLocation />}
+            path="/admin/user-info-location"
+          />
+          <Route element={<RoomInfoManage />} path="/admin/room-info-manage" />
+          <Route
+            element={<BookingRoomManage />}
+            path="/admin/booking-room-manage"
+          />
         </Route>
       </Routes>
     </>

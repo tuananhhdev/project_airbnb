@@ -6,7 +6,7 @@ export const axiosClient = {
     API.get(`/api/phong-thue/lay-phong-theo-vi-tri?maViTri=${maViTri}`),
 
   //  room details
-  getRoomDetails: (id) => API.get(`/api/phong-thue?id=${id}`),
+  getRoomDetails: (id) => API.get(`/api/phong-thue?${id}`),
 
   // list room
   getListRoom: () => API.get(`/api/phong-thue`),

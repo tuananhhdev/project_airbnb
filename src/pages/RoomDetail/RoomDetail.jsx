@@ -3,10 +3,19 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { axiosClient } from "../../services/Api";
+import {
+  getDetailRoom,
+  getDetailsRoomAction,
+} from "../../redux/slices/roomSlice";
 export default function RoomDetail(props) {
+  // let { listRoom } = useSelector((state) => state.room);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const actionThunk = getDetailRoom();
+    dispatch(actionThunk);
+  },[]);
   const [room, setRoom] = useState([]);
   const { id } = useParams();
-
   useEffect(() => {
     axiosClient
       .getRoomDetails(id)
@@ -17,24 +26,24 @@ export default function RoomDetail(props) {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, []);
   return (
     <>
       <div>
         <div>
           <div className="h-28"></div>
           <div className="container mx-auto px-20">
-            {room.map((room, index) => {
+            {room.slice(0, 12).map((item, index) => {
               return (
                 <div key={index}>
                   <div>
                     <p>
                       <span className="font-semibold text-xl sm:text-3xl tracking-widest leading-relaxed text-gray-900">
                         {/* {roomDetail?.name} */}
-                        {room.tenPhong}
+                        {item.tenPhong}
                       </span>
                       <div className="mt-5">
-                        <img src={room.hinhAnh} alt="" />
+                        <img src={item.hinhAnh} alt="" />
                       </div>
                     </p>
                   </div>
@@ -81,18 +90,18 @@ export default function RoomDetail(props) {
                             Toàn bộ căn hộ. Chủ nhà Sungwon
                           </h1>
                           <span className="text-sm font-normal flex tracking-widest text-gray-700 ">
-                            {room.khach} khách
+                            {item.khach} khách
                             {/* <span>{roomDetailDetail?.guests} khách . </span> */}
                             <ul className="flex list-disc">
                               <li className="mx-1 ml-6">
-                                {room.phongNgu} phòng ngủ
+                                {item.phongNgu} phòng ngủ
                               </li>
                               <li className="mx-1 ml-6">
-                                {room.giuong}
+                                {item.giuong}
                                 giường
                               </li>
                               <li className="mx-1 ml-6">
-                                {room.phongTam}
+                                {item.phongTam}
                                 phòng tắm
                               </li>
                             </ul>

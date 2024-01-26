@@ -58,6 +58,13 @@ const AdminTemplate = () => {
                 </Link>
               ),
             },
+            {
+              key: "/admin/booking-room-manage",
+              icon: <VideoCameraOutlined />,
+              label: (
+                <Link to={"/admin/booking-room-manage"}>Quản lí đặt phòng</Link>
+              ),
+            },
           ]}
         />
       </Sider>

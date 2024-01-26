@@ -1,15 +1,20 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
-import { useDispatch, useSelector } from "react-redux";
-import { getListLocation } from "../../../redux/action/LocationAction";
 import cn from "classnames";
+import { useDispatch } from "react-redux";
+// import { AppDispatch, RootState } from "configStore";
+// import { getListLocation } from "Slices/location";
+import { useSelector } from "react-redux";
+
 import Select from "react-select";
-import { Dropdown, Space, Divider, theme } from "antd";
-// import { AppDispatch, RootState } from "../";
 import { Controller, FieldErrors, useForm } from "react-hook-form";
+// import { SearchValue } from "Interface/search";
+// import { removeUser } from "Slices/auth";
+import bannerBackground from "../../../assets/img/banner_house.jpg";
 const Headers = () => {
   const { pathname } = useLocation();
+
   const [showLogin, setShowLogin] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
@@ -17,6 +22,7 @@ const Headers = () => {
   const [isFocusCheckIn, setIsFocusCheckIn] = useState(false);
   const [isFocusCheckOut, setIsFocusCheckOut] = useState(false);
   const [isFocusGuest, setIsFocusGuest] = useState(false);
+
   const loginMenu = useRef(null);
   const formShow = useRef(null);
 
@@ -31,14 +37,14 @@ const Headers = () => {
 
   const dispatch = useDispatch();
 
-  // const listLocation = useSelector(
-  //   (state) => state.LocationReducer.listLocation
-  // );
-  // const { user } = useSelector((state: RootState) => state.auth);
+  const { listLocation, isLoading, error } = useSelector(
+    (state) => state.location
+  );
+  // const { user } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    dispatch(getListLocation());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getListLocation());
+  // }, []);
 
   const locationInput = useCallback(
     (inputElement) => {
@@ -48,7 +54,7 @@ const Headers = () => {
     },
     [showForm]
   );
-  // const options: {value,label} = [];
+  // const options: { value: string; label: string }[] = [];
   // listLocation.map((location) => {
   //   options.push({ value: location._id, label: location.name });
   // });
@@ -58,20 +64,17 @@ const Headers = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm(
-    // < SearchValue >
-    {
-      // Khai báo giá trị mặc định cho các input trong form
-      defaultValues: {
-        location: { value: "", label: "" },
-        checkIn: "",
-        checkOut: "",
-        guest: 0,
-      },
-      // mode: cách validation được trigger (default là submit)
-      mode: "onTouched",
-    }
-  );
+  } = useForm({
+    // Khai báo giá trị mặc định cho các input trong form
+    defaultValues: {
+      location: { value: "", label: "" },
+      checkIn: "",
+      checkOut: "",
+      guest: 0,
+    },
+    // mode: cách validation được trigger (default là submit)
+    mode: "onTouched",
+  });
 
   const navigate = useNavigate();
   const onSubmit = (values) => {
@@ -87,58 +90,23 @@ const Headers = () => {
     }
   };
 
-  // const onError = (error: FieldErrors<SearchValue>) => {
-  //   console.log(error);
-  // };
-
-  // const handleLogOut = () => {
-  //   localStorage.removeItem("user");
-  //   localStorage.removeItem("token");
-  //   setShowLogin(false);
-
-  //   dispatch(removeUser(null));
-  //   navigate("/");
-  // };
-  const { useToken } = theme;
-  const items = [
-    {
-      key: "1",
-      label: (
-        <div>
-          <a
-            // onClick={showModal}
-            rel="noopener noreferrer"
-            href="/dangnhap"
-            className="font-semibold text-lg">
-            Đăng nhập
-          </a>
-        </div>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          href="/dangky"
-          className="font-semibold text-lg">
-          Đăng ký
-        </a>
-      ),
-    },
-  ];
-  const { token } = useToken();
-  const contentStyle = {
-    backgroundColor: token.colorBgElevated,
-    borderRadius: token.borderRadiusLG,
-    boxShadow: token.boxShadowSecondary,
+  const onError = (error) => {
+    console.log(error);
   };
-  const menuStyle = {
-    boxShadow: "none",
+
+  const handleLogOut = () => {
+    // localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    setShowLogin(false);
+
+    // dispatch(removeUser(null));
+    navigate("/");
   };
   return (
     <div>
-      <nav className="bg-black  w-full  z-20">
+      <nav
+        className="fixed top-0  w-full z-30 pt-3"
+        style={{ background: `${bannerBackground}` }}>
         <div className="container mx-auto px-2 sm:px-10 py-5 flex flex-wrap justify-between items-center">
           {/* logo  */}
           <NavLink
@@ -165,10 +133,10 @@ const Headers = () => {
           {/* nav link */}
           <div
             className="flex flex-wrap justify-center items-center relative z-20"
-            style={{ flex: "45%" }}>
+            style={{ flex: "45%", marginRight: "70px" }}>
             <div
               className={cn(
-                "flex flex-wrap justify-center items-center text-white mb-3",
+                "flex flex-wrap justify-center items-center",
                 pathname.startsWith("/personal-info") ? "hidden" : ""
               )}>
               <NavLink className="mx-2" to="">
@@ -221,17 +189,14 @@ const Headers = () => {
           {/* form */}
           <div
             className={cn(
-              "absolute top-0 left-0 w-screen  transition-all duration-300 pb-3 z-10",
+              "absolute top-0 left-0 w-screen bg-white transition-all duration-300 pb-3 z-10",
               showForm ? " shadow-lg" : ""
             )}
             style={{ paddingTop: "4.4rem" }}
             ref={formShow}>
             <form
               className="flex flex-wrap justify-center items-center"
-              onSubmit={handleSubmit(
-                onSubmit
-                // , onError
-              )}>
+              onSubmit={handleSubmit(onSubmit, onError)}>
               <div
                 className={cn(
                   "flex flex-wrap justify-center items-center relative  transition-all duration-300",
@@ -245,8 +210,10 @@ const Headers = () => {
                 )}>
                 <div
                   className={cn(
-                    " py-2 hover:bg-gray-300 rounded-full h-full flex flex-wrap justify-center items-center",
-                    isFocusLocation ? "border bg-white hover:bg-white " : ""
+                    "px-5 py-2 hover:bg-gray-300 rounded-full h-full flex flex-wrap justify-center items-center",
+                    isFocusLocation
+                      ? "border bg-white hover:bg-white shadow-lg"
+                      : ""
                   )}>
                   <label
                     htmlFor="checkInDate"
@@ -336,7 +303,7 @@ const Headers = () => {
                     placeholder="Thêm khách"
                   />
                 </div>
-                <button className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 absolute right-0">
+                <button className="text-white bg-rose-600 hover:bg-red-800 duration-300 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 absolute right-0">
                   Tìm kiếm
                 </button>
               </div>
@@ -346,7 +313,7 @@ const Headers = () => {
 
           {/* menu login */}
           <div
-            className="hidden sm:block flex-initial text-white col-end-6 z-20"
+            className="hidden sm:block flex-initial col-end-6 z-20"
             style={{ flex: "25%" }}>
             <div className="relative flex items-center justify-end">
               <div className="mr-4 flex items-center z-10">
@@ -384,13 +351,13 @@ const Headers = () => {
               </div>
               <div className="block z-10" ref={loginMenu}>
                 <div className="relative inline">
-                  {/* <button
+                  <button
                     type="button"
                     className="relative inline-flex items-center rounded-full border px-2 hover:shadow-lg"
                     onClick={() => {
                       setShowLogin(!showLogin);
-                    }}> */}
-                  {/* <div className="pl-1">
+                    }}>
+                    <div className="pl-1">
                       <svg
                         viewBox="0 0 32 32"
                         xmlns="http://www.w3.org/2000/svg"
@@ -412,116 +379,83 @@ const Headers = () => {
                           <path d="m2 8h28" />
                         </g>
                       </svg>
-                    </div> */}
-                  <div className="block h-10 w-12 pl-4">
-                    {/* {user ? ( */}
-                    {/* <div className="w-full h-full flex justify-center items-center">
-                        <img */}
-                    {/* // src={user?.avatar}
-                          alt=""
-                          className="w-7 h-7 rounded-full"
-                        />
-                      </div> */}
-                    {/* ) : ( */}
-                    {/* <svg
-                        viewBox="0 0 32 32"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                        role="presentation"
-                        focusable="false"
-                        style={{
-                          display: "block",
-                          height: "100%",
-                          width: "100%",
-                          fill: "currentcolor",
-                        }}>
-                        <path d="m16 .7c-8.437 0-15.3 6.863-15.3 15.3s6.863 15.3 15.3 15.3 15.3-6.863 15.3-15.3-6.863-15.3-15.3-15.3zm0 28c-4.021 0-7.605-1.884-9.933-4.81a12.425 12.425 0 0 1 6.451-4.4 6.507 6.507 0 0 1 -3.018-5.49c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5a6.513 6.513 0 0 1 -3.019 5.491 12.42 12.42 0 0 1 6.452 4.4c-2.328 2.925-5.912 4.809-9.933 4.809z" />
-                      </svg> */}
-                    {/* )} */}
-                  </div>
-                  {/* </button> */}
+                    </div>
+                    <div className="block h-10 w-12 pl-4">
+                      {/* {user ? ( */}
+                      <div className="w-full h-full flex justify-center items-center">
+                        <i class="fa-solid fa-user"></i>
 
+                        {/* <img */}
+                        {/* // src={user?.avatar}
+                            // alt=""
+                            // className="w-7 h-7 rounded-full" */}
+                        {/* // /> */}
+                      </div>
+                      {/* ) : ( */}
+                      {/* <svg
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          role="presentation"
+                          focusable="false"
+                          style={{
+                            display: "block",
+                            height: "100%",
+                            width: "100%",
+                            fill: "currentcolor",
+                          }}>
+                          <path d="m16 .7c-8.437 0-15.3 6.863-15.3 15.3s6.863 15.3 15.3 15.3 15.3-6.863 15.3-15.3-6.863-15.3-15.3-15.3zm0 28c-4.021 0-7.605-1.884-9.933-4.81a12.425 12.425 0 0 1 6.451-4.4 6.507 6.507 0 0 1 -3.018-5.49c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5a6.513 6.513 0 0 1 -3.019 5.491 12.42 12.42 0 0 1 6.452 4.4c-2.328 2.925-5.912 4.809-9.933 4.809z" />
+                        </svg> */}
+                      {/* )} */}
+                    </div>
+                  </button>
                   <div
-                  // className={
-                  // showLogin
-                  //     ? "absolute right-0 z-50 rounded-md shadow flex flex-col mt-4 w-56 bg-white"
-                  //     : "hidden"
-                  // }
-                  >
+                    className={
+                      showLogin
+                        ? "absolute right-0 z-50 rounded-md shadow flex flex-col mt-4 w-56 bg-white"
+                        : "hidden"
+                    }>
                     {/* / */}
                     {/* {localStorage.getItem("user") ? ( */}
                     {/* <div className="flex flex-col border-b-2 font-semibold">
+                        <NavLink
+                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                          to="">
+                          Tin nhắn
+                        </NavLink>
+                        <NavLink
+                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                          // to={`/tickets-by-user/${user?._id}`}
+                          onClick={() => setShowLogin(false)}>
+                          Chuyến đi
+                        </NavLink>
+                        <NavLink
+                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                          // to={`/personal-info/${user?._id}`}
+                          onClick={() => setShowLogin(false)}>
+                          Thông tin cá nhân
+                        </NavLink>
+                      </div> */}
+                    {/* ) : ( */}
+                    <div className="font-medium flex flex-col border-b-2">
                       <NavLink
                         className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                        to="">
-                        Tin nhắn
-                      </NavLink>
-                      <NavLink
-                        className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                        // to={`/tickets-by-user/${user?._id}`}
+                        to="/dangky"
                         // onClick={() => setShowLogin(false)}
                       >
-                        Chuyến đi
-                      </NavLink>
-                      <NavLink
-                        className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                        // to={`/personal-info/${user?._id}`}
-                        onClick={() => setShowLogin(false)}>
-                        Thông tin cá nhân
-                      </NavLink>
-                    </div> */}
-                    {/* // ) : ( */}
-                    <Dropdown
-                      menu={{
-                        items,
-                      }}
-                      dropdownRender={(menu) => (
-                        <div style={contentStyle}>
-                          {React.cloneElement(menu, {
-                            style: menuStyle,
-                          })}
-                          <Divider
-                            style={{
-                              margin: 0,
-                            }}
-                          />
-                        </div>
-                      )}>
-                      <a onClick={(e) => e.preventDefault()}>
-                        <Space>
-                          <div
-                            className="border-1 border-gray-700 px-5 py-1 rounded-full "
-                            style={{
-                              transform: "translateY(-20px",
-                            }}>
-                            <i class="fa-solid fa-bars text-white cursor-pointer mr-4"></i>
-                            <i
-                              className="fa-solid fa-user text-white cursor-pointer text-lg"
-                              style={{
-                                transform: "translateY(-0px)",
-                              }}></i>
-                          </div>
-
-                          {/* <DownOutlined /> */}
-                        </Space>
-                      </a>
-                    </Dropdown>
-                    {/* <div className="font-medium flex flex-col border-b-2">
-                      <NavLink
-                        className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                        to="/register"
-                        onClick={() => setShowLogin(false)}>
                         Đăng ký
                       </NavLink>
                       <NavLink
                         className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                        to="/login"
-                        onClick={() => setShowLogin(false)}>
+                        to="/dangnhap"
+                        // onClick={() => setShowLogin(false)}
+                      >
                         Đăng nhập
                       </NavLink>
-                    </div> */}
-                    {/* // )} */}
-                    {/* <div className="font-normal flex flex-col">
+                    </div>
+                    {/* )} */}
+
+                    <div className="font-normal flex flex-col">
                       <NavLink
                         className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
                         to="">
@@ -537,18 +471,19 @@ const Headers = () => {
                         to="">
                         Trợ giúp
                       </NavLink>
-                    </div> */}
+                    </div>
+
+                    {/* {localStorage.getItem("user") ? ( */}
                     {/* <div className="font-medium flex flex-col border-t-2">
-                      <div
-                        className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200 cursor-pointer"
-                        // onClick={handleLogOut}
-                      >
-                        Đăng xuất
-                      </div>
-                    </div> */}
-                    {/* // ) : ( */}
-                    {/* // "" */}
-                    {/* // )} */}
+                        <div
+                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200 cursor-pointer"
+                          onClick={handleLogOut}>
+                          Đăng xuất
+                        </div>
+                      </div> */}
+                    {/* ) : ( */}
+                    {/* "" */}
+                    {/* )} */}
                   </div>
                 </div>
               </div>

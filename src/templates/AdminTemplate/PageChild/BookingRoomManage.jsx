@@ -7,16 +7,20 @@ import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";
 const columns = [
   {
-    title: "ID",
-    dataIndex: "id",
+    title: "Mã phòng",
+    dataIndex: "maPhong",
   },
   {
-    title: "Tên",
+    title: "Tên phòng",
     dataIndex: "ten",
   },
   {
     title: "Hình ảnh",
     dataIndex: "hinhAnh",
+  },
+  {
+    title: "Vị trí",
+    dataIndex: "viTri",
   },
   {
     title: "Hành động",
@@ -43,20 +47,19 @@ for (let i = 0; i < 46; i++) {
     ),
   });
 }
-const UserManage = () => {
+const BookingRoomManage = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const onSelectChange = (newSelectedRowKeys) => {
     console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
-
   return (
     <div>
-      <h1 className="text-4xl mb-5 font-semibold">Quản lí người dùng</h1>
+      <h1 className="text-4xl mb-5 font-semibold">Quản lí phòng</h1>
       <a className="p-2 rounded-lg  text-lg border-2 border-gray-500 hover:text-gray-500 duration-500">
-        <NavLink to={"/admin/add-user"}>
-          <i class="fa-solid fa-user-plus mr-3 text-lg"></i>
-          Thêm quản trị viên
+        <NavLink to={"/admin/add-room"}>
+          <i class="fa-solid fa-house mr-3 text-lg"></i>
+          Thêm phòng
         </NavLink>
       </a>
       <div className="mt-10 flex items-center">
@@ -69,7 +72,7 @@ const UserManage = () => {
           autoComplete="off"></Box>
         <TextField
           id="outlined-search"
-          label="Nhập vào tài khoản hoặc họ tên người dùng"
+          label="Nhập vào tên phòng"
           type="search"
           style={{
             width: "880px",
@@ -96,4 +99,4 @@ const UserManage = () => {
   );
 };
 
-export default UserManage;
+export default BookingRoomManage;

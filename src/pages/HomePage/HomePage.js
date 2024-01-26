@@ -7,12 +7,15 @@ import ListLocation from "../../components/ListLocation/ListLocation";
 import SearchLocation from "../../components/SearchLocation/SearchLocation";
 import PageLocation from "../../components/PageLocation/PageLocation";
 import RoomList from "../../components/RoomList/RoomList";
+import Tabs from "../../components/Tabs/Tabs";
 const HomePage = () => {
   return (
     <div>
-      <Banner />
+      {/* <Banner /> */}
       {/* <ListLocation /> */}
       {/* <PageLocation /> */}
+      <div className="h-28"></div>
+      <Tabs />
       <RoomList />
     </div>
   );

@@ -3,13 +3,13 @@ import loginBackground from "../../assets/img/login_house.jpg";
 import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-import { loginAction } from "../../redux/action/AuthAction";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/slices/authSlice";
 
 export default function Login() {
-  const dispatch = useDispatch;
-  const { userLogin } = useSelector((state) => state.AuthReducer);
-  console.log(userLogin);
+  const dispatch = useDispatch();
+
+  // console.log(userLogin);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -25,8 +25,9 @@ export default function Login() {
         .required("*Vui lòng không bỏ trống!*"),
     }),
     onSubmit: (values) => {
-      const action = loginAction(values);
-      dispatch(action);
+      dispatch(login(values));
+      // const action = loginAction(values);
+      // dispatch(action);
       console.log("values", values);
     },
   });

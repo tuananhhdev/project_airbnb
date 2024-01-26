@@ -42,7 +42,10 @@ export default function RoomList() {
         {room.slice(0, 12).map((room, index) => {
           return (
             <div key={index}>
-              <NavLink className="roomLink" to={`/room-detail/${room.id}`}>
+              <NavLink
+                // key={room.id}
+                className="roomLink"
+                to={`/room-detail/${room.id}`}>
                 <div
                   pagination={{
                     dynamicBullets: true,
@@ -67,7 +70,6 @@ export default function RoomList() {
                 <div>
                   <p className="flex justify-between mt-2">
                     <span className="font-bold">{room.tenPhong}</span>
-
                   </p>
                   <p className="text-gray-500">{randomNumber(2, 10000)} km</p>
                   <p className="text-gray-500">

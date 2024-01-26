@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-
-import LocationReducer from "./reducer/LocationReducer.js";
-import AuthReducer from "./reducer/AuthReducer.js";
-import { RoomReducer } from "./reducer/roomReducer.js";
-
-export const store = configureStore({
+import userSlice from "./slices/authSlice";
+import roomSlice from "./slices/roomSlice";
+import locationSlice from "./slices/locationSlice";
+const store = configureStore({
   reducer: {
-    RoomReducer,
+    user: userSlice,
+    room: roomSlice,
+    location: locationSlice,
   },
 });
+
 export default store;
