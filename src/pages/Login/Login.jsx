@@ -99,7 +99,7 @@ export default function Login() {
             </button>
             <p className="text-lg text-center mt-4 ">
               Chưa có tài khoản ?
-              <NavLink to={"/dangky"}>
+              <NavLink to={"/register"}>
                 <a className="ml-2 text-red-500 hover:underline">
                   Đăng ký ngay
                 </a>

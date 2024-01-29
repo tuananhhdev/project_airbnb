@@ -3,27 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { UseDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper/modules";
-// import { layDanhSachPhong } from "../../redux/action/RoomAction";
-import { axiosClient } from "../../services/Api";
-// import { layDanhSachPhong } from "../../redux/action/RoomAction";
-// import { Navigation } from "react-router-dom";
+import { Pagination, Navigation, Mousewheel, Keyboard } from "swiper/modules";
+import "./RoomList.css";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { axiosClient } from "../../services/RoomServ";
 export default function RoomList() {
   const randomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
   };
-  // const listRoom = useSelector((state) => state.room.listRoom);
-  // console.log({ listRoom });
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(layDanhSachPhong());
-  // }, []);
-  // const { listRoom } = useSelector((state) => state.RoomReducer);
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   const action = layDanhSachPhong();
-  //   dispatch(action);
-  // });
+
   const [room, setRoom] = useState([]);
   useEffect(() => {
     axiosClient
@@ -37,41 +27,50 @@ export default function RoomList() {
       });
   }, []);
   return (
-    <div className="container mx-auto mt-16 mb-16">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mx-10">
+    <div className="container mx-auto mt-8 mb-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 mx-10">
         {room.slice(0, 12).map((room, index) => {
           return (
             <div key={index}>
               <NavLink
-                // key={room.id}
+                key={room.id}
                 className="roomLink"
                 to={`/room-detail/${room.id}`}>
-                <div
-                  pagination={{
-                    dynamicBullets: true,
-                  }}
+                <Swiper
+                  pagination={true}
+                  cssMode={true}
                   loop={true}
                   navigation={true}
-                  modules={[Pagination, Navigation]}
+                  mousewheel={true}
+                  keyboard={true}
+                  modules={[Pagination, Navigation, Mousewheel, Keyboard]}
                   className="roomSwiper relative">
-                  <div className="w-full">
-                    <img src={room.hinhAnh} alt="" />
-                  </div>
-                  <div className="w-full">
-                    <img src={room.hinhAnh} alt="" />
-                  </div>
+                  <SwiperSlide className="w-full">
+                    <img
+                      className=""
+                      src={room.hinhAnh}
+                      alt=""
+                      style={{
+                        width: "342px",
+                        height: "278px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </SwiperSlide>
                   {/* <div className="w-full">
                     <img src={room.hinhAnh} alt="" />
                   </div> */}
-                  <button className="absolute top-3 right-3 z-30 ">
-                  <i class="fa-solid fa-star text-xl text-yellow-500 hover:text-yellow-600 duration-500"></i>
+                  {/* <div className="w-full">
+                    <img src={room.hinhAnh} alt="" />
+                  </div> */}
+                  <button className="absolute top-3 right-3 z-50 ">
+                    <i class="fa-solid fa-star text-xl text-yellow-500 hover:text-yellow-600 duration-500"></i>
                   </button>
-                </div>
+                </Swiper>
                 <div>
                   <p className="flex justify-between mt-2">
                     <span className="font-bold">{room.tenPhong}</span>
                   </p>
-                  <p className="text-gray-500">{randomNumber(2, 10000)} km</p>
                   <p className="text-gray-500">
                     Ngày {randomNumber(1, 30)} - Ngày {randomNumber(1, 30)}{" "}
                     tháng {randomNumber(1, 12)}

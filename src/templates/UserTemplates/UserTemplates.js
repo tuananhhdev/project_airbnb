@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
-import Headers from "./Header/Headers";
+import Headers from "./Header/Header";
 
 const UserTemplates = () => {
   return (

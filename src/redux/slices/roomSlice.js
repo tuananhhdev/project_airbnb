@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { axiosClient } from "../../services/Api";
+import { axiosClient } from "../../services/RoomServ";
 
 const initialState = {
   listRoom: [],

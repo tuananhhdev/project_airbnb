@@ -1,204 +1,213 @@
-// import React from "react";
-// import Footer from "../../templates/UserTemplates/Footer";
-// import Header from "../../templates/UserTemplates/Header/Header";
-// import registerHouse from "../../assets/img/register_house.png";
-// import { useFormik } from "formik";
-// import * as Yup from "yup";
-// import { listAPI } from "../../services/API";
-// import { message } from "antd";
+import React from "react";
+import registerBackground from "../../assets/img/register_img.jfif";
+import { NavLink } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+const Register = () => {
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      email: "",
+      password: "",
+      phone: "",
+      birthday: "",
+      gender: true,
+    },
+    validationSchema: Yup.object({
+      fullName: Yup.string()
+        // .matches(/^[A-Za-z ]*$/, "*Vui lòng nhập đúng định dạng!*")
+        .min(8, "*Vui lòng nhập tối thiểu 8 ký tự!*")
+        .max(20)
+        .required("*Vui lòng không bỏ trống!*"),
+      email: Yup.string()
+        .email("*Vui lòng nhập đúng định dạng!*")
+        .required("*Vui lòng không bỏ trống!*"),
+      password: Yup.string()
+        .matches(/^(?=.*[a-z])/, "*Mật khẩu phải chứa 1 ký tự thường!*")
+        .matches(/^(?=.*[A-Z])/, "*Mật khẩu phải chứa 1 ký tự hoa!*")
+        .matches(/^(?=.*[0-9])/, "*Mật khẩu phải chứa 1 ký tự số!*")
+        .matches(
+          /^(?=.*[!@#\$%\^&\*])/,
+          "*Mật khẩu phải chứa 1 ký tự đặc biệt!*"
+        )
 
-// const Register = () => {
-//   const phoneRegExp =
-//     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-//   const [messageApi, contextHolder] = message.useMessage();
-//   const {
-//     handleSubmit,
-//     handleChange,
-//     handleBlur,
-//     values,
-//     errors,
-//     touched,
-//     isValid,
-//     dirty,
-//   } = useFormik({
-//     initialValues: {
-//       taiKhoan: "",
-//       email: "",
-//       phone: "",
-//       password: "",
-//     },
-//     onSubmit: (values) => {
-//       listAPI
-//         .register(values)
-//         .then((res) => {
-//           console.log(res);
-//           message.success("Đăng ký thành công");
-//           setTimeout(() => {
-//             Navigate("/");
-//           }, 1000);
-//         })
-//         .catch((err) => {
-//           messageApi.open({
-//             type: "error",
-//             content: err.response.data.content,
-//           });
-//           console.log(err);
-//         });
-//     },
+        .required("*Vui lòng không bỏ trống!*"),
+      phone: Yup.number()
+        .typeError("*Vui lòng nhập đúng định dạng!*")
+        .positive("*Không được chứa dấu trừ!*")
+        .integer("*Không được chứa dấu chấm!*")
+        .min(8, "*Vui lòng nhập tối thiểu 8 số!*")
+        // .max(20, "*Vui lòng nhập tối đa 10 số*")
+        .required("*Vui lòng không bỏ trống!*"),
+      birthday: Yup.string().required("*Vui lòng không bỏ trống!*"),
+      gender: Yup.string().required("*Vui lòng không bỏ trống*"),
+    }),
+    onSubmit: (data) => {
+      localStorage.setItem("RegisterInfo", JSON.stringify(data));
+      // console.log([data]);
+    },
+  });
 
-//     validationSchema: Yup.object({
-//       taiKhoan: Yup.string()
-//         .required("*Vui lòng không bỏ trống!*")
-//         .matches(
-//           /^[a-zA-ZÀ-ÖÙ-öù-ÿĀ-žḀ-ỿ0-9\s\-\/.]+$/,
-//           "*Vui lòng nhập đúng định dạng!*"
-//         ),
-//       email: Yup.string()
-//         .required("*Vui lòng không bỏ trống!*")
-//         .email("*Vui lòng nhập đúng định dạng!*"),
-//       phone: Yup.string()
-//         .matches(
-//           /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-//           "*Vui lòng nhập đúng định dạng!*"
-//         )
-//         .required("*Vui lòng không bỏ trống!*"),
-//       password: Yup.string()
-//         .min(6, "*Mật khẩu quá ngắn, tối thiểu 6 ký tự!*")
-//         .max(20, "*Mật khẩu chỉ chứa tối đa 20 ký tự!*")
-//         .required("*Vui lòng không bỏ trống!*"),
-//     }),
-//   });
-//   return (
-//     <div>
-//       {contextHolder}
-//       <Header />
-//       <div className="h-screen md:flex">
-//         <div className="relative overflow-hidden md:flex w-1/2 bg-black  justify-around items-center hidden">
-//           <img src={registerHouse} alt="" className="object-cover" />
-//         </div>
-//         <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
-//           <form className="bg-white" onSubmit={handleSubmit}>
-//             <h1 className="text-4xl mb-10 font-semibold text-center">
-//               Đăng ký
-//             </h1>
-//             <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-//               <svg
-//                 xmlns="http://www.w3.org/2000/svg"
-//                 className="h-6 w-6 text-black-400 me-2"
-//                 viewBox="0 0 20 20"
-//                 fill="currentColor">
-//                 <path
-//                   fillRule="evenodd"
-//                   d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-//                   clipRule="evenodd"
-//                 />
-//               </svg>
-//               <input
-//                 className="pl-2 outline-none border-none"
-//                 type="text"
-//                 name="taiKhoan"
-//                 id="taiKhoan"
-//                 placeholder="Vui lòng nhập họ tên"
-//                 onChange={handleChange}
-//                 onBlur={handleBlur}
-//                 value={values.taiKhoan}
-//               />
-//               {errors.taiKhoan && touched.taiKhoan ? (
-//                 <p className=" text-red-500 text-lg mt-1">{errors.taiKhoan}</p>
-//               ) : null}
-//             </div>
+  return (
+    <div>
+      {" "}
+      <div
+        className=" flex items-center justify-center h-screen"
+        style={{
+          background: `url(${registerBackground})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          objectFit: "cover",
+        }}>
+        <div className="bg-white p-8 rounded-2xl shadow-lg max-w-xl w-full">
+          <div className="flex justify-center mb-6">
+            <NavLink to={"/"}>
+              <span className="inline-block ">
+                <i class="fa-brands fa-airbnb text-5xl text-pink-600"></i>
+              </span>
+            </NavLink>
+          </div>
+          <h2 className="text-3xl font-semibold text-center mb-10">Đăng ký</h2>
 
-//             <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
-//               <i class="fa-solid fa-envelope text-black text-xl me-3"></i>
-//               <input
-//                 className="pl-2 outline-none border-none"
-//                 type="text"
-//                 name="email"
-//                 id="email"
-//                 placeholder="Vui lòng nhập E-mail"
-//                 onChange={handleChange}
-//                 onBlur={handleBlur}
-//                 value={values.email}
-//               />
-//               {errors.email && touched.email ? (
-//                 <p className=" text-red-500 text-lg mt-1">{errors.email}</p>
-//               ) : null}
-//             </div>
-//             <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
-//               <i class="fa-solid fa-phone text-xl me-3"></i>
-//               <input
-//                 className="pl-2 outline-none border-none"
-//                 type="text"
-//                 name="phone"
-//                 id="phone"
-//                 placeholder="Vui lòng nhập số điện thoại"
-//                 onChange={handleChange}
-//                 onBlur={handleBlur}
-//                 value={values.phone}
-//               />
-//               {errors.phone && touched.phone ? (
-//                 <p className=" text-red-500 text-lg mt-1">{errors.phone}</p>
-//               ) : null}
-//             </div>
-//             <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
-//               <i class="fa-solid fa-lock text-xl me-3"></i>
-//               <input
-//                 className="pl-2 outline-none border-none"
-//                 type="password"
-//                 name="password"
-//                 id="password"
-//                 placeholder="Vui lòng nhập mật khẩu"
-//                 onChange={handleChange}
-//                 onBlur={handleBlur}
-//                 value={values.password}
-//               />
-//               {errors.password && touched.password ? (
-//                 <p className=" text-red-500 text-lg mt-1">{errors.password}</p>
-//               ) : null}
-//             </div>
-//             <div className="checkbox-wrapper-28 ms-3 mt-3">
-//               <input
-//                 id="tmp-28"
-//                 type="checkbox"
-//                 className="promoted-input-checkbox"
-//               />
-//               <svg>
-//                 <use xlinkHref="#checkmark-28" />
-//               </svg>
-//               <label className="text-xl" htmlFor="tmp-28">
-//                 Remember me
-//               </label>
-//               <svg
-//                 xmlns="http://www.w3.org/2000/svg"
-//                 style={{ display: "none" }}>
-//                 <symbol id="checkmark-28" viewBox="0 0 24 24">
-//                   <path
-//                     strokeLinecap="round"
-//                     strokeMiterlimit={10}
-//                     fill="none"
-//                     d="M22.9 3.7l-15.2 16.6-6.6-7.1"></path>
-//                 </symbol>
-//               </svg>
-//             </div>
+          <form onSubmit={formik.handleSubmit}>
+            <div className="grid grid-cols-2 gap-x-7">
+              <div className="mb-4">
+                <label
+                  htmlFor="fullName"
+                  className="block text-gray-700 text-sm font-semibold mb-2">
+                  Họ tên
+                </label>
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                  placeholder="Tuan Anh"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.fullName}
+                />
+                {formik.errors.fullName && formik.touched.fullName && (
+                  <p className="text-red-600 text-lg">
+                    {formik.errors.fullName}
+                  </p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="block text-gray-700 text-sm font-semibold mb-2">
+                  E-mail
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                  placeholder="example@gmail.com"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                />
+                {formik.errors.email && formik.touched.email && (
+                  <p className="text-red-600 text-lg">{formik.errors.email}</p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="phone"
+                  className="block text-gray-700 text-sm font-semibold mb-2">
+                  Số điện thoại
+                </label>
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                  placeholder="+84 332-146-137"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.phone}
+                />
+                {formik.errors.phone && formik.touched.phone && (
+                  <p className="text-red-600 text-lg">{formik.errors.phone}</p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="password"
+                  className="block text-gray-700 text-sm font-semibold mb-2">
+                  Mật khẩu
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                  placeholder="**********"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                />
+                {formik.errors.password && formik.touched.password && (
+                  <p className="text-red-600 text-lg">
+                    {formik.errors.password}
+                  </p>
+                )}
+              </div>
 
-//             <button
-//               type="submit"
-//               className="block w-full bg-indigo-600 mt-10 py-2 rounded-2xl text-white text-xl font-semibold mb-3 hover:bg-indigo-800 duration-500">
-//               Hoàn thành
-//             </button>
-//           </form>
-//         </div>
-//       </div>
-//       <div>
-//         <a
-//           href="/"
-//           className="fixed  right-10 bottom-10  transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12">
-//           <i class="fa-solid fa-arrow-left text-black text-2xl "></i>
-//         </a>
-//       </div>
-//       <Footer />
-//     </div>
-//   );
-// };
+              <div className="mb-4">
+                <label
+                  htmlFor="date"
+                  className="block text-gray-700 text-sm font-semibold mb-2">
+                  Ngày sinh
+                </label>
+                <input
+                  type="date"
+                  id="date"
+                  name="date"
+                  className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.date}
+                />
+                {formik.errors.date && formik.touched.date && (
+                  <p>{formik.errors.date}</p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="gender"
+                  className="block text-gray-700 text-sm font-semibold mb-2">
+                  Giới tính
+                </label>
+                <select
+                  name="gender"
+                  id="gender"
+                  className="px-4 py-2"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.gender}>
+                  <option value="Nam">Nam</option>
+                  <option value="Nữ">Nữ</option>
+                </select>
+                {formik.errors.gender && formik.touched.gender && (
+                  <p>{formik.errors.gender}</p>
+                )}
+              </div>
+            </div>
 
-// export default Register;
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+              Tiếp tục
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Register;

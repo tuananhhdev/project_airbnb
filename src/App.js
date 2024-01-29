@@ -26,8 +26,8 @@ function App() {
 
           <Route element={<RoomLocation />} path="/room-location/:id" />
         </Route>
-        <Route element={<Login />} path="/dangnhap" />
-        <Route element={<Register />} path="/dangky" />
+        <Route element={<Login />} path="/login" />
+        <Route element={<Register />} path="/register" />
         {/* <Route element={<Page404 />} path="*" /> */}
 
         <Route path="/admin" element={<AdminTemplate />}>

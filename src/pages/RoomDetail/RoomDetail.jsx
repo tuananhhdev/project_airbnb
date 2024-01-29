@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { axiosClient } from "../../services/Api";
+import { axiosClient } from "../../services/RoomServ";
 import {
   getDetailRoom,
   getDetailsRoomAction,
@@ -13,7 +13,7 @@ export default function RoomDetail(props) {
   useEffect(() => {
     const actionThunk = getDetailRoom();
     dispatch(actionThunk);
-  },[]);
+  }, []);
   const [room, setRoom] = useState([]);
   const { id } = useParams();
   useEffect(() => {

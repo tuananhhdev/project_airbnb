@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   UserOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  //   UserOutlined,
-  VideoCameraOutlined,
+  HomeOutlined,
+  EditOutlined,
+  EnvironmentOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import { Link, Outlet, useLocation, NavLink } from "react-router-dom";
+import SubMenu from "antd/es/menu/SubMenu";
 
 const AdminTemplate = () => {
   const { Header, Sider, Content } = Layout;
@@ -38,11 +41,15 @@ const AdminTemplate = () => {
             {
               key: "/admin",
               icon: <UserOutlined />,
-              label: <Link to={"/admin"}>Quản lí người dùng</Link>,
+              label: (
+                <div>
+                  <Link to={"/admin"}>Quản lí người dùng</Link>,
+                </div>
+              ),
             },
             {
               key: "/admin/user-info-location",
-              icon: <VideoCameraOutlined />,
+              icon: <EnvironmentOutlined />,
               label: (
                 <Link to={"/admin/user-info-location"}>
                   Quản lí thông tin vị trí
@@ -51,16 +58,18 @@ const AdminTemplate = () => {
             },
             {
               key: "/admin/room-info-manage",
-              icon: <VideoCameraOutlined />,
+              icon: <HomeOutlined />,
               label: (
-                <Link to={"/admin/room-info-manage"}>
-                  Quản lí thông tin phòng
-                </Link>
+                <div>
+                  <Link to={"/admin/room-info-manage"}>
+                    Quản lí thông tin phòng
+                  </Link>
+                </div>
               ),
             },
             {
               key: "/admin/booking-room-manage",
-              icon: <VideoCameraOutlined />,
+              icon: <EditOutlined />,
               label: (
                 <Link to={"/admin/booking-room-manage"}>Quản lí đặt phòng</Link>
               ),
