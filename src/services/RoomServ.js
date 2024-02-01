@@ -2,11 +2,11 @@ import { API } from "./configSer";
 export const axiosClient = {
   // Room Api
   // room by location
-  getRoomByLocation: (value) =>
-    API.get(`/api/phong-thue/lay-phong-theo-vi-tri?maViTri=${value}`),
+  getRoomByLocation: (maViTri) =>
+    API.get(`/api/phong-thue/lay-phong-theo-vi-tri?maViTri=${maViTri}`),
 
   //  room details
-  getRoomDetails: (id) => API.get(`/api/phong-thue?${id}`),
+  getRoomDetails: (id) => API.get(`/api/phong-thue/${id}`),
 
   // list room
   getListRoom: () => API.get(`/api/phong-thue`),
@@ -18,14 +18,5 @@ export const axiosClient = {
   updateRoom: (roomId) => API.put(`/api/phong-thue/${roomId}`),
 
   // booking room
-  bookingRoom: () => API.get(`/api/dat-phong`),
-
-  
-
-  // Auth Api
-  // sign in
-  signin: (userInfo) => API.post(`/api/auth/signin`, userInfo),
-
-  // sign up
-  // signup: () => API.post(`/api/auth/signin`),
+  bookingRoom: (values) => API.post("/api/dat-phong", values),
 };

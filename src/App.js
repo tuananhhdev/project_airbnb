@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import UserTemplates from "./templates/UserTemplates/UserTemplates";
 import HomePage from "./pages/HomePage/HomePage";
 import Page404 from "./pages/Page404/Page404";
@@ -22,9 +22,9 @@ function App() {
       <Routes>
         <Route element={<UserTemplates />} path="/">
           <Route element={<HomePage />} index />
-          <Route element={<RoomDetail />} path="/room-detail/:id" />
+          <Route element={<RoomDetail />} path="/room-details/:id" />
 
-          <Route element={<RoomLocation />} path="/room-location/:id" />
+          <Route element={<RoomLocation />} path="room-location/:id" />
         </Route>
         <Route element={<Login />} path="/login" />
         <Route element={<Register />} path="/register" />
@@ -43,6 +43,7 @@ function App() {
             path="/admin/booking-room-manage"
           />
         </Route>
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </>
   );

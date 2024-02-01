@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/slices/authSlice";
+// import { login } from "../../redux/slices/authSlice";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -24,12 +24,6 @@ export default function Login() {
         .min(8, "*Vui lòng nhập tối đa 8 ký tự!*")
         .required("*Vui lòng không bỏ trống!*"),
     }),
-    onSubmit: (values) => {
-      dispatch(login(values));
-      // const action = loginAction(values);
-      // dispatch(action);
-      console.log("values", values);
-    },
   });
   return (
     <div>

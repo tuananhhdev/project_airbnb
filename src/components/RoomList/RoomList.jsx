@@ -35,7 +35,7 @@ export default function RoomList() {
               <NavLink
                 key={room.id}
                 className="roomLink"
-                to={`/room-detail/${room.id}`}>
+                to={`/room-details/${room.id}`}>
                 <Swiper
                   pagination={true}
                   cssMode={true}
@@ -57,12 +57,6 @@ export default function RoomList() {
                       }}
                     />
                   </SwiperSlide>
-                  {/* <div className="w-full">
-                    <img src={room.hinhAnh} alt="" />
-                  </div> */}
-                  {/* <div className="w-full">
-                    <img src={room.hinhAnh} alt="" />
-                  </div> */}
                   <button className="absolute top-3 right-3 z-50 ">
                     <i class="fa-solid fa-star text-xl text-yellow-500 hover:text-yellow-600 duration-500"></i>
                   </button>

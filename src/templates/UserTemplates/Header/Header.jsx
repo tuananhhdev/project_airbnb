@@ -117,19 +117,19 @@ const Headers = () => {
   }, []);
 
   const options = [
-    { value: 1, label: "Hồ Chí Minh" },
-    { value: 2, label: "Cần Thơ" },
+    { values: 1, label: "Hồ Chí Minh" },
+    { values: 2, label: "Cần Thơ" },
     { vlue: 3, label: "Nha Trang" },
-    { value: 4, label: "Hà Nội" },
-    { value: 5, label: "Phú Quốc" },
-    { value: 6, label: "Đà Nẵng" },
-    { value: 7, label: "Đà Lạt" },
-    { value: 8, label: "Phan Thiết" },
-    { value: 2013, label: "Lâm Đồng" },
-    { value: 2034, label: "California" },
-    { value: 2035, label: "New York" },
-    { value: 2113, label: "Mỹ Tho" },
-    { value: 2118, label: "Hóc Môn" },
+    { values: 4, label: "Hà Nội" },
+    { values: 5, label: "Phú Quốc" },
+    { values: 6, label: "Đà Nẵng" },
+    { values: 7, label: "Đà Lạt" },
+    { values: 8, label: "Phan Thiết" },
+    { values: 2013, label: "Lâm Đồng" },
+    { values: 2034, label: "California" },
+    { values: 2035, label: "New York" },
+    { values: 2113, label: "Mỹ Tho" },
+    { values: 2118, label: "Hóc Môn" },
   ];
   // const  navigate = useNavigate()
   const scrollStyle = scrolling
