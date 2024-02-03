@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosClient } from "../../services/RoomServ";
+import { axiosClient, roomAPI } from "../../services/RoomServ";
 
 const initialState = {
   listRoom: [],
@@ -15,7 +15,6 @@ const roomSlice = createSlice({
   extraReducers: (builder) => {
     // chi tiet phong
     builder
-
       .addCase(getDetailRoom.pending, (state) => {
         state.isLoading = true;
       })
@@ -28,18 +27,32 @@ const roomSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-    // lay phong theo vi tri
-    // builder.addCase(getListRoomByLocation.pending, (state) => {
-    //   state.isLoading = true;
-    // });
-    // builder.addCase(getListRoomByLocation.fulfilled, (state, { payload }) => {
-    //   state.isLoading = false;
-    //   state.listRoom = payload;
-    // });
-    // builder.addCase(getListRoomByLocation.rejected, (state, { error }) => {
-    //   state.isLoading = false;
-    //   state.error = error.message;
-    // });
+
+    // lay danh sach phong
+    builder.addCase(getListRoom.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getListRoom.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.listRoom = payload;
+    });
+    builder.addCase(getListRoom.rejected, (state, { error }) => {
+      state.isLoading = false;
+      state.error = error.message;
+    });
+
+    // lay phong theo ma vi tri
+    builder.addCase(getRoomByLocation.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getRoomByLocation.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.listRoom = payload;
+    });
+    builder.addCase(getRoomByLocation.rejected, (state, { error }) => {
+      state.isLoading = false;
+      state.error = error.message;
+    });
   },
 });
 
@@ -49,7 +62,7 @@ export const getDetailRoom = createAsyncThunk(
   " room/getDetailsRoom",
   async (id) => {
     try {
-      const response = await axiosClient.getRoomDetails(id);
+      const response = await roomAPI.getRoomDetails(id);
       return response.data.content;
     } catch (error) {
       throw error;
@@ -57,11 +70,11 @@ export const getDetailRoom = createAsyncThunk(
   }
 );
 
-export const getListRoomByLocation = createAsyncThunk(
-  "room/getListRoomByLocation",
-  async (maViTri) => {
+export const getRoomByLocation = createAsyncThunk(
+  "room/getRoomByLocation",
+  async (locationId) => {
     try {
-      const listRoom = await axiosClient.getRoomByLocation(maViTri);
+      const listRoom = await roomAPI.getRoomByLocation(locationId);
       return listRoom;
     } catch (error) {
       throw error;
@@ -71,9 +84,18 @@ export const getListRoomByLocation = createAsyncThunk(
 
 export const booking = createAsyncThunk("room/booking", async (values) => {
   try {
-    const result = await axiosClient.bookingRoom(values);
+    const result = await roomAPI.bookingRoom(values);
     console.log(result);
     return result;
+  } catch (error) {
+    throw error;
+  }
+});
+
+export const getListRoom = createAsyncThunk("room/getListRoom", async () => {
+  try {
+    const listRoom = await roomAPI.getListRoom();
+    return listRoom;
   } catch (error) {
     throw error;
   }

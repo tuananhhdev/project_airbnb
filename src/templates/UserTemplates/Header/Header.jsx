@@ -3,17 +3,13 @@ import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
 import cn from "classnames";
 import { useDispatch } from "react-redux";
-// import { AppDispatch, RootState } from "configStore";
-// import { getListLocation } from "Slices/location";
+import { getListLocation } from "../../../redux/slices/locationSlice";
 import { useSelector } from "react-redux";
+import { removeUser } from "../../../redux/slices/authSlice";
 import "./Header.css";
 import Select from "react-select";
 import { Controller, FieldErrors, useForm } from "react-hook-form";
-// import { SearchValue } from "Interface/search";
-// import { removeUser } from "Slices/auth";
-import bannerBackground from "../../../assets/img/banner_house.jpg";
-import { axiosClient } from "../../../services/LocationServ";
-import axios from "axios";
+import { axiosClient, locationAPI } from "../../../services/LocationServ";
 const Headers = () => {
   const { pathname } = useLocation();
   const [scrolling, setScrolling] = useState(false);
@@ -38,9 +34,13 @@ const Headers = () => {
   useOnClickOutside(formShow, handleFormClickOutSide);
 
   const dispatch = useDispatch();
-
-  const listLocation = useSelector((state) => state.location);
-
+  useEffect(() => {
+    dispatch(getListLocation());
+  }, []);
+  const { listLocation, isLoading, error } = useSelector(
+    (state) => state.location
+  );
+  const { user } = useSelector((state) => state.auth);
   const locationInput = useCallback(
     (inputElement) => {
       if (showForm && inputElement) {
@@ -49,12 +49,6 @@ const Headers = () => {
     },
     [showForm]
   );
-  const fetchData = () => {
-    return axiosClient.getListLocation().then((result) => {
-      const res = result.data.content;
-      return res;
-    });
-  };
 
   const {
     register,
@@ -92,10 +86,9 @@ const Headers = () => {
   };
 
   const handleLogOut = () => {
-    // localStorage.removeItem("user");
+    localStorage.removeItem("user");
     localStorage.removeItem("token");
     setShowLogin(false);
-
     // dispatch(removeUser(null));
     navigate("/");
   };
@@ -116,21 +109,40 @@ const Headers = () => {
     };
   }, []);
 
-  const options = [
-    { values: 1, label: "Hồ Chí Minh" },
-    { values: 2, label: "Cần Thơ" },
-    { vlue: 3, label: "Nha Trang" },
-    { values: 4, label: "Hà Nội" },
-    { values: 5, label: "Phú Quốc" },
-    { values: 6, label: "Đà Nẵng" },
-    { values: 7, label: "Đà Lạt" },
-    { values: 8, label: "Phan Thiết" },
-    { values: 2013, label: "Lâm Đồng" },
-    { values: 2034, label: "California" },
-    { values: 2035, label: "New York" },
-    { values: 2113, label: "Mỹ Tho" },
-    { values: 2118, label: "Hóc Môn" },
-  ];
+  // const options = [
+  //   { values: 1, label: "Hồ Chí Minh" },
+  //   { values: 2, label: "Cần Thơ" },
+  //   { vlue: 3, label: "Nha Trang" },
+  //   { values: 4, label: "Hà Nội" },
+  //   { values: 5, label: "Phú Quốc" },
+  //   { values: 6, label: "Đà Nẵng" },
+  //   { values: 7, label: "Đà Lạt" },
+  //   { values: 8, label: "Phan Thiết" },
+  //   { values: 2013, label: "Lâm Đồng" },
+  //   { values: 2034, label: "California" },
+  //   { values: 2035, label: "New York" },
+  //   { values: 2113, label: "Mỹ Tho" },
+  //   { values: 2118, label: "Hóc Môn" },
+  // ];
+  const [viTri, setViTri] = useState([]);
+  useEffect(() => {
+    locationAPI
+      .getListLocation()
+      .then((res) => {
+        console.log("🚀 ~ .then ~ res:", res);
+        setViTri(res.data.content);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  const renderList = () => {
+    return viTri.map((location) => ({
+      value: location.id,
+      label: location.tinhThanh,
+    }));
+  };
+  // listLocation.map((location) => {
+  //   options.push({ value: location.id, label: location.tinhThanh });
+  // });
   // const  navigate = useNavigate()
   const scrollStyle = scrolling
     ? "costum-navbar text-white bg-black"
@@ -256,7 +268,7 @@ const Headers = () => {
                     render={({ field }) => (
                       <Select
                         {...field}
-                        options={options}
+                        options={renderList()}
                         className="w-48 text-black bg-transparent outline-none select_location"
                         ref={locationInput}
                         onFocus={() => setIsFocusLocation(true)}

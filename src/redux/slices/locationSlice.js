@@ -1,33 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { axiosClient } from "../../services/RoomServ";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { axiosClient, locationAPI } from "../../services/LocationServ";
 
 const initialState = {
   listLocation: [],
+  isLoading: false,
+  error: undefined,
 };
 
 const locationSlice = createSlice({
   name: "location",
   initialState,
-  reducers: {
-    getListLocationAction: (state, action) => {
-      state.listLocation = action.payload;
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getListLocation.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getListLocation.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.listLocation = payload;
+    });
+    builder.addCase(getListLocation.rejected, (state, { error }) => {
+      state.isLoading = false;
+      state.error = error.message;
+    });
   },
 });
 
-export const { getListLocationAction } = locationSlice.actions;
-
 export default locationSlice.reducer;
 
-export const getListLocation = () => {
-  return async (dispatch) => {
+export const getListLocation = createAsyncThunk(
+  "location/getListLocation",
+  async () => {
     try {
-      const result = await axiosClient.getListLocation();
-      console.log(result);
-      const action = getListLocationAction(result.data.content);
-      dispatch(action);
-    } catch (errors) {
-      console.log("errors", errors.response?.data);
+      const listLocation = await locationAPI.getListLocation();
+      return listLocation;
+    } catch (error) {
+      throw error;
     }
-  };
-};
+  }
+);

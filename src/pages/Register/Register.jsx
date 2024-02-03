@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import registerBackground from "../../assets/img/register_img.jfif";
 import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAuth, registerAuth, signup } from "../../redux/slices/authSlice";
 const Register = () => {
+  const { isLoading } = useSelector((state) => state.auth);
+  const [isForm, setIsForm] = useState(false);
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      fullName: "",
+      name: "",
       email: "",
       password: "",
       phone: "",
@@ -42,11 +47,33 @@ const Register = () => {
       birthday: Yup.string().required("*Vui lòng không bỏ trống!*"),
       gender: Yup.string().required("*Vui lòng không bỏ trống*"),
     }),
-    onSubmit: (data) => {
-      localStorage.setItem("RegisterInfo", JSON.stringify(data));
-      // console.log([data]);
+    onsubmit: (values) => {
+      const { name, email, password, phone, birthday, gender } = values;
+      dispatch(
+        registerAuth({
+          name,
+          email,
+          password,
+          phone,
+          birthday,
+          gender,
+        })
+      );
     },
   });
+  // const handleClickSubmit = (values) => {
+  //   const { name, email, password, phone, birthday, gender } = values;
+  //   dispatch(
+  //     registerAuth({
+  //       name,
+  //       email,
+  //       password,
+  //       phone,
+  //       birthday,
+  //       gender,
+  //     })
+  //   );
+  // };
 
   return (
     <div>
@@ -70,28 +97,26 @@ const Register = () => {
           </div>
           <h2 className="text-3xl font-semibold text-center mb-10">Đăng ký</h2>
 
-          <form onSubmit={formik.handleSubmit}>
+          <form onSubmit={onsubmit}>
             <div className="grid grid-cols-2 gap-x-7">
               <div className="mb-4">
                 <label
-                  htmlFor="fullName"
+                  htmlFor="name"
                   className="block text-gray-700 text-sm font-semibold mb-2">
                   Họ tên
                 </label>
                 <input
                   type="text"
-                  id="fullName"
-                  name="fullName"
+                  id="name"
+                  name="name"
                   className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
                   placeholder="Tuan Anh"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.fullName}
+                  value={formik.values.name}
                 />
-                {formik.errors.fullName && formik.touched.fullName && (
-                  <p className="text-red-600 text-lg">
-                    {formik.errors.fullName}
-                  </p>
+                {formik.errors.name && formik.touched.name && (
+                  <p className="text-red-600 text-lg">{formik.errors.name}</p>
                 )}
               </div>
               <div className="mb-4">
@@ -171,6 +196,7 @@ const Register = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.date}
+                  format={new Date().toLocaleDateString("vi-VI")}
                 />
                 {formik.errors.date && formik.touched.date && (
                   <p>{formik.errors.date}</p>
@@ -200,6 +226,7 @@ const Register = () => {
 
             <button
               type="submit"
+              disabled={!isForm || isLoading}
               className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
               Tiếp tục
             </button>

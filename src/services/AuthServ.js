@@ -1,6 +1,6 @@
 import { API } from "./configSer";
 
-export const axiosClient = {
+export const authAPI = {
   // signin
   signin: (values) => API.post("/api/auth/signin", values),
 

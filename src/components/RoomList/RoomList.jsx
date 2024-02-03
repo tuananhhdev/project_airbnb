@@ -8,7 +8,7 @@ import "./RoomList.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { axiosClient } from "../../services/RoomServ";
+import { axiosClient, roomAPI } from "../../services/RoomServ";
 export default function RoomList() {
   const randomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -16,7 +16,7 @@ export default function RoomList() {
 
   const [room, setRoom] = useState([]);
   useEffect(() => {
-    axiosClient
+    roomAPI
       .getListRoom()
       .then((res) => {
         console.log(res);

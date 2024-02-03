@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getReviewByRooms } from "../../redux/slices/reviewSlice";
+import userReview from "../../assets/img/user-36-02.jpg";
 import moment from "moment";
 const Review = () => {
   //   const { roomDetails, isLoading, error } = useSelector((state) => state.room);
@@ -144,7 +145,7 @@ const Review = () => {
                   <div>
                     {review.id ? (
                       <img
-                        src={review.id.avatar}
+                        src={review.avatar}
                         className="w-10 h-10 rounded-full overflow-hidden shadow-lg"
                       />
                     ) : (

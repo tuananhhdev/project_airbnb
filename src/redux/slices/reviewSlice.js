@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosClient } from "../../services/ReviewServ";
+import { axiosClient, reviewAPI } from "../../services/ReviewServ";
 
 const initialState = {
   reviewList: [],
@@ -34,7 +34,7 @@ export const getReviewByRooms = createAsyncThunk(
   "review/getReviewByRooms",
   async () => {
     try {
-      const response = await axiosClient.getReviewByRooms();
+      const response = await reviewAPI.getReviewByRooms();
       return response.data.content;
     } catch (error) {
       throw error;

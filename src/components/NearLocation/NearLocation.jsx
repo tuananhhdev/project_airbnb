@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { axiosClient } from "../../services/LocationServ";
+import { axiosClient, locationAPI } from "../../services/LocationServ";
 import { Link } from "react-router-dom";
 import { Card } from "antd";
 
 const NearLocation = () => {
   const [city, setCity] = useState([]);
   useEffect(() => {
-    axiosClient
+    locationAPI
       .searchLocation()
       .then((res) => {
         console.log(res);

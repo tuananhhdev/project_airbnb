@@ -1,9 +1,9 @@
 import { API } from "./configSer";
-export const axiosClient = {
+export const roomAPI = {
   // Room Api
   // room by location
-  getRoomByLocation: (maViTri) =>
-    API.get(`/api/phong-thue/lay-phong-theo-vi-tri?maViTri=${maViTri}`),
+  getRoomByLocation: (locationId) =>
+    API.get(`/api/phong-thue/lay-phong-theo-vi-tri?maViTri=${locationId}`),
 
   //  room details
   getRoomDetails: (id) => API.get(`/api/phong-thue/${id}`),
@@ -19,4 +19,8 @@ export const axiosClient = {
 
   // booking room
   bookingRoom: (values) => API.post("/api/dat-phong", values),
+
+  // booking room by user
+  bookingRoomByUser: ({ id }) =>
+    API.get(`/api/dat-phong/lay-theo-nguoi-dung/${id}`),
 };
