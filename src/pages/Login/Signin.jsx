@@ -17,23 +17,8 @@ const Signin = () => {
   const [isForm, setForm] = useState(false);
   const uploadForm = (props) => {
     const { getFieldDecorator, validateFields, getFieldError } = props.form;
-    };
-    const formik = useFormik()
+  };
   const onFinish = (values) => {
-    validateFields();
-    const validationErrors = getFieldsError();
-    let allValid = true;
-    console.log(validationErrors);
-    for (let key in validationErrors) {
-      console.log(validationErrors[key]);
-      if (validationErrors[key] !== undefined) {
-        allValid = false;
-        break;
-      }
-    }
-    if (allValid) {
-      dispatch(submitFormData());
-    }
     const { email, password } = values || {};
     const data = { email, password };
     dispatch(loginAuth(data));
