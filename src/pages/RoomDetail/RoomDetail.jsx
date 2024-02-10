@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { getDetailRoom } from "../../redux/slices/roomSlice";
 import Review from "../../components/Review/Review";
 import FormBooking from "../../components/FormBooking/FormBooking";
+import { setLoadingOn } from "../../redux/slices/loadingSlice";
 export default function RoomDetail(props) {
   const { roomDetails } = useSelector((state) => state?.room);
   const { id } = useParams();

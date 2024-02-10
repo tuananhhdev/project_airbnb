@@ -1,13 +1,14 @@
 export let userLocalStorage = {
   get: () => {
-    let dataJson = localStorage.getItem("USER-INFO");
+    let dataJson = localStorage.getItem("USER");
     return JSON.parse(dataJson);
   },
   set: (user) => {
     let dataJson = JSON.stringify(user);
-    localStorage.setItem("USER-INFO", dataJson);
+    localStorage.setItem("USER", dataJson);
   },
   remove: () => {
-    localStorage.removeItem("USER-INFO");
+    localStorage.removeItem("USER");
   },
 };
+

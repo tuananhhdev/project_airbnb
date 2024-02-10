@@ -10,7 +10,8 @@ import "./Header.css";
 import Select from "react-select";
 import { Controller, FieldErrors, useForm } from "react-hook-form";
 import { axiosClient, locationAPI } from "../../../services/LocationServ";
-const Headers = () => {
+import { DatePicker } from "antd";
+const Header = () => {
   const { pathname } = useLocation();
   const [scrolling, setScrolling] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -68,18 +69,18 @@ const Headers = () => {
   });
 
   const navigate = useNavigate();
-  const onSubmit = (values) => {
-    if (values.location?.value !== "") {
-      navigate(`/room-location/${values.location?.value}`, {
-        state: {
-          location: values.location,
-          checkIn: values.checkIn,
-          checkOut: values.checkOut,
-          guest: values.guest,
-        },
-      });
-    }
-  };
+  // const onSubmit = (values) => {
+  //   if (values.location?.value !== "") {
+  //     navigate(`/room-location/${values.location?.value}`, {
+  //       state: {
+  //         location: values.location,
+  //         checkIn: values.checkIn,
+  //         checkOut: values.checkOut,
+  //         guest: values.guest,
+  //       },
+  //     });
+  //   }
+  // };
 
   const onError = (error) => {
     console.log(error);
@@ -237,9 +238,7 @@ const Headers = () => {
             )}
             style={{ paddingTop: "4.4rem" }}
             ref={formShow}>
-            <form
-              className="flex flex-wrap justify-center items-center"
-              onSubmit={handleSubmit(onSubmit, onError)}>
+            <form className="flex flex-wrap justify-center items-center">
               <div
                 className={cn(
                   "flex flex-wrap justify-center items-center relative bg-white transition-all duration-300 rounded-full ",
@@ -296,7 +295,7 @@ const Headers = () => {
                     className="block text-sm font-medium text-black">
                     Nhận phòng
                   </label>
-                  <input
+                  <DatePicker
                     {...register("checkIn")}
                     type="date"
                     id="checkInDate"
@@ -318,8 +317,9 @@ const Headers = () => {
                     className="block text-sm font-medium text-black">
                     Trả phòng
                   </label>
-                  <input
+                  <DatePicker
                     {...register("checkOut")}
+                    name="chec"
                     type="date"
                     id="checkOutDate"
                     className="bg-transparent text-gray-500 outline-none"
@@ -351,7 +351,18 @@ const Headers = () => {
                   />
                 </div>
                 <button
-                  onClick={onSubmit}
+                  onClick={(values) => {
+                    if (values.location?.value !== "") {
+                      navigate(`/room-location/${values.location?.value}`, {
+                        state: {
+                          location: values.location,
+                          checkIn: values.checkIn,
+                          checkOut: values.checkOut,
+                          guest: values.guest,
+                        },
+                      });
+                    }
+                  }}
                   className="text-white bg-rose-600 hover:bg-red-800 duration-300 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 absolute right-0">
                   Tìm kiếm
                 </button>
@@ -547,4 +558,4 @@ const Headers = () => {
   );
 };
 
-export default Headers;
+export default Header;

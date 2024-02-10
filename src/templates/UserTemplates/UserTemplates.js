@@ -1,15 +1,23 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
-import Headers from "./Header/Header";
 
+import { useSelector } from "react-redux";
+import LoadingPages from "../../components/LoadingPages/LoadingPages";
+import Headers from "./Header/Headers";
+import Header from "../../templates/UserTemplates/Header/Header"
 const UserTemplates = () => {
+  const { isLoading } = useSelector((state) => state.loading);
   return (
-    <div>
-      <Headers />
-      <Outlet />
-      <Footer />
-    </div>
+    <>
+      {isLoading ? <LoadingPages /> : null}
+      <>
+        {/* <Headers /> */}
+        <Header />
+        <Outlet />
+        <Footer />
+      </>
+    </>
   );
 };
 

@@ -14,7 +14,7 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
-const Register = () => {
+const DangNhap = () => {
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -230,4 +230,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default DangNhap;

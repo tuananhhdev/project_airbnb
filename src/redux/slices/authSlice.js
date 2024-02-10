@@ -133,13 +133,13 @@ export default authSlice.reducer;
 
 export const registerAuth = createAsyncThunk(
   "auth/registerAuth",
-  async (values, { dispatch }) => {
+  async (userData, { dispatch }) => {
     try {
-      const response = await API.post("/api/auth-signup", values);
+      const response = await API.post("/api/auth/signup", userData);
       if (response.status === 200) {
-        const loginRes = await API.get("/api/auth/signin", {
-          email: values.email,
-          password: values.password,
+        const loginRes = await API.post("/api/auth/signin", {
+          email: userData.email,
+          password: userData.password,
         });
         dispatch(loginAction(loginRes.data.content.user));
         notification.success({ message: "Đăng ký tài khoản thành công!" });
@@ -149,16 +149,17 @@ export const registerAuth = createAsyncThunk(
       }
     } catch (error) {
       notification.error({ message: "Đăng ký tài khoản không thành công! " });
-      throw error;
+      // throw error;
+      console.log("error", error.response.data);
     }
   }
 );
 
 export const loginAuth = createAsyncThunk(
-  "auth.loginAuth",
-  async (values, { dispatch }) => {
+  "auth/loginAuth",
+  async (userData, { dispatch }) => {
     try {
-      const response = await API.post("/api/auth/signin", values);
+      const response = await API.post("/api/auth/signin", userData);
       if (response.status === 200) {
         dispatch(loginAction(response.data.content));
         userLocalStorage.set(response.data.content);
@@ -236,7 +237,8 @@ export const getBookingRoom = createAsyncThunk(
   async ({ id }, { rejectWithValue }) => {
     try {
       const response = await roomAPI.bookingRoomByUser({ id });
-      bookingRoom({ id });
+      //   bookingRoom({ id });
+
       console.log(response);
       return response.data.content;
     } catch (error) {

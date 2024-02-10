@@ -13,6 +13,9 @@ import AddUser from "./templates/AdminTemplate/PageChild/AddUser";
 import BookingRoomManage from "./templates/AdminTemplate/PageChild/BookingRoomManage";
 import Login from "./pages/Login/Login";
 import Signin from "./pages/Login/Signin";
+import DangNhap from "./pages/Register/DangNhap";
+import { Suspense } from "react";
+import LoadingPages from "./components/LoadingPages/LoadingPages";
 
 function App() {
   return (
@@ -37,7 +40,8 @@ function App() {
             path="/admin/booking-room-manage"
           />
         </Route>
-        <Route element={<Signin />} path="/login" />
+
+        <Route element={<Login />} path="/login" />
         <Route element={<Register />} path="/register" />
         <Route path="*" element={<Page404 />} />
       </Routes>
