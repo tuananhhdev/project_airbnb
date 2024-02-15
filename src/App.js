@@ -24,7 +24,7 @@ function App() {
         <Route element={<UserTemplates />} path="/">
           <Route element={<HomePage />} index />
           <Route element={<RoomDetail />} path="/room-details/:id" />
-          <Route element={<RoomLocation />} path="room-location/:id" />
+          <Route element={<RoomLocation />} path="room-by-city/:id" />
         </Route>
 
         <Route path="/admin" element={<AdminTemplate />}>

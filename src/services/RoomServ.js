@@ -9,7 +9,7 @@ export const roomAPI = {
   getRoomDetails: (id) => API.get(`/api/phong-thue/${id}`),
 
   // list room
-  getListRoom: () => API.get(`/api/phong-thue`),
+  getListRoom: (locationId) => API.get("/api/phong-thue", locationId),
 
   // delete room
   deleteRoom: (roomId) => API.delete(`/api/phong-thue/${roomId}`),

@@ -35,23 +35,23 @@ const Register = () => {
       gender: true,
       role: "",
     },
-    onSubmit(values) {
-      axios({
-        method: "POST",
-        url: "https://airbnbnew.cybersoft.edu.vn/api/auth/signup",
-        data: values,
-      })
-        .then((res) => {
-          console.log(res);
-          notification.success({ message: "Đăng ký thành công" });
-          navigate("/login");
-        })
-        .catch((error) => {
-          console.log(error.response.data);
-          notification.error({ message: "Đăng ký thất bại!" });
-        });
-    },
   });
+  const onSubmit = (values) => {
+    axios({
+      method: "POST",
+      url: "https://airbnbnew.cybersoft.edu.vn/api/auth/signup",
+      data: values,
+    })
+      .then((res) => {
+        console.log(res);
+        notification.success({ message: "Đăng ký thành công" });
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        notification.error({ message: "Đăng ký thất bại!" });
+      });
+  };
   // const handleGenderChange = (value) => {
   //   console.log(value);
   // };
@@ -81,146 +81,190 @@ const Register = () => {
           <h2 className="text-3xl font-semibold text-center mb-10">Đăng ký</h2>
 
           {/* Form register */}
-          <Form onFinish={handleSubmit}>
+          <Form onFinish={onSubmit} layout="vertical">
             <div className="grid grid-cols-2 gap-x-7">
               <div className="mb-4">
-                <label
-                  htmlFor="name"
-                  className="block text-gray-700 text-sm font-semibold mb-2">
-                  Tài khoản
-                </label>
-                <Input
-                  type="text"
-                  id="name"
+                <Form.Item
+                  label="Tài khoản"
                   name="name"
-                  size="large"
-                  placeholder=" Nhập tài khoản"
-                  prefix={<UserOutlined className="mr-2" />}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.name}
-                />
+                  className="block text-gray-700 text-sm font-semibold mb-2"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng không bỏ trống!",
+                    },
+                    {
+                      min: 6,
+                      message: "Vui lòng nhập tối thiểu 6 đến 10 ký tự!",
+                    },
+                    {
+                      max: 10,
+                      message: "Vui lòng nhập tối đa 10 ký tự!",
+                    },
+                  ]}
+                  hasFeedback>
+                  <Input
+                    type="text"
+                    id="name"
+                    name="name"
+                    size="large"
+                    placeholder=" Nhập tài khoản"
+                    prefix={<UserOutlined className="mr-2" />}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.name}
+                  />
+                </Form.Item>
               </div>
               <div className="mb-4">
-                <label
-                  htmlFor="email"
-                  className="block text-gray-700 text-sm font-semibold mb-2">
-                  E-mail
-                </label>
-                <Input
-                  type="email"
-                  id="email"
+                <Form.Item
+                  label="E-mail"
                   name="email"
-                  size="large"
-                  placeholder=" example@gmail.com"
-                  prefix={<MailOutlined className="mr-2" />}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.email}
-                />
+                  className="block text-gray-700 text-sm font-semibold mb-2"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng không bỏ trống!",
+                    },
+                    {
+                      type: "email",
+                      message: "E-mail không đúng định dạng!",
+                    },
+                  ]}
+                  hasFeedback>
+                  <Input
+                    type="email"
+                    id="email"
+                    name="email"
+                    size="large"
+                    placeholder=" example@gmail.com"
+                    prefix={<MailOutlined className="mr-2" />}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                  />
+                </Form.Item>
               </div>
               <div className="mb-4">
-                <label
-                  htmlFor="phone"
-                  className="block text-gray-700 text-sm font-semibold mb-2">
-                  Số điện thoại
-                </label>
-                <Input
-                  type="tel"
-                  id="phone"
+                <Form.Item
+                  label="Số điện thoại"
                   name="phone"
-                  pattern="^[0-9\-\+]{9,15}$"
-                  size="large"
-                  placeholder=" +84-332-146-137"
-                  prefix={<PhoneOutlined className="mr-2" />}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.phone}
-                />
+                  className="block text-gray-700 text-sm font-semibold mb-2"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng không bỏ trống!",
+                    },
+                    {
+                      pattern: /^[0-9]{10}$/,
+                      message: "Số điện thoại không đúng định dạng!",
+                    },
+                  ]}
+                  hasFeedback>
+                  <Input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    pattern="^[0-9\-\+]{9,15}$"
+                    size="large"
+                    placeholder=" Nhập số điện thoại"
+                    prefix={<PhoneOutlined className="mr-2" />}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.phone}
+                  />
+                </Form.Item>
               </div>
               <div className="mb-4">
-                <label
-                  htmlFor="password"
-                  className="block text-gray-700 text-sm font-semibold mb-2">
-                  Mật khẩu
-                </label>
-                <Input.Password
+                <Form.Item
+                  label="Mật khẩu"
                   name="password"
-                  id="password"
-                  size="large"
-                  placeholder="Nhập mật khẩu"
-                  prefix={<LockOutlined className="mr-3" />}
-                  iconRender={(visible) =>
-                    visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                  }
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.password}
-                />
+                  className="block text-gray-700 text-sm font-semibold mb-2"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng không bỏ trống!",
+                    },
+                  ]}
+                  hasFeedback>
+                  <Input.Password
+                    name="password"
+                    id="password"
+                    size="large"
+                    placeholder="**********"
+                    prefix={<LockOutlined className="mr-3" />}
+                    iconRender={(visible) =>
+                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.password}
+                  />
+                </Form.Item>
               </div>
 
               <div className="mb-4">
-                <label
-                  htmlFor="birthday"
-                  className="block text-gray-700 text-sm font-semibold mb-2">
-                  Ngày sinh
-                </label>
-                <DatePicker
-                  // id="birthday"
-                  name="birtday"
-                  className="w-full"
-                  format={dateFormatList}
-                  size="large"
-                  placeholder="Nhập ngày sinh"
-                  onChange={(values) => {
-                    // setFieldValue("birthday", date);
-                    setFieldValue(
-                      "birthday",
-                      moment(values).format("DD/MM/YYYY")
-                    );
-                  }}
-                  // changeOnBlur={handleBlur}
-                  // value={values.birthday ? dayjs(values.birthday) : ""}
-                />
+                <Form.Item
+                  label="Ngày sinh"
+                  name="birthday"
+                  className="block text-gray-700 text-sm font-semibold mb-2"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng không bỏ trống!",
+                    },
+                  ]}
+                  hasFeedback>
+                  <DatePicker
+                    // id="birthday"
+                    name="birtday"
+                    className="w-full"
+                    format={dateFormatList}
+                    size="large"
+                    placeholder="Nhập ngày sinh"
+                    onChange={(values) => {
+                      // setFieldValue("birthday", date);
+                      setFieldValue(
+                        "birthday",
+                        moment(values).format("DD/MM/YYYY")
+                      );
+                    }}
+                    // changeOnBlur={handleBlur}
+                    // value={values.birthday ? dayjs(values.birthday) : ""}
+                  />
+                </Form.Item>
               </div>
               <div className="mb-4">
-                <label
-                  htmlFor="gender"
-                  className="block text-gray-700 text-sm font-semibold mb-2">
-                  Giới tính
-                </label>
-                <Select
-                  // id="gender"
+                <Form.Item
+                  label="Giới tính"
                   name="gender"
-                  size="large"
-                  className="w-full"
-                  placeholder="Chọn giới tính"
-                  style={{
-                    width: 120,
-                  }}
-                  // options={[
-                  //   {
-                  //     value: true,
-                  //     label: "Nam",
-                  //   },
-                  //   {
-                  //     value: false,
-                  //     label: "Nữ",
-                  //   },
-                  // ]}
-                  // onChange={handleChange}
-                  // onBlur={handleBlur}
-                  // value={values.gender}
-                >
-                  <Select.Option value="true">Nam</Select.Option>
-                  <Select.Option value="false">Nữ</Select.Option>
-                </Select>
+                  className="block text-gray-700 text-sm font-semibold mb-2"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng không bỏ trống!",
+                    },
+                  ]}
+                  hasFeedback>
+                  <Select
+                    // id="gender"
+                    name="gender"
+                    size="large"
+                    className="w-full"
+                    placeholder="Chọn giới tính"
+                    style={{
+                      width: 120,
+                    }}>
+                    <Select.Option value={true}>Nam</Select.Option>
+                    <Select.Option value={false}>Nữ</Select.Option>
+                  </Select>
+                </Form.Item>
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+              className="w-full bg-black  text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 font-medium hover:bg-slate-900  focus:black-opacity-50">
               Tiếp tục
             </button>
           </Form>

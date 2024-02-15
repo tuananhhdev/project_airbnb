@@ -57,14 +57,13 @@ const Header = () => {
     control,
     formState: { errors },
   } = useForm({
-    // Khai báo giá trị mặc định cho các input trong form
     defaultValues: {
       location: { value: "", label: "" },
       checkIn: "",
       checkOut: "",
       guest: 0,
     },
-    // mode: cách validation được trigger (default là submit)
+
     mode: "onTouched",
   });
 
@@ -109,22 +108,20 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const onSubmit = (values) => {
+    if (values.location?.value !== "") {
+      navigate(`/room-by-city/${values.location?.value}`, {
+        state: {
+          location: values.location,
+          checkIn: values.checkIn,
+          checkOut: values.checkOut,
+          guest: values.guest,
+        },
+      });
+      window.location.reload();
+    } else navigate("*");
+  };
 
-  // const options = [
-  //   { values: 1, label: "Hồ Chí Minh" },
-  //   { values: 2, label: "Cần Thơ" },
-  //   { vlue: 3, label: "Nha Trang" },
-  //   { values: 4, label: "Hà Nội" },
-  //   { values: 5, label: "Phú Quốc" },
-  //   { values: 6, label: "Đà Nẵng" },
-  //   { values: 7, label: "Đà Lạt" },
-  //   { values: 8, label: "Phan Thiết" },
-  //   { values: 2013, label: "Lâm Đồng" },
-  //   { values: 2034, label: "California" },
-  //   { values: 2035, label: "New York" },
-  //   { values: 2113, label: "Mỹ Tho" },
-  //   { values: 2118, label: "Hóc Môn" },
-  // ];
   const [viTri, setViTri] = useState([]);
   useEffect(() => {
     locationAPI
@@ -141,16 +138,14 @@ const Header = () => {
       label: location.tinhThanh,
     }));
   };
-  // listLocation.map((location) => {
-  //   options.push({ value: location.id, label: location.tinhThanh });
-  // });
-  // const  navigate = useNavigate()
+
   const scrollStyle = scrolling
     ? "costum-navbar text-white bg-black"
     : "text-white";
   return (
     <div>
-      <nav className={`fixed top-0 w-full z-50  ${scrollStyle} duration-500`}>
+      <nav
+        className={`fixed top-0 w-full z-50 text-white   duration-500 bg-black`}>
         <div className="container mx-auto px-2 sm:px-10 py-5 flex flex-wrap justify-between items-center">
           {/* logo  */}
           <NavLink
@@ -231,14 +226,14 @@ const Header = () => {
           {/* end nav link */}
 
           {/* form */}
-          <div
+          {/* <div
             className={cn(
               "absolute top-0 left-0 w-screen  transition-all duration-300 pb-3 z-10",
               showForm ? " shadow-lg" : ""
             )}
             style={{ paddingTop: "4.4rem" }}
             ref={formShow}>
-            <form className="flex flex-wrap justify-center items-center">
+            <form className="flex flex-wrap justify-center items-center"  onSubmit={handleSubmit(onSubmit, onError)}>
               <div
                 className={cn(
                   "flex flex-wrap justify-center items-center relative bg-white transition-all duration-300 rounded-full ",
@@ -252,9 +247,9 @@ const Header = () => {
                 )}>
                 <div
                   className={cn(
-                    "px-5 py-2 hover:bg-gray-300 rounded-full h-full flex flex-wrap justify-center items-center bg-white  border  shadow-lg",
+                    "px-5 py-2 hover:bg-gray-300 rounded-full h-full flex flex-wrap justify-center items-center",
                     isFocusLocation
-                      ? "border bg-black hover:bg-white shadow-lg"
+                      ? "border bg-white hover:bg-white shadow-lg"
                       : ""
                   )}>
                   <label
@@ -295,7 +290,7 @@ const Header = () => {
                     className="block text-sm font-medium text-black">
                     Nhận phòng
                   </label>
-                  <DatePicker
+                  <input
                     {...register("checkIn")}
                     type="date"
                     id="checkInDate"
@@ -317,7 +312,7 @@ const Header = () => {
                     className="block text-sm font-medium text-black">
                     Trả phòng
                   </label>
-                  <DatePicker
+                  <input
                     {...register("checkOut")}
                     name="chec"
                     type="date"
@@ -353,7 +348,7 @@ const Header = () => {
                 <button
                   onClick={(values) => {
                     if (values.location?.value !== "") {
-                      navigate(`/room-location/${values.location?.value}`, {
+                      navigate(`/room-by-city/${values.location?.value}`, {
                         state: {
                           location: values.location,
                           checkIn: values.checkIn,
@@ -364,6 +359,131 @@ const Header = () => {
                     }
                   }}
                   className="text-white bg-rose-600 hover:bg-red-800 duration-300 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 absolute right-0">
+                  Tìm kiếm
+                </button>
+              </div>
+            </form>
+          </div> */}
+          <div
+            className={cn(
+              "absolute top-0 left-0 w-screen transition-all duration-300 pb-3 z-10",
+              showForm ? " shadow-lg" : ""
+            )}
+            style={{ paddingTop: "4.4rem" }}
+            ref={formShow}>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-wrap justify-center items-center">
+              <div
+                className={cn(
+                  "flex flex-wrap justify-center items-center relative bg-white transition-all duration-300 rounded-full",
+                  isFocusLocation ||
+                    isFocusCheckIn ||
+                    isFocusCheckOut ||
+                    isFocusGuest
+                    ? "bg-gray-200"
+                    : "",
+                  showForm ? "h-16 rounded-full border " : "h-0 overflow-hidden"
+                )}>
+                <div
+                  className={cn(
+                    "px-5 py-2 hover:bg-gray-300 rounded-full h-full flex flex-wrap justify-center items-center",
+                    isFocusLocation
+                      ? "border bg-white hover:bg-white shadow-lg"
+                      : ""
+                  )}>
+                  <label
+                    htmlFor="checkInDate"
+                    className="block text-sm font-medium text-black mr-2">
+                    Địa điểm
+                  </label>
+                  <Controller
+                    name="location"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={renderList()}
+                        className="w-48 text-black bg-transparent outline-none select_location"
+                        ref={locationInput}
+                        onFocus={() => setIsFocusLocation(true)}
+                        onBlur={() => setIsFocusLocation(false)}
+                        placeholder="Tìm kiếm điểm đến"
+                        noOptionsMessage={() => {
+                          "Không tìm thấy địa điểm!";
+                        }}
+                      />
+                    )}
+                    control={control}
+                  />
+                </div>
+
+                <div
+                  className={cn(
+                    "hidden sm:block py-2 px-5 hover:bg-gray-300 rounded-full overflow-hidden h-full",
+                    isFocusCheckIn
+                      ? "border bg-white hover:bg-white shadow-lg"
+                      : ""
+                  )}>
+                  <label
+                    htmlFor="checkInDate"
+                    className="block text-sm font-medium text-black">
+                    Nhận phòng
+                  </label>
+                  <input
+                    {...register("checkIn")}
+                    type="date"
+                    id="checkInDate"
+                    className="bg-transparent text-gray-500 outline-none"
+                    placeholder="Thêm ngày"
+                    onFocus={() => setIsFocusCheckIn(true)}
+                    onBlur={() => setIsFocusCheckIn(false)}
+                  />
+                </div>
+                <div
+                  className={cn(
+                    "hidden sm:block py-2 px-5 hover:bg-gray-300 rounded-full overflow-hidden h-full",
+                    isFocusCheckOut
+                      ? "border bg-white hover:bg-white shadow-lg"
+                      : ""
+                  )}>
+                  <label
+                    htmlFor="checkOutDate"
+                    className="block text-sm font-medium text-black">
+                    Trả phòng
+                  </label>
+                  <input
+                    {...register("checkOut")}
+                    type="date"
+                    id="checkOutDate"
+                    className="bg-transparent outline-none"
+                    placeholder="Thêm ngày"
+                    onFocus={() => setIsFocusCheckOut(true)}
+                    onBlur={() => setIsFocusCheckOut(false)}
+                  />
+                </div>
+                <div
+                  className={cn(
+                    "hidden sm:block py-2 pl-7 pr-5 hover:bg-gray-300 rounded-full overflow-hidden h-full",
+                    isFocusGuest
+                      ? "border bg-white hover:bg-white shadow-lg"
+                      : ""
+                  )}>
+                  <label
+                    htmlFor="guest"
+                    className="block text-sm font-medium text-black">
+                    Khách
+                  </label>
+                  <input
+                    {...register("guest")}
+                    type="number"
+                    id="guest"
+                    className="bg-transparent outline-none"
+                    onFocus={() => setIsFocusGuest(true)}
+                    onBlur={() => setIsFocusGuest(false)}
+                    placeholder="Thêm khách"
+                  />
+                </div>
+                <button className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 absolute right-0">
                   Tìm kiếm
                 </button>
               </div>
@@ -474,7 +594,7 @@ const Header = () => {
                   <div
                     className={
                       showLogin
-                        ? "absolute right-0 z-50 rounded-md shadow flex flex-col mt-4 w-56 bg-black"
+                        ? "absolute right-0 z-50 rounded-md shadow flex flex-col mt-4 w-56 text-black bg-white"
                         : "hidden"
                     }>
                     {/* / */}
@@ -499,16 +619,16 @@ const Header = () => {
                         </NavLink>
                       </div> */}
                     {/* ) : ( */}
-                    <div className="font-medium flex flex-col border-b-2">
+                    <div className=" flex flex-col border-b-2">
                       <NavLink
-                        className="hover:text-gray-300 pl-5 py-2 transition-all duration-300"
+                        className="hover:text-gray-500 pl-5 py-2 transition-all duration-300"
                         to="/login"
                         // onClick={() => setShowLogin(false)}
                       >
                         Đăng nhập
                       </NavLink>
                       <NavLink
-                        className="hover:text-gray-300 pl-5 py-2 mb-3 transition-all duration-200"
+                        className="hover:text-gray-500 pl-5 py-2 mb-3 transition-all duration-200"
                         to="/register"
                         // onClick={() => setShowLogin(false)}
                       >
@@ -519,12 +639,12 @@ const Header = () => {
 
                     <div className="font-normal flex flex-col">
                       <NavLink
-                        className="hover:text-gray-300 pl-5 py-2 mt-3 transition-all duration-200"
+                        className="hover:text-gray-500 pl-5 py-2 mt-3 transition-all duration-200"
                         to="">
                         Cho thuê nhà
                       </NavLink>
                       <NavLink
-                        className="hover:text-gray-300 pl-5 py-2 transition-all duration-200"
+                        className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
                         to="">
                         Tổ chức trải nghiệm
                       </NavLink>

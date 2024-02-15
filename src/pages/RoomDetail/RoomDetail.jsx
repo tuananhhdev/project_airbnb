@@ -56,11 +56,11 @@ export default function RoomDetail(props) {
               <span className="text-sm font-normal tracking-widest mx-1">
                 <i className="fa-solid fa-award" /> Chủ nhà siêu cấp
               </span>
-              {/* <span className="underline text-sm font-normal tracking-widest mx-1">
-                {roomDetails?.maViTri ? roomDetails?.maViTri.tenViTri : ""},
-                {roomDetails?.maViTri ? roomDetails?.maViTri.tinhThanh : ""},
-                {roomDetails?.maViTri ? roomDetails?.maViTri.quocGia : ""}
-              </span> */}
+              <span className="underline text-sm font-normal tracking-widest mx-1">
+                {roomDetails?.locationId ? roomDetails?.locationId.tenViTri : ""},
+                {roomDetails?.locationId ? roomDetails?.locationId.tinhThanh : ""},
+                {roomDetails?.locationId ? roomDetails?.locationId.quocGia : ""}
+              </span>
             </div>
             <div className="flex flex-wrap justify-center items-center">
               <button className="px-2 py-1 hover:bg-gray-100 rounded-md transition-all duration-150 flex justify-center items-center font-semibold text-sm text-gray-700">

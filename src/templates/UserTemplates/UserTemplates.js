@@ -4,15 +4,12 @@ import Footer from "./Footer";
 
 import { useSelector } from "react-redux";
 import LoadingPages from "../../components/LoadingPages/LoadingPages";
+import Header from "../../templates/UserTemplates/Header/Header";
 import Headers from "./Header/Headers";
-import Header from "../../templates/UserTemplates/Header/Header"
 const UserTemplates = () => {
-  const { isLoading } = useSelector((state) => state.loading);
   return (
     <>
-      {isLoading ? <LoadingPages /> : null}
       <>
-        {/* <Headers /> */}
         <Header />
         <Outlet />
         <Footer />

@@ -7,11 +7,11 @@ import Map from "./Map";
 import { getRoomByLocation } from "../../redux/slices/roomSlice";
 
 const RoomLocation = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getRoomByLocation(id))
-  }, [id]);
+  // const { id } = useParams();
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(getRoomByLocation(id))
+  // }, [id]);
   return (
     <div className="container mx-auto">
       <div className="h-28"></div>

@@ -74,7 +74,7 @@ export const getRoomByLocation = createAsyncThunk(
   "room/getRoomByLocation",
   async (locationId) => {
     try {
-      const listRoom = await roomAPI.getRoomByLocation(locationId);
+      const listRoom = await roomAPI.getListRoom(locationId);
       return listRoom;
     } catch (error) {
       throw error;
