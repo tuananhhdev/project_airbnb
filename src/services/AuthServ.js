@@ -10,6 +10,10 @@ export const authAPI = {
   // get user info
   getUserInfo: (id) => API.get(`/api/users/${id}`),
 
+  // get booked by user
+  getBookedByUser: (id) =>
+    API.get(`/api/dat-phong/lay-phong-theo-nguoi-dung/${id}`),
+
   // update user
   updateUser: (values) => API.put(`/api/users/${values.id}`, values.values),
 

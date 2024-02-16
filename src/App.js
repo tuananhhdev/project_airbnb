@@ -16,6 +16,7 @@ import Signin from "./pages/Login/Signin";
 import DangNhap from "./pages/Register/DangNhap";
 import { Suspense } from "react";
 import LoadingPages from "./components/LoadingPages/LoadingPages";
+import TicketByUser from "./pages/TicketByUser/TicketByUser";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route element={<HomePage />} index />
           <Route element={<RoomDetail />} path="/room-details/:id" />
           <Route element={<RoomLocation />} path="room-by-city/:id" />
+          <Route path="/tickets-by-user" element={<TicketByUser />} />
         </Route>
 
         <Route path="/admin" element={<AdminTemplate />}>

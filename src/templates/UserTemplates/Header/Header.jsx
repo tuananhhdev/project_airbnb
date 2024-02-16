@@ -11,6 +11,8 @@ import Select from "react-select";
 import { Controller, FieldErrors, useForm } from "react-hook-form";
 import { axiosClient, locationAPI } from "../../../services/LocationServ";
 import { DatePicker } from "antd";
+import { userLocalStorage } from "../../../utils/Local";
+// import { userLocalStorage } from "../../../utils/Local";
 const Header = () => {
   const { pathname } = useLocation();
   const [scrolling, setScrolling] = useState(false);
@@ -86,11 +88,12 @@ const Header = () => {
   };
 
   const handleLogOut = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    setShowLogin(false);
-    // dispatch(removeUser(null));
-    navigate("/");
+    // localStorage.removeItem("user");
+    // localStorage.removeItem("token");
+    // setShowLogin(false);
+    // navigate("/");
+    userLocalStorage.remove();
+    window.location.reload();
   };
   useEffect(() => {
     const handleScroll = () => {
@@ -563,79 +566,41 @@ const Header = () => {
                       </svg>
                     </div>
                     <div className="block h-10 w-12 pl-4">
-                      {/* {user ? ( */}
-                      <div className="w-full h-full flex justify-center items-center">
-                        <i class="fa-solid fa-user"></i>
-
-                        {/* <img */}
-                        {/* // src={user?.avatar}
-                            // alt=""
-                            // className="w-7 h-7 rounded-full" */}
-                        {/* // /> */}
-                      </div>
-                      {/* ) : ( */}
-                      {/* <svg
-                          viewBox="0 0 32 32"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                          role="presentation"
-                          focusable="false"
+                      {user ? (
+                        <div className="w-full h-full flex justify-center items-center">
+                          <img
+                            src={user?.avatar}
+                            alt=""
+                            className="w-7 h-7 rounded-full"
+                          />
+                        </div>
+                      ) : (
+                        <i
+                          class="fa-solid fa-user w-full h-full flex justify-center items-center"
                           style={{
-                            display: "block",
-                            height: "100%",
-                            width: "100%",
-                            fill: "currentcolor",
-                          }}>
-                          <path d="m16 .7c-8.437 0-15.3 6.863-15.3 15.3s6.863 15.3 15.3 15.3 15.3-6.863 15.3-15.3-6.863-15.3-15.3-15.3zm0 28c-4.021 0-7.605-1.884-9.933-4.81a12.425 12.425 0 0 1 6.451-4.4 6.507 6.507 0 0 1 -3.018-5.49c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5a6.513 6.513 0 0 1 -3.019 5.491 12.42 12.42 0 0 1 6.452 4.4c-2.328 2.925-5.912 4.809-9.933 4.809z" />
-                        </svg> */}
-                      {/* )} */}
+                            transform: "translateY(-4px)",
+                          }}></i>
+                      )}
                     </div>
                   </button>
-                  <div
+                  {/* <div
                     className={
                       showLogin
                         ? "absolute right-0 z-50 rounded-md shadow flex flex-col mt-4 w-56 text-black bg-white"
                         : "hidden"
                     }>
-                    {/* / */}
-                    {/* {localStorage.getItem("user") ? ( */}
-                    {/* <div className="flex flex-col border-b-2 font-semibold">
-                        <NavLink
-                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                          to="">
-                          Tin nhắn
-                        </NavLink>
-                        <NavLink
-                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                          // to={`/tickets-by-user/${user?._id}`}
-                          onClick={() => setShowLogin(false)}>
-                          Chuyến đi
-                        </NavLink>
-                        <NavLink
-                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                          // to={`/personal-info/${user?._id}`}
-                          onClick={() => setShowLogin(false)}>
-                          Thông tin cá nhân
-                        </NavLink>
-                      </div> */}
-                    {/* ) : ( */}
                     <div className=" flex flex-col border-b-2">
                       <NavLink
                         className="hover:text-gray-500 pl-5 py-2 transition-all duration-300"
-                        to="/login"
-                        // onClick={() => setShowLogin(false)}
-                      >
+                        to="/login">
                         Đăng nhập
                       </NavLink>
                       <NavLink
                         className="hover:text-gray-500 pl-5 py-2 mb-3 transition-all duration-200"
-                        to="/register"
-                        // onClick={() => setShowLogin(false)}
-                      >
+                        to="/register">
                         Đăng ký
                       </NavLink>
                     </div>
-                    {/* )} */}
 
                     <div className="font-normal flex flex-col">
                       <NavLink
@@ -654,18 +619,80 @@ const Header = () => {
                         Trợ giúp
                       </NavLink>
                     </div>
+                  </div> */}
+                  <div
+                    className={
+                      showLogin
+                        ? "absolute right-0 z-50 rounded-md shadow flex flex-col mt-4 w-56 bg-white"
+                        : "hidden"
+                    }>
+                    {/* / */}
+                    {localStorage.getItem("user") ? (
+                      <div className="flex flex-col border-b-2 font-semibold">
+                        <NavLink
+                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                          to="">
+                          Tin nhắn
+                        </NavLink>
+                        <NavLink
+                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                          to={`/tickets-by-user/${user?._id}`}
+                          onClick={() => setShowLogin(false)}>
+                          Chuyến đi
+                        </NavLink>
+                        <NavLink
+                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                          to={`/personal-info/${user?._id}`}
+                          onClick={() => setShowLogin(false)}>
+                          Thông tin cá nhân
+                        </NavLink>
+                      </div>
+                    ) : (
+                      <div className="font-medium flex flex-col border-b-2">
+                        <NavLink
+                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                          to="/register"
+                          onClick={() => setShowLogin(false)}>
+                          Đăng ký
+                        </NavLink>
+                        <NavLink
+                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                          to="/login"
+                          onClick={() => setShowLogin(false)}>
+                          Đăng nhập
+                        </NavLink>
+                      </div>
+                    )}
 
-                    {/* {localStorage.getItem("user") ? ( */}
-                    {/* <div className="font-medium flex flex-col border-t-2">
+                    <div className="font-normal flex flex-col">
+                      <NavLink
+                        className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                        to="">
+                        Cho thuê nhà
+                      </NavLink>
+                      <NavLink
+                        className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                        to="">
+                        Tổ chức trải nghiệm
+                      </NavLink>
+                      <NavLink
+                        className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                        to="">
+                        Trợ giúp
+                      </NavLink>
+                    </div>
+
+                    {localStorage.getItem("user") ? (
+                      <div className="font-medium flex flex-col border-t-2">
                         <div
                           className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200 cursor-pointer"
                           onClick={handleLogOut}>
                           Đăng xuất
                         </div>
-                      </div> */}
-                    {/* ) : ( */}
-                    {/* "" */}
-                    {/* )} */}
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
