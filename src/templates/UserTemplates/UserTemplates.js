@@ -7,9 +7,9 @@ const UserTemplates = () => {
   return (
     <>
       <>
-        <Header />
-        <Outlet />
-        <Footer />
+          <Header />
+          <Outlet />
+          <Footer />
       </>
     </>
   );

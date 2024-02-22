@@ -14,6 +14,8 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+
 const Register = () => {
   const navigate = useNavigate();
   const {
@@ -26,16 +28,23 @@ const Register = () => {
     setFieldValue,
   } = useFormik({
     initialValues: {
-      id: 0,
+      // id: 0,
       name: "",
       email: "",
       password: "",
       phone: "",
       birthday: "",
       gender: true,
-      role: "",
+      // role: "",
+      // birthday: "",
+      // name: "",
+      // email: "",
+      // phone: "",
+      // gender: undefined,
+      // password: "",
     },
   });
+  const dispatch = useDispatch();
   const onSubmit = (values) => {
     axios({
       method: "POST",
@@ -45,19 +54,16 @@ const Register = () => {
       .then((res) => {
         console.log(res);
         notification.success({ message: "Đăng ký thành công" });
+        // message.success("Đăng nhập thành công");
         navigate("/login");
       })
       .catch((error) => {
         console.log(error.response.data);
         notification.error({ message: "Đăng ký thất bại!" });
+        // message.error("Đăng ký thất bại!");
       });
   };
-  // const handleGenderChange = (value) => {
-  //   console.log(value);
-  // };
-  // const handleBirthdayChange = (value) => {
-  //   console.log(value);
-  // };
+
   const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY", "DD-MM-YYYY", "DD-MM-YY"];
   return (
     <div>

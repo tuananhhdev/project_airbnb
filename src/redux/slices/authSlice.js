@@ -1,169 +1,54 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosClient } from "../../services/AuthServ";
-import { userLocalStorage } from "../../utils/Local";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import { userLocalStorage } from "../api/localService";
+// import { https } from "../api/config";
+// import { clearPopup } from "./popupSlice";
 import { notification } from "antd";
-import { roomAPI } from "../../services/RoomServ";
 import { API } from "../../services/configSer";
-import { ApiFilled } from "@ant-design/icons";
+import { userLocalStorage } from "../../utils/Local";
+import { authAPI } from "../../services/AuthServ";
+// import { userServ } from "../api/api";
+
 const initialState = {
   user: userLocalStorage.get(),
-  userInfo: {},
-  bookingRoom: [],
-  comment: [],
-  isLoading: false,
-  error: null,
+  infoUser: {},
+  loading: false,
+  bookedRooms: [],
 };
 
-const authSlice = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {
-    loginAction: (state, action) => {
-      state.user = action.payload;
-    },
-    infoUserAction: (state, { payload }) => {
-      state.userInfo = payload;
-    },
-    removeLoginAction: (state) => {
-      state.user = null;
-    },
-    commentAction: (state, action) => {
-      state.comment = action.payload;
-    },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(registerAuth.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(registerAuth.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(registerAuth.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(loginAuth.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(loginAuth.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(loginAuth.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(updateProfile.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(updateProfile.fulfilled, (state, action) => {
-        state.isLoading = false;
-      })
-      .addCase(updateProfile.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(getBookingRoom.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.bookingRoom = action.payload;
-        state.error = null;
-      })
-      .addCase(postComment.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(postComment.fulfilled, (state, action) => {
-        state.isLoading = false;
-
-        console.log("Action Payload:", action.payload);
-
-        if (action.payload) {
-          state.comment = [...state.comments, action.payload];
-        } else {
-          console.error("postComment.fulfilled action payload is undefined");
-        }
-      })
-      .addCase(postComment.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(editComment.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(editComment.fulfilled, (state, action) => {
-        state.isLoading = false;
-
-        const editedComment = action.payload;
-        const updatedComments = state.comment.map((comment) =>
-          comment.id === editedComment.id ? editedComment : comment
-        );
-        state.comment = updatedComments;
-      })
-      .addCase(editComment.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(removeComment.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(removeComment.fulfilled, (state, action) => {
-        state.isLoading = false;
-        // Remove the comment from the state based on the ID
-        const removedCommentId = action.payload;
-        state.comment = state.comment.filter(
-          (comment) => comment.id !== removedCommentId
-        );
-      })
-      .addCase(removeComment.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(getComment.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getComment.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.comment = action.payload;
-      })
-      .addCase(getComment.rejected, (state) => {
-        state.isLoading = false;
-      });
-  },
-});
-
-export const { loginAction, removeLoginAction, infoUserAction } =
-  authSlice.actions;
-
-export default authSlice.reducer;
-
-export const registerAuth = createAsyncThunk(
-  "auth/registerAuth",
+export const registerUser = createAsyncThunk(
+  "user/registerUser",
   async (userData, { dispatch }) => {
     try {
-      const response = await API.post("/api/auth/signup", userData);
+      const response = await API.post("/auth/signup", userData);
       if (response.status === 200) {
-        const loginRes = await API.post("/api/auth/signin", {
+        const loginResponse = await API.post("/auth/signin", {
           email: userData.email,
           password: userData.password,
         });
-        dispatch(loginAction(loginRes.data.content.user));
-        notification.success({ message: "Đăng ký tài khoản thành công!" });
-        userLocalStorage.set(loginRes.data.content);
+        // dispatch(setLogin(loginResponse.data.content.user));
+        notification.success({ message: "Tạo tài khoản thành công !" });
+        // dispatch(clearPopup({ popup: "" }));
+        userLocalStorage.set(loginResponse.data.content);
         window.location.reload();
-        return loginRes.data.content.user;
+        return loginResponse.data.content.user;
       }
     } catch (error) {
-      notification.error({ message: "Đăng ký tài khoản không thành công! " });
-      // throw error;
-      console.log("error", error.response.data);
+      notification.error({ message: "Tạo tài khoản thất bại !" });
+      console.log("error", error.content.data);
     }
   }
 );
 
-export const loginAuth = createAsyncThunk(
-  "auth/loginAuth",
+export const loginUser = createAsyncThunk(
+  "user/loginUser",
   async (userData, { dispatch }) => {
     try {
-      const response = await API.post("/api/auth/signin", userData);
+      const response = await API.post("/auth/signin", userData);
       if (response.status === 200) {
-        dispatch(loginAction(response.data.content));
+        // dispatch(setLogin(response.data.content));
         userLocalStorage.set(response.data.content);
         notification.success({ message: "Đăng nhập thành công !" });
+        // dispatch(clearPopup({ popup: "" }));
         setTimeout(() => {
           window.location.reload();
         }, 200);
@@ -177,26 +62,25 @@ export const loginAuth = createAsyncThunk(
 );
 
 export const updateProfile = createAsyncThunk(
-  "auth/updateProfile",
-  async ({ values, id }, { dispatch }) => {
+  "user/updateProfile",
+  async ({ profileData, id }, { dispatch }) => {
     try {
-      const response = await API.put(`/api/users/${id}`, values);
+      const response = await API.put(`/users/${id}`, profileData);
       if (response.status === 200) {
-        const dataUpdate = {
+        const setDataUpdate = {
           token: userLocalStorage.get()?.token,
           user: response.data.content,
         };
-        dispatch(loginAction(dataUpdate));
-        userLocalStorage.set(dataUpdate);
-        notification.success({
-          message: "Cập nhật thông tin tài khoản thành công",
-        });
+        // dispatch(setLogin(setDataUpdate));
+        userLocalStorage.set(setDataUpdate);
+        // dispatch(clearPopup({ popup: "" }));
+        notification.success({ message: "Cập nhật tài khoản thành công" });
         return response.data.content;
       }
     } catch (error) {
       notification.error({
         message:
-          error.response.data.content || "Có lỗi xảy ra, vui lòng thử lại!",
+          error.response.data.content || "Có lỗi xảy ra, vui lòng thử lại",
       });
       throw error;
     }
@@ -204,41 +88,39 @@ export const updateProfile = createAsyncThunk(
 );
 
 export const updateAvatar = createAsyncThunk(
-  "auth/updateAvatar",
+  "user/updateAvatar",
   async (formFile, { dispatch }) => {
     try {
-      const formData = new FormData();
-      formData.append("formFile", formFile);
-      const response = await API.post("/api/users/upload-avatar", formData, {
+      const bodyFormData = new FormData();
+      bodyFormData.append("formFile", formFile);
+
+      const response = await API.post("/users/upload-avatar", bodyFormData, {
         headers: {
-          "Content-Type ": "multipart/form-data",
+          "Content-Type": "multipart/form-data",
         },
       });
+
       if (response.status === 200) {
-        dispatch(loginAction(response.data.content));
+        // dispatch(setLogin(response.data.content));
         userLocalStorage.set(response.data.content);
-        notification.success({
-          message: "Cập nhật thông tin tài khoản thành công",
-        });
+        notification.success({ message: "Cập nhật tài khoản thành công" });
         return response.data.content;
       }
     } catch (error) {
       notification.error({
         message:
-          error.response?.data.content || "Có lỗi xảy ra, vui lòng thử lại!",
+          error.response?.data.content || "Có lỗi xảy ra, vui lòng thử lại",
       });
       throw error;
     }
   }
 );
 
-export const getBookingRoom = createAsyncThunk(
-  "auth/getBookingRoom",
+export const getListBookedRooms = createAsyncThunk(
+  "user/getListBookedRooms",
   async ({ id }, { rejectWithValue }) => {
     try {
-      const response = await roomAPI.bookingRoomByUser({ id });
-      //   bookingRoom({ id });
-
+      const response = await authAPI.getBookedByUser({ id });
       console.log(response);
       return response.data.content;
     } catch (error) {
@@ -247,93 +129,61 @@ export const getBookingRoom = createAsyncThunk(
   }
 );
 
-export const postComment = createAsyncThunk(
-  "auth/postComment",
-  async ({ dataComment }) => {
-    try {
-      const response = await API.post(`/api/binh-luan`, dataComment);
-      if (response.status === 200) {
-        const newComment = response.data.content;
-        notification.success({
-          message: response?.data.message || "Comment posted successfull",
-        });
-        return newComment;
-      }
-    } catch (error) {
-      notification.error({
-        message:
-          error.response?.data.content ||
-          "Error posting comment, please try again!",
+const userSlice = createSlice({
+  name: "userSlice",
+  initialState,
+  reducers: {
+    setLogin: (state, action) => {
+      state.user = action.payload;
+    },
+    setInfoUser: (state, { payload }) => {
+      state.infoUser = payload;
+    },
+    removeLogin: (state) => {
+      state.user = null;
+    },
+    setComments: (state, action) => {
+      state.comments = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.loading = false;
+      })
+      .addCase(registerUser.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.loading = false;
+      })
+      .addCase(loginUser.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(updateProfile.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(getListBookedRooms.fulfilled, (state, action) => {
+        state.loading = false;
+        state.bookedRooms = action.payload;
+        state.error = null;
       });
-      throw error;
-    }
-  }
-);
+  },
+});
 
-export const editComment = createAsyncThunk(
-  "auth/editComment",
-  async ({ id, dataComment }) => {
-    try {
-      const response = await API.put(`/api/binh-luan/${id}`, dataComment);
-      console.log(response);
-      if (response.status === 200) {
-        const editedComment = response.data.content;
-        notification.success({
-          message: response?.data.message || "Comment edited successfully",
-        });
-        return editedComment;
-      }
-    } catch (error) {
-      notification.error({
-        message:
-          error.response?.data.content ||
-          "Error editing comment, please try again",
-      });
-      throw error;
-    }
-  }
-);
-
-export const removeComment = createAsyncThunk(
-  "auth/removeComment",
-  async (id) => {
-    try {
-      const response = await API.delete(`/api/binh-luan/${id}`);
-      if (response.status === 200) {
-        notification.success({
-          message: response?.data.message || "Comment deleted successfully",
-        });
-        return id;
-      }
-    } catch (error) {
-      notification.error({
-        message:
-          error.response?.data.content ||
-          "Error delete comment, please try again!",
-      });
-      throw error;
-    }
-  }
-);
-
-export const getComment = createAsyncThunk(
-  "auth/getComment",
-  async (maPhong) => {
-    try {
-      const response = await API.get(
-        `/api/binh-luan/lay-binh-luan-theo-phong/${maPhong}`
-      );
-      if (response.status === 200) {
-        const comments = response.data.content;
-        return comments;
-      }
-    } catch (error) {
-      notification.error({
-        message:
-          error.response?.data.content ||
-          "Error getting comment, please try again!",
-      });
-      throw error;
-    }
-  }
-);
+export const { setInfoUser, removeLogin, setLogin } = userSlice.actions;
+export default userSlice.reducer;

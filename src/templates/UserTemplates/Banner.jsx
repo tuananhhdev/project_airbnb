@@ -12,6 +12,7 @@ const Banner = () => {
           objectFit: "contain",
           backgroundPosition: " center",
           height: "85vh",
+          width: "100%",
         }}></div>
     </>
   );

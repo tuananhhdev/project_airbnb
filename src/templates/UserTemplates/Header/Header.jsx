@@ -1,18 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
 import cn from "classnames";
-import { useDispatch } from "react-redux";
-import { getListLocation } from "../../../redux/slices/locationSlice";
 import { useSelector } from "react-redux";
-import { removeUser } from "../../../redux/slices/authSlice";
 import "./Header.css";
 import Select from "react-select";
-import { Controller, FieldErrors, useForm } from "react-hook-form";
-import { axiosClient, locationAPI } from "../../../services/LocationServ";
-import { DatePicker } from "antd";
+import { Controller, useForm } from "react-hook-form";
+import { locationAPI } from "../../../services/LocationServ";
 import { userLocalStorage } from "../../../utils/Local";
-// import { userLocalStorage } from "../../../utils/Local";
 const Header = () => {
   const { pathname } = useLocation();
   const [scrolling, setScrolling] = useState(false);
@@ -36,13 +31,6 @@ const Header = () => {
   useOnClickOutside(loginMenu, handleLoginMenuClickOutSide);
   useOnClickOutside(formShow, handleFormClickOutSide);
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getListLocation());
-  }, []);
-  const { listLocation, isLoading, error } = useSelector(
-    (state) => state.location
-  );
   const { user } = useSelector((state) => state.auth);
   const locationInput = useCallback(
     (inputElement) => {
@@ -70,28 +58,8 @@ const Header = () => {
   });
 
   const navigate = useNavigate();
-  // const onSubmit = (values) => {
-  //   if (values.location?.value !== "") {
-  //     navigate(`/room-location/${values.location?.value}`, {
-  //       state: {
-  //         location: values.location,
-  //         checkIn: values.checkIn,
-  //         checkOut: values.checkOut,
-  //         guest: values.guest,
-  //       },
-  //     });
-  //   }
-  // };
-
-  const onError = (error) => {
-    console.log(error);
-  };
 
   const handleLogOut = () => {
-    // localStorage.removeItem("user");
-    // localStorage.removeItem("token");
-    // setShowLogin(false);
-    // navigate("/");
     userLocalStorage.remove();
     window.location.reload();
   };
@@ -142,13 +110,9 @@ const Header = () => {
     }));
   };
 
-  const scrollStyle = scrolling
-    ? "costum-navbar text-white bg-black"
-    : "text-white";
   return (
     <div>
-      <nav
-        className={`fixed top-0 w-full z-50 text-white   duration-500 bg-black`}>
+      <nav className="fixed top-0 w-full z-50 text-white   duration-500 bg-black">
         <div className="container mx-auto px-2 sm:px-10 py-5 flex flex-wrap justify-between items-center">
           {/* logo  */}
           <NavLink
@@ -170,9 +134,7 @@ const Header = () => {
               </svg>
             </div>
           </NavLink>
-          {/* end logo  */}
 
-          {/* nav link */}
           <div
             className="flex flex-wrap justify-center items-center relative z-20 text-black font-semibold"
             style={{ flex: "45%", marginRight: "70px" }}>
@@ -226,147 +188,7 @@ const Header = () => {
               </div>
             </div>
           </div>
-          {/* end nav link */}
 
-          {/* form */}
-          {/* <div
-            className={cn(
-              "absolute top-0 left-0 w-screen  transition-all duration-300 pb-3 z-10",
-              showForm ? " shadow-lg" : ""
-            )}
-            style={{ paddingTop: "4.4rem" }}
-            ref={formShow}>
-            <form className="flex flex-wrap justify-center items-center"  onSubmit={handleSubmit(onSubmit, onError)}>
-              <div
-                className={cn(
-                  "flex flex-wrap justify-center items-center relative bg-white transition-all duration-300 rounded-full ",
-                  isFocusLocation ||
-                    isFocusCheckIn ||
-                    isFocusCheckOut ||
-                    isFocusGuest
-                    ? "bg-gray-200"
-                    : "",
-                  showForm ? "h-16 rounded-full border " : "h-0 overflow-hidden"
-                )}>
-                <div
-                  className={cn(
-                    "px-5 py-2 hover:bg-gray-300 rounded-full h-full flex flex-wrap justify-center items-center",
-                    isFocusLocation
-                      ? "border bg-white hover:bg-white shadow-lg"
-                      : ""
-                  )}>
-                  <label
-                    htmlFor="checkInDate"
-                    className="block text-sm font-medium text-black mr-2">
-                    Địa điểm
-                  </label>
-                  <Controller
-                    name="location"
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        options={renderList()}
-                        className="w-48 text-black bg-transparent outline-none select_location"
-                        ref={locationInput}
-                        onFocus={() => setIsFocusLocation(true)}
-                        onBlur={() => setIsFocusLocation(false)}
-                        placeholder="Tìm kiếm điểm đến"
-                        noOptionsMessage={() => {
-                          "Không tìm thấy địa điểm!";
-                        }}
-                      />
-                    )}
-                    control={control}
-                  />
-                  ;
-                </div>
-
-                <div
-                  className={cn(
-                    "hidden sm:block py-2 px-5 hover:bg-gray-300 rounded-full overflow-hidden h-full",
-                    isFocusCheckIn
-                      ? "border bg-white hover:bg-white shadow-lg"
-                      : ""
-                  )}>
-                  <label
-                    htmlFor="checkInDate"
-                    className="block text-sm font-medium text-black">
-                    Nhận phòng
-                  </label>
-                  <input
-                    {...register("checkIn")}
-                    type="date"
-                    id="checkInDate"
-                    className="bg-transparent text-gray-500 outline-none"
-                    placeholder="Thêm ngày"
-                    onFocus={() => setIsFocusCheckIn(true)}
-                    onBlur={() => setIsFocusCheckIn(false)}
-                  />
-                </div>
-                <div
-                  className={cn(
-                    "hidden sm:block py-2 px-5 hover:bg-gray-300 rounded-full overflow-hidden h-full",
-                    isFocusCheckOut
-                      ? "border bg-white hover:bg-white shadow-lg"
-                      : ""
-                  )}>
-                  <label
-                    htmlFor="checkOutDate"
-                    className="block text-sm font-medium text-black">
-                    Trả phòng
-                  </label>
-                  <input
-                    {...register("checkOut")}
-                    name="chec"
-                    type="date"
-                    id="checkOutDate"
-                    className="bg-transparent text-gray-500 outline-none"
-                    placeholder="Thêm ngày"
-                    onFocus={() => setIsFocusCheckOut(true)}
-                    onBlur={() => setIsFocusCheckOut(false)}
-                  />
-                </div>
-                <div
-                  className={cn(
-                    "hidden sm:block py-2 pl-7 pr-5 hover:bg-gray-300 rounded-full overflow-hidden h-full",
-                    isFocusGuest
-                      ? "border bg-white hover:bg-white shadow-lg"
-                      : ""
-                  )}>
-                  <label
-                    htmlFor="guest"
-                    className="block text-sm font-medium text-black">
-                    Khách
-                  </label>
-                  <input
-                    {...register("guest")}
-                    type="number"
-                    id="guest"
-                    className="bg-transparent text-gray-500 outline-none"
-                    onFocus={() => setIsFocusGuest(true)}
-                    onBlur={() => setIsFocusGuest(false)}
-                    placeholder="Thêm khách"
-                  />
-                </div>
-                <button
-                  onClick={(values) => {
-                    if (values.location?.value !== "") {
-                      navigate(`/room-by-city/${values.location?.value}`, {
-                        state: {
-                          location: values.location,
-                          checkIn: values.checkIn,
-                          checkOut: values.checkOut,
-                          guest: values.guest,
-                        },
-                      });
-                    }
-                  }}
-                  className="text-white bg-rose-600 hover:bg-red-800 duration-300 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 absolute right-0">
-                  Tìm kiếm
-                </button>
-              </div>
-            </form>
-          </div> */}
           <div
             className={cn(
               "absolute top-0 left-0 w-screen transition-all duration-300 pb-3 z-10",
@@ -492,9 +314,7 @@ const Header = () => {
               </div>
             </form>
           </div>
-          {/* end form */}
 
-          {/* menu login */}
           <div
             className="hidden sm:block flex-initial col-end-6 z-20"
             style={{ flex: "25%" }}>
@@ -583,52 +403,15 @@ const Header = () => {
                       )}
                     </div>
                   </button>
-                  {/* <div
-                    className={
-                      showLogin
-                        ? "absolute right-0 z-50 rounded-md shadow flex flex-col mt-4 w-56 text-black bg-white"
-                        : "hidden"
-                    }>
-                    <div className=" flex flex-col border-b-2">
-                      <NavLink
-                        className="hover:text-gray-500 pl-5 py-2 transition-all duration-300"
-                        to="/login">
-                        Đăng nhập
-                      </NavLink>
-                      <NavLink
-                        className="hover:text-gray-500 pl-5 py-2 mb-3 transition-all duration-200"
-                        to="/register">
-                        Đăng ký
-                      </NavLink>
-                    </div>
 
-                    <div className="font-normal flex flex-col">
-                      <NavLink
-                        className="hover:text-gray-500 pl-5 py-2 mt-3 transition-all duration-200"
-                        to="">
-                        Cho thuê nhà
-                      </NavLink>
-                      <NavLink
-                        className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
-                        to="">
-                        Tổ chức trải nghiệm
-                      </NavLink>
-                      <NavLink
-                        className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
-                        to="">
-                        Trợ giúp
-                      </NavLink>
-                    </div>
-                  </div> */}
                   <div
                     className={
                       showLogin
-                        ? "absolute right-0 z-50 rounded-md shadow flex flex-col mt-4 w-56 bg-white"
+                        ? "absolute right-0 z-50 rounded-md shadow flex flex-col mt-4 w-56 bg-white text-black"
                         : "hidden"
                     }>
-                    {/* / */}
                     {localStorage.getItem("user") ? (
-                      <div className="flex flex-col border-b-2 font-semibold">
+                      <div className="flex flex-col border-b-2 font-semibold ">
                         <NavLink
                           className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
                           to="">
@@ -636,29 +419,25 @@ const Header = () => {
                         </NavLink>
                         <NavLink
                           className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                          to={`/tickets-by-user/${user?._id}`}
-                          onClick={() => setShowLogin(false)}>
+                          to={`/tickets-by-user/${user?._id}`}>
                           Chuyến đi
                         </NavLink>
                         <NavLink
                           className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                          to={`/personal-info/${user?._id}`}
-                          onClick={() => setShowLogin(false)}>
+                          to={`/personal-info/${user?._id}`}>
                           Thông tin cá nhân
                         </NavLink>
                       </div>
                     ) : (
                       <div className="font-medium flex flex-col border-b-2">
                         <NavLink
-                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                          to="/register"
-                          onClick={() => setShowLogin(false)}>
+                          className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
+                          to="/register">
                           Đăng ký
                         </NavLink>
                         <NavLink
-                          className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                          to="/login"
-                          onClick={() => setShowLogin(false)}>
+                          className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
+                          to="/login">
                           Đăng nhập
                         </NavLink>
                       </div>
@@ -666,17 +445,17 @@ const Header = () => {
 
                     <div className="font-normal flex flex-col">
                       <NavLink
-                        className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                        className="hover:text-gray-500 pl-5 py-2 transition-all duration-200 font-semibold "
                         to="">
                         Cho thuê nhà
                       </NavLink>
                       <NavLink
-                        className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                        className="hover:text-gray-500 pl-5 py-2 transition-all duration-200 font-medium"
                         to="">
                         Tổ chức trải nghiệm
                       </NavLink>
                       <NavLink
-                        className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
+                        className="hover:text-gray-500 pl-5 py-2 transition-all duration-200 font-medium"
                         to="">
                         Trợ giúp
                       </NavLink>
@@ -698,7 +477,6 @@ const Header = () => {
               </div>
             </div>
           </div>
-          {/* end menu login */}
         </div>
       </nav>
     </div>

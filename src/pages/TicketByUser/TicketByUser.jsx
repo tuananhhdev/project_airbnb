@@ -3,10 +3,14 @@ import { userLocalStorage } from "../../utils/Local";
 import Profile from "./Properties/Profile";
 import { useSelector } from "react-redux";
 import BookRoomByUser from "./Properties/BookRoomByUser";
-import { MODAL_NAME } from "../../hook/useModal";
+import { MODAL_NAME, useModal } from "../../hook/useModal";
 
 export default function TicketByUser() {
   const { user } = useSelector((state) => state?.auth?.user || {});
+  const modal = useModal();
+  const handleUpdate = () => {
+    modal.open(MODAL_NAME.EDIT_PROFILE);
+  };
   const handleLogout = () => {
     userLocalStorage.remove();
     window.location.reload();
