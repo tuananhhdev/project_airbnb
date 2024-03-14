@@ -40,3 +40,19 @@
   height: 25px;
   background-color: #fff;
 }
+
+/* Responsive Mobile */
+@media only screen and (max-width: 768px) {
+  .box {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .room_name,
+  .room_cost {
+    font-size: 14px !important;
+  }
+  .room_date {
+    font-size: 13px !important;
+  }
+}

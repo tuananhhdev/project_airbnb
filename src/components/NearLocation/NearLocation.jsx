@@ -3,6 +3,7 @@ import { axiosClient, locationAPI } from "../../services/LocationServ";
 import { Link } from "react-router-dom";
 import { Card } from "antd";
 import "animate.css";
+import "./NearLocation.css";
 const NearLocation = () => {
   const [city, setCity] = useState([]);
   useEffect(() => {
@@ -19,12 +20,12 @@ const NearLocation = () => {
   };
   return (
     <>
-      <div className="container mt-6  ">
-        <h1 className="text-2xl font-semibold mb-3 -mx-8">
+      <div className="box1 container mt-6  ">
+        <h1 className="title text-2xl font-semibold mb-3 -mx-8">
           Khám phá những điểm đến gần đây
         </h1>
-        <div className="container  space-y-12  ">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 wow animate__animated animate__fadeInUp ">
+        <div className="box2 container space-y-12  ">
+          <div className="items grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 wow animate__animated animate__fadeInUp ">
             {city.slice(0, 8).map((item, index) => {
               return (
                 <div key={index}>
@@ -36,7 +37,7 @@ const NearLocation = () => {
                         boxShadow:
                           "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;",
                       }}>
-                      <div className="flex items-center gap-3">
+                      <div className=" flex items-center gap-3">
                         <img
                           className="w-12 h-12 rounded-lg object-cover"
                           src={item.hinhAnh}

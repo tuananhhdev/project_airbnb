@@ -1,0 +1,6 @@
+/* Responsive Mobile */
+@media screen and (min-width: 375px) {
+  .banner_background {
+    height: 10vh !important;
+  }
+}

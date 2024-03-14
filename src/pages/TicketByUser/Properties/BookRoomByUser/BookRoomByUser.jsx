@@ -1,38 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { UseDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper/modules";
-import "./RoomList.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { axiosClient, roomAPI } from "../../services/RoomServ";
-export default function RoomList() {
-  const randomNumber = (min, max) => {
-    return Math.floor(Math.random() * (max - min)) + min;
-  };
-
-  const [room, setRoom] = useState([]);
+import ModalUpdateProfile from "../ModalUpdateProfile";
+import ModalShowProfile from "../ModalShowProfile";
+import { roomAPI } from "../../../../services/RoomServ";
+import { NavLink } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper/modules";
+import "./BookRoomByUser.css";
+const BookRoomByUser = () => {
+  const [bookedRoom, setBookedRoom] = useState([]);
   useEffect(() => {
     roomAPI
       .getListRoom()
       .then((res) => {
-        console.log(res);
-        setRoom(res.data.content);
+        setBookedRoom(res.data.content);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  const randomNumber = (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+  };
   return (
-    <div className="box container mx-auto mt-8 mb-16">
-      <div
-        // {/*
-        //  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 mx-10" */}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mx-10">
-        {room.slice(0, 12).map((room, index) => {
+    <>
+      <div className="ml-5 space-y-3 max-w-md">
+        <p className="text-3xl font-semibold">Xin chào, tôi là Tuấn Anh </p>
+        <p className="text-gray-500">Bắt đầu tham gia vào 2021</p>
+        <ModalUpdateProfile />
+        <ModalShowProfile />
+        <br />
+        <p className=" text-2xl font-bold pb-10">Phòng đã thuê</p>
+        {bookedRoom.slice(0, 5).map((room, index) => {
           return (
             <div key={index}>
               <NavLink
@@ -47,12 +49,12 @@ export default function RoomList() {
                   navigation={true}
                   modules={[Pagination, Navigation]}
                   className="roomSwiper relative">
-                  <SwiperSlide className="pics w-full">
+                  <SwiperSlide className=" w-full">
                     <img
                       src={room.hinhAnh}
                       alt=""
                       style={{
-                        width: "342px",
+                        width: "450px",
                         height: "278px",
                         objectFit: "cover",
                       }}
@@ -104,22 +106,24 @@ export default function RoomList() {
                 </Swiper>
                 <div>
                   <p className="flex justify-between mt-2">
-                    <span className="room_name font-bold">{room.tenPhong}</span>
+                    <span className="room_name font-bold text-lg">{room.tenPhong}</span>
                   </p>
                   <p className="room_date text-gray-500">
-                    Ngày {randomNumber(1, 30)} - Ngày {randomNumber(1, 30)}{" "}
-                    tháng {randomNumber(1, 12)}
+                    Ngày đến - 25/10/2022
                   </p>
-                  <p className="mt-1">
-                    <span className="room_cost font-bold">${randomNumber(99, 599)}</span>{" "}
-                    đêm
+                  <p className="room_date text-gray-500 pb-10
+                  ">
+                    Ngày đi - 30/11/2022
                   </p>
+                
                 </div>
               </NavLink>
             </div>
           );
         })}
       </div>
-    </div>
+    </>
   );
-}
+};
+
+export default BookRoomByUser;

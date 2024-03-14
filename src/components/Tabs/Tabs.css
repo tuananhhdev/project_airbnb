@@ -72,3 +72,14 @@
 .select_location input {
   outline: none;
 }
+
+/* Responsive Mobile */
+@media screen and (min-width: 375px) {
+  .box {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  span {
+    font-size: 10px !important;
+  }
+}

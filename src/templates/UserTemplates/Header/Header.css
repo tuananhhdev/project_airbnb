@@ -1,3 +1,50 @@
 input::placeholder {
   color: gray !important;
 }
+
+/* Responsive mobile */
+@media only screen and (max-width: 768px) {
+  .header {
+    position: relative !important;
+  }
+  /* .logo {
+    display: block !important;
+  } */
+
+  .header_link {
+    margin-top: 5px;
+    font-size: 13px;
+    margin-right: -65px;
+  }
+
+  .search_form {
+    margin-left: 20px;
+    margin-right: -45px;
+  }
+  .search_form .location,
+  .week,
+  .add_guest {
+    font-size: 10px !important;
+    font-weight: 700 !important;
+  }
+  .search_icon {
+    height: 28px !important;
+    width: 28px !important;
+  }
+  .search_icon .icon {
+    height: 10px !important;
+    width: 10px !important;
+  }
+  .search_items {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+  }
+  .search_items .places_title {
+    font-size: 12px !important;
+  }
+  .places_input:focus {
+    border: none;
+  }
+
+  
+}

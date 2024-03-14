@@ -1,29 +1,26 @@
 import React from "react";
-import { render } from "react-dom";
-import { useSelector } from "react-redux";
 
 const ProfileList = () => {
-  const { user } = useSelector((state) => state?.auth?.user) || {};
   const profileData = [
     {
       label: "Tài khoản :",
-      value: user?.name,
+      value: "Tuấn Anh",
     },
     {
       label: "E-mail :",
-      value: user?.email,
+      value: "tuananhteves126@gmail.com",
     },
     {
       label: "Số điện thoại :",
-      value: user?.phone,
+      value: "0332146137",
     },
     {
       label: "Ngày sinh :",
-      value: user?.birthday,
+      value: "12/06/2005",
     },
     {
       label: "Giới tính :",
-      value: user?.gender,
+      value: "Nam",
     },
   ];
   return (
@@ -37,7 +34,7 @@ const ProfileList = () => {
               {renderData.label}
             </div>
             <div className="max-w-[50%] tracking-wide flex items-center space-x-3 text-gray-500 text-sm text-right">
-              {renderData.value || "-"}
+              {renderData.value}
             </div>
           </div>
         );

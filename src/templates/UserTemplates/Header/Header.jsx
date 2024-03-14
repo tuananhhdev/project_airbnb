@@ -8,6 +8,7 @@ import Select from "react-select";
 import { Controller, useForm } from "react-hook-form";
 import { locationAPI } from "../../../services/LocationServ";
 import { userLocalStorage } from "../../../utils/Local";
+import { ConfigProvider } from "antd";
 const Header = () => {
   const { pathname } = useLocation();
   const [scrolling, setScrolling] = useState(false);
@@ -112,12 +113,11 @@ const Header = () => {
 
   return (
     <div>
-      <nav className="fixed top-0 w-full z-50 text-white   duration-500 bg-black">
-        <div className="container mx-auto px-2 sm:px-10 py-5 flex flex-wrap justify-between items-center">
-          {/* logo  */}
+      <nav className="header fixed top-0 w-full z-50 text-white duration-500 bg-black">
+        <div className="header_items container mx-auto px-2 sm:px-10 py-5 flex flex-wrap justify-between items-center">
           <NavLink
-            to=""
-            className="hidden sm:flex flex-wrap items-center   z-20"
+            to="/"
+            className="logo hidden sm:flex flex-wrap items-center z-20"
             style={{ flex: "25%", color: "#F43F5E" }}>
             <div className="hidden md:block">
               <svg
@@ -136,9 +136,12 @@ const Header = () => {
           </NavLink>
 
           <div
-            className="flex flex-wrap justify-center items-center relative z-20 text-black font-semibold"
+            className="link flex flex-wrap justify-center items-center relative z-20 text-black font-semibold"
             style={{ flex: "45%", marginRight: "70px" }}>
-            <div className={cn("flex flex-wrap justify-center items-center")}>
+            <div
+              className={cn(
+                "header_link flex flex-wrap justify-center items-center "
+              )}>
               <NavLink
                 className="mx-2 text-white hover:text-gray-500 duration-200"
                 to="">
@@ -155,23 +158,30 @@ const Header = () => {
             </div>
             <div
               className={cn(
-                "absolute flex flex-wrap px-3 py-1.5 rounded-full shadow-lg  bg-white justify-center items-center cursor-pointer z-20",
+                " search_form absolute flex flex-wrap px-3 py-1.5 rounded-full shadow-lg  bg-white justify-center items-center cursor-pointer z-20 ",
                 showForm ? "hidden" : "",
-                pathname.startsWith("/personal-info") ? "hidden" : ""
+                pathname.startsWith("/tickets-by-user") ? "hidden" : ""
               )}
               onClick={() => {
                 setShowForm(true);
               }}>
-              <div className="font-medium border-r pr-2">Địa điểm bất kỳ</div>
-              <div className="font-medium border-r pr-2 pl-2">tuần bất kỳ</div>
-              <div className="font-medium pr-2 pl-2">Thêm khách</div>
-              <div className="inline-flex w-8 h-8 justify-center items-center bg-rose-500 rounded-full text-white">
+              <div
+                className="location font-medium border-r pr-2"
+                style={{ fontSize: "16px" }}>
+                Địa điểm bất kỳ
+              </div>
+              <div className="week font-medium border-r pr-2 pl-2">
+                Tuần bất kỳ
+              </div>
+              <div className="add_guest font-medium pr-2 pl-2">Thêm khách</div>
+              <div className="search_icon inline-flex w-8 h-8 justify-center items-center bg-rose-500 rounded-full text-white">
                 <svg
                   viewBox="0 0 32 32"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
                   role="presentation"
                   focusable="false"
+                  className="icon"
                   style={{
                     display: "block",
                     fill: "none",
@@ -191,7 +201,7 @@ const Header = () => {
 
           <div
             className={cn(
-              "absolute top-0 left-0 w-screen transition-all duration-300 pb-3 z-10",
+              " absolute top-0 left-0 w-screen transition-all duration-300 pb-3 z-10",
               showForm ? " shadow-lg" : ""
             )}
             style={{ paddingTop: "4.4rem" }}
@@ -212,15 +222,15 @@ const Header = () => {
                 )}>
                 <div
                   className={cn(
-                    "px-5 py-2 hover:bg-gray-300 rounded-full h-full flex flex-wrap justify-center items-center",
+                    "search_items px-5 py-2 hover:bg-gray-300 rounded-full h-full flex flex-wrap justify-center items-center",
                     isFocusLocation
                       ? "border bg-white hover:bg-white shadow-lg"
                       : ""
                   )}>
                   <label
                     htmlFor="checkInDate"
-                    className="block text-sm font-medium text-black mr-2">
-                    Địa điểm
+                    className="places_title block text-sm font-medium text-black mr-2">
+                    Địa điểm : 
                   </label>
                   <Controller
                     name="location"
@@ -228,7 +238,22 @@ const Header = () => {
                       <Select
                         {...field}
                         options={renderList()}
-                        className="w-48 text-black bg-transparent outline-none select_location"
+                        styles={{
+                          control: (provided) => ({
+                            ...provided,
+                            border: "none",
+                          }),
+                        }}
+                        // theme={(theme) => ({
+                        //   ...theme,
+                        //   borderRadius: 0,
+                        //   border: "none",
+                        //   colors: {
+                        //     ...theme.colors,
+                        //     border: "none",
+                        //   },
+                        // })}
+                        className="places_input w-48   text-black bg-white focus:outline-none focus:border-white select_location "
                         ref={locationInput}
                         onFocus={() => setIsFocusLocation(true)}
                         onBlur={() => setIsFocusLocation(false)}
@@ -252,7 +277,7 @@ const Header = () => {
                   <label
                     htmlFor="checkInDate"
                     className="block text-sm font-medium text-black">
-                    Nhận phòng
+                    Nhận phòng :
                   </label>
                   <input
                     {...register("checkIn")}
@@ -274,7 +299,7 @@ const Header = () => {
                   <label
                     htmlFor="checkOutDate"
                     className="block text-sm font-medium text-black">
-                    Trả phòng
+                    Trả phòng :
                   </label>
                   <input
                     {...register("checkOut")}
@@ -308,7 +333,7 @@ const Header = () => {
                     placeholder="Thêm khách"
                   />
                 </div>
-                <button className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 absolute right-0">
+                <button className="find_btn text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 absolute right-0">
                   Tìm kiếm
                 </button>
               </div>
@@ -324,7 +349,7 @@ const Header = () => {
                   className="inline-block rounded-full py-2 px-3 hover:text-gray-300 duration-500"
                   href="#">
                   <div className="hidden relative lg:flex cursor-pointer items-center whitespace-nowrap ">
-                    <span className="text-lg font-normal">
+                    <span className="become_user text-lg font-normal">
                       Trở thành chủ nhà
                     </span>
                   </div>
@@ -334,7 +359,7 @@ const Header = () => {
                     type="button"
                     className="relative inline-block rounded-full py-2 px-3 hover:text-gray-400 duration-500">
                     <div className="flex h-5 items-center">
-                      <div className="_xpkakx">
+                      <div className="earth_logo  _xpkakx">
                         <svg
                           viewBox="0 0 16 16"
                           xmlns="http://www.w3.org/2000/svg"
@@ -354,8 +379,8 @@ const Header = () => {
                   </button>
                 </div>
               </div>
-              <div className="block z-10" ref={loginMenu}>
-                <div className="relative inline">
+              <div className="user_link block z-10" ref={loginMenu}>
+                <div className=" relative inline">
                   <button
                     type="button"
                     className="relative inline-flex items-center rounded-full border px-2 hover:shadow-lg"
@@ -439,6 +464,11 @@ const Header = () => {
                           className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
                           to="/login">
                           Đăng nhập
+                        </NavLink>
+                        <NavLink
+                          className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
+                          to="/tickets-by-user">
+                          Thông tin cá nhân
                         </NavLink>
                       </div>
                     )}

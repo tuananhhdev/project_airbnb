@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   UserOutlined,
   MenuFoldOutlined,
@@ -10,7 +9,6 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import { Link, Outlet, useLocation, NavLink } from "react-router-dom";
-import SubMenu from "antd/es/menu/SubMenu";
 
 const AdminTemplate = () => {
   const { Header, Sider, Content } = Layout;
@@ -28,40 +26,41 @@ const AdminTemplate = () => {
           className="mt-10"
           theme="dark"
           mode="inline"
-          // lấy localtion từ hook useLocation để kiểm tra xem người dùng đang đứng ở component nào để active nút menu
           defaultSelectedKeys={[location.pathname]}
           items={[
             {
               icon: (
                 <NavLink to={"/"}>
-                  <i class="fa-brands fa-airbnb fs-1 text-pink-600"></i>
+                  <i class="fa-brands fa-airbnb fs-1 mb-10 mt-10 text-pink-600"></i>
                 </NavLink>
               ),
             },
             {
               key: "/admin",
-              icon: <UserOutlined />,
+              icon: <UserOutlined className="text-lg" />,
               label: (
                 <div>
-                  <Link to={"/admin"}>Quản lí người dùng</Link>,
+                  <Link className="text-sm" to={"/admin"}>
+                    Quản lí người dùng
+                  </Link>
                 </div>
               ),
             },
             {
               key: "/admin/user-info-location",
-              icon: <EnvironmentOutlined />,
+              icon: <EnvironmentOutlined className="text-lg" />,
               label: (
-                <Link to={"/admin/user-info-location"}>
+                <Link className="text-sm" to={"/admin/user-info-location"}>
                   Quản lí thông tin vị trí
                 </Link>
               ),
             },
             {
               key: "/admin/room-info-manage",
-              icon: <HomeOutlined />,
+              icon: <HomeOutlined className="text-lg" />,
               label: (
                 <div>
-                  <Link to={"/admin/room-info-manage"}>
+                  <Link className="text-sm" to={"/admin/room-info-manage"}>
                     Quản lí thông tin phòng
                   </Link>
                 </div>
@@ -69,12 +68,15 @@ const AdminTemplate = () => {
             },
             {
               key: "/admin/booking-room-manage",
-              icon: <EditOutlined />,
+              icon: <EditOutlined className="text-lg" />,
               label: (
-                <Link to={"/admin/booking-room-manage"}>Quản lí đặt phòng</Link>
+                <Link className="text-sm" to={"/admin/booking-room-manage"}>
+                  Quản lí đặt phòng
+                </Link>
               ),
             },
           ]}
+          N
         />
       </Sider>
       <Layout>

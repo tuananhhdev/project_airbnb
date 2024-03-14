@@ -21,7 +21,7 @@ const Profile = () => {
         </div>
       </div>
       <div className="mt-2 border-t py-2">
-        <div className="font-semibold text-lg text-gray-800">Đã xác nhận</div>
+        <div className="font-semibold text-lg text-gray-800">Tuấn Anh đã xác nhận</div>
         <div className="mt-2">
           <CheckCircleOutlined className="text-green-600" />
           <span className="ml-2 text-sm italic">Địa chỉ email</span>

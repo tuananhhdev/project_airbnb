@@ -31,8 +31,8 @@ const StayEverywhere = () => {
     },
   ];
   return (
-    <div className="container mx-auto mt-10">
-      <h1 className="font-semibold text-2xl mb-8">Ở bất cứ đâu</h1>
+    <div className="container  mt-10">
+      <h1 className="title font-semibold text-2xl mb-8">Ở bất cứ đâu</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {anywhereData.map((item, index) => {
           return (
@@ -49,7 +49,7 @@ const StayEverywhere = () => {
                     }}
                   />
                 }>
-                <h3 className="text-lg -mx-5 -my-4">{item.ten}</h3>
+                <h3 className="all_house text-lg -mx-5 -my-4">{item.ten}</h3>
               </Card>
             </Link>
           );

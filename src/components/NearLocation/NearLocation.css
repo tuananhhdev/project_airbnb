@@ -1,0 +1,25 @@
+/* Responsive Mobile */
+@media only screen and (max-width: 768px) {
+  .title {
+    font-size: 18px !important;
+    margin-left: 20px !important;
+  }
+
+  .box1,
+  .box2 {
+    padding-left: 0px !important;
+  }
+  .items {
+    /* padding-left: 0px !important;
+    margin-left: 0px !important; */
+    display: grid !important;
+    grid-template-columns: 170px 170px !important;
+  }
+  .items img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .items h2 {
+    font-size: 10px !important;
+  }
+}
