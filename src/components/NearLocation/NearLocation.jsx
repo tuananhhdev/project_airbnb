@@ -21,7 +21,7 @@ const NearLocation = () => {
   return (
     <>
       <div className="box1 container mt-6  ">
-        <h1 className="title text-2xl font-semibold mb-3 -mx-8">
+        <h1 className="title text-2xl font-semibold mb-3 ">
           Khám phá những điểm đến gần đây
         </h1>
         <div className="box2 container space-y-12  ">

@@ -1,151 +1,263 @@
 import React from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
-import { Form, Input } from "antd";
+import { Input, DatePicker, Select, message, notification, Form } from "antd";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  MailOutlined,
+  PhoneOutlined,
+  UserOutlined,
+  EyeTwoTone,
+  EyeInvisibleOutlined,
+  LockOutlined,
+} from "@ant-design/icons";
+import moment from "moment";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 const AddUser = () => {
-  const formik = useFormik({
+  const navigate = useNavigate();
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    errors,
+    touched,
+    setFieldValue,
+  } = useFormik({
     initialValues: {
-      ten: "",
+      name: "",
       email: "",
-      taiKhoan: "",
-      soDienThoai: "",
-      matKhau: "",
-    },
-    // validationSchema: Yup.object({
-    //   ten: Yup.string()
-    //     .min(8, "*Vui lòng nhập tối thiểu 8 kí tự!*")
-    //     .required("*Vui lòng không bỏ trống*"),
-    //   email: Yup.string()
-    //     .email("*Vui lòng nhập đúng dạng E-mail!*")
-    //     .min(2, "*Vui lòng nhập tối thiểu 2 ký tự!*")
-    //     .required("*Vui lòng không bỏ trống!*"),
-    //   matKhau: Yup.string()
-    //     .min(8, "*Vui lòng nhập tối đa 8 ký tự!*")
-    //     .required("*Vui lòng không bỏ trống!*"),
-    // }),
-    onSubmit: (data) => {
-      console.log(data);
+      password: "",
+      phone: "",
+      birthday: "",
+      gender: true,
     },
   });
+  const dispatch = useDispatch();
+  const onSubmit = (values) => {
+    axios({
+      method: "POST",
+      url: "https://airbnbnew.cybersoft.edu.vn/api/auth/signup",
+      data: values,
+    })
+      .then((res) => {
+        console.log(res);
+        notification.success({ message: "Đăng ký thành công" });
+        // message.success("Đăng nhập thành công");
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        notification.error({ message: "Đăng ký thất bại!" });
+        // message.error("Đăng ký thất bại!");
+      });
+  };
+  const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY", "DD-MM-YYYY", "DD-MM-YY"];
   return (
-    <div>
-      <h1 className="text-3xl font-semibold">Thêm quản trị viên</h1>
-
-      {/* <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-lg">
-          <form className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email
-              </label>
-              <div className="relative">
-                <input
-                  type="email"
-                  className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                  placeholder="Enter email"
-                />
-                <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="size-4 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                    />
-                  </svg>
-                </span>
-              </div>
-            </div>
-            <div>
-              <label htmlFor="password">Password</label>
-              <div className="relative">
-                <input
-                  type="password"
-                  className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                  placeholder="Enter password"
-                />
-              </div>
-              <div className="relative">
-                <input
-                  type="text"
-                  className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                  placeholder="..."
-                />
-              </div>
-            </div>
-            <button
-              type="submit"
-              className="block w-full rounded-lg bg-black hover:bg-gray-900 px-5 py-3 text-sm font-medium text-white">
-              Thêm
-            </button>
-          </form>
-        </div>
-      </div> */}
-      <div>
-        <section className="max-w-xl p-6 mx-auto  rounded-xl shadow-2xl mt-20">
-          <Form layout="vertical">
-            <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-              <div>
-                <Form.Item className="text-white font-medium " label="Tên">
+    <>
+      <h1 className="text-4xl mb-5 font-semibold">Thêm người dùng</h1>
+      <div
+        className=" flex items-center justify-center h-screen"
+        // style={{
+        //   background: `url(${registerBackground})`,
+        //   backgroundRepeat: "no-repeat",
+        //   backgroundSize: "cover",
+        //   backgroundPosition: "center",
+        //   objectFit: "cover",
+        // }}
+      >
+        <div className="bg-white p-8 rounded-2xl shadow-lg max-w-xl w-full">
+          {/* Form register */}
+          <Form onFinish={onSubmit} layout="vertical">
+            <div className="grid grid-cols-2 gap-x-7">
+              <div className="mb-4">
+                <Form.Item
+                  label="Tài khoản"
+                  name="name"
+                  className="block text-gray-700 text-xl font-semibold mb-2"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng không bỏ trống!",
+                    },
+                    {
+                      min: 6,
+                      message: "Vui lòng nhập tối thiểu 6 đến 10 ký tự!",
+                    },
+                    {
+                      max: 10,
+                      message: "Vui lòng nhập tối đa 10 ký tự!",
+                    },
+                  ]}
+                  hasFeedback>
                   <Input
-                    id="username"
                     type="text"
-                    className="block w-full px-4 py-2 mt-2 border border-gray-300 rounded-md  dark:text-gray-300 dark:border-gray-600 focus:border-black dark:focus:border-black focus:outline-none focus:ring"
-                    placeholder="Nhập tên"
+                    id="name"
+                    name="name"
+                    size="large"
+                    placeholder=" Nhập tài khoản"
+                    prefix={<UserOutlined className="mr-2" />}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.name}
                   />
                 </Form.Item>
               </div>
-              <div>
-                <label
-                  className="text-gray-700 dark:text-gray-200"
-                  htmlFor="emailAddress">
-                  Email Address
-                </label>
-                <input
-                  id="emailAddress"
-                  type="email"
-                  className="block w-full px-4 py-2 mt-2 border border-gray-300 rounded-md  dark:text-gray-300 dark:border-gray-600 focus:border-black dark:focus:border-black focus:outline-none focus:ring"
-                />
+              <div className="mb-4">
+                <Form.Item
+                  label="E-mail"
+                  name="email"
+                  className="block text-gray-700 text-sm font-semibold mb-2"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng không bỏ trống!",
+                    },
+                    {
+                      type: "email",
+                      message: "E-mail không đúng định dạng!",
+                    },
+                  ]}
+                  hasFeedback>
+                  <Input
+                    type="email"
+                    id="email"
+                    name="email"
+                    size="large"
+                    placeholder=" example@gmail.com"
+                    prefix={<MailOutlined className="mr-2" />}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                  />
+                </Form.Item>
               </div>
-              <div>
-                <label
-                  className="text-gray-700 dark:text-gray-200"
-                  htmlFor="password">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                />
+              <div className="mb-4">
+                <Form.Item
+                  label="Số điện thoại"
+                  name="phone"
+                  className="block text-gray-700 text-sm font-semibold mb-2"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng không bỏ trống!",
+                    },
+                    {
+                      pattern: /^[0-9]{10}$/,
+                      message: "Số điện thoại không đúng định dạng!",
+                    },
+                  ]}
+                  hasFeedback>
+                  <Input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    pattern="^[0-9\-\+]{9,15}$"
+                    size="large"
+                    placeholder=" Nhập số điện thoại"
+                    prefix={<PhoneOutlined className="mr-2" />}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.phone}
+                  />
+                </Form.Item>
               </div>
-              <div>
-                <label
-                  className="text-gray-700 dark:text-gray-200"
-                  htmlFor="passwordConfirmation">
-                  Password Confirmation
-                </label>
-                <input
-                  id="passwordConfirmation"
-                  type="password"
-                  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                />
+              <div className="mb-4">
+                <Form.Item
+                  label="Mật khẩu"
+                  name="password"
+                  className="block text-gray-700 text-sm font-semibold mb-2"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng không bỏ trống!",
+                    },
+                  ]}
+                  hasFeedback>
+                  <Input.Password
+                    name="password"
+                    id="password"
+                    size="large"
+                    placeholder="**********"
+                    prefix={<LockOutlined className="mr-3" />}
+                    iconRender={(visible) =>
+                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.password}
+                  />
+                </Form.Item>
+              </div>
+
+              <div className="mb-4">
+                <Form.Item
+                  label="Ngày sinh"
+                  name="birthday"
+                  className="block text-gray-700 text-sm font-semibold mb-2"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng không bỏ trống!",
+                    },
+                  ]}
+                  hasFeedback>
+                  <DatePicker
+                    // id="birthday"
+                    name="birtday"
+                    className="w-full"
+                    format={dateFormatList}
+                    size="large"
+                    placeholder="Nhập ngày sinh"
+                    onChange={(values) => {
+                      // setFieldValue("birthday", date);
+                      setFieldValue(
+                        "birthday",
+                        moment(values).format("DD/MM/YYYY")
+                      );
+                    }}
+                    // changeOnBlur={handleBlur}
+                    // value={values.birthday ? dayjs(values.birthday) : ""}
+                  />
+                </Form.Item>
+              </div>
+              <div className="mb-4">
+                <Form.Item
+                  label="Giới tính"
+                  name="gender"
+                  className="block text-gray-700 text-sm font-semibold mb-2"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng không bỏ trống!",
+                    },
+                  ]}
+                  hasFeedback>
+                  <Select
+                    // id="gender"
+                    name="gender"
+                    size="large"
+                    className="w-full"
+                    placeholder="Chọn giới tính"
+                    style={{
+                      width: 120,
+                    }}>
+                    <Select.Option value={true}>Nam</Select.Option>
+                    <Select.Option value={false}>Nữ</Select.Option>
+                  </Select>
+                </Form.Item>
               </div>
             </div>
-            <div className="mt-6">
-              <button className="w-full px-6 py-3 text-white transition-colors duration-200 transform bg-black rounded-md hover:bg-gray-800 focus:outline-none focus:bg-gray-700">
-                Thêm
-              </button>
-            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-black text-lg text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 font-medium hover:bg-slate-900  focus:black-opacity-50">
+              Thêm
+            </button>
           </Form>
-        </section>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

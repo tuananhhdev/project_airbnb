@@ -117,11 +117,11 @@ const Header = () => {
         <div className="header_items container mx-auto px-2 sm:px-10 py-5 flex flex-wrap justify-between items-center">
           <NavLink
             to="/"
-            className="logo hidden sm:flex flex-wrap items-center z-20"
-            style={{ flex: "25%", color: "#F43F5E" }}>
+            className="logo hidden sm:flex flex-wrap items-center z-20 text-rose-600 "
+            style={{ flex: "25%" }}>
             <div className="hidden md:block">
               <svg
-                width={102}
+                width={110}
                 height={32}
                 fill="currentcolor"
                 style={{ display: "block" }}>
@@ -230,7 +230,7 @@ const Header = () => {
                   <label
                     htmlFor="checkInDate"
                     className="places_title block text-sm font-medium text-black mr-2">
-                    Địa điểm : 
+                    Địa điểm :
                   </label>
                   <Controller
                     name="location"
@@ -397,8 +397,8 @@ const Header = () => {
                         style={{
                           display: "block",
                           fill: "none",
-                          height: 16,
-                          width: 16,
+                          height: 22,
+                          width: 22,
                           stroke: "currentcolor",
                           strokeWidth: 3,
                           overflow: "visible",
@@ -421,9 +421,9 @@ const Header = () => {
                         </div>
                       ) : (
                         <i
-                          class="fa-solid fa-user w-full h-full flex justify-center items-center"
+                          class="fa-solid fa-user w-full h-full flex justify-center items-center text-lg"
                           style={{
-                            transform: "translateY(-4px)",
+                            transform: "translateY(-2px)",
                           }}></i>
                       )}
                     </div>

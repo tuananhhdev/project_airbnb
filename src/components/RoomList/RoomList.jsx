@@ -104,14 +104,14 @@ export default function RoomList() {
                 </Swiper>
                 <div>
                   <p className="flex justify-between mt-2">
-                    <span className="room_name font-bold">{room.tenPhong}</span>
+                    <span className="room_name font-bold text-lg">{room.tenPhong}</span>
                   </p>
                   <p className="room_date text-gray-500">
                     Ngày {randomNumber(1, 30)} - Ngày {randomNumber(1, 30)}{" "}
                     tháng {randomNumber(1, 12)}
                   </p>
                   <p className="mt-1">
-                    <span className="room_cost font-bold">${randomNumber(99, 599)}</span>{" "}
+                    <span className="room_cost font-bold text-lg">${randomNumber(99, 599)}</span>{" "}
                     đêm
                   </p>
                 </div>
