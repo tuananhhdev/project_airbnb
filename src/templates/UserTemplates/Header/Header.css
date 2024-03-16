@@ -4,6 +4,9 @@ input::placeholder {
 
 /* Responsive mobile */
 @media only screen and (max-width: 768px) {
+  body {
+    margin-right: 0 !important;
+  }
   .header {
     position: relative !important;
   }
@@ -45,6 +48,4 @@ input::placeholder {
   .places_input:focus {
     border: none;
   }
-
-  
 }

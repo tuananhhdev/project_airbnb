@@ -24,11 +24,13 @@ const Tabs = (props) => {
               width={30}
               height={30}
             />
-            <span className="interesting_title font-semibold">Thật ấn tượng</span>
+            <span className="interesting_title font-semibold">
+              Thật ấn tượng
+            </span>
           </SwiperSlide>
           <SwiperSlide className="">
             <img
-              class="two"
+              className="two"
               src="https://a0.muscache.com/pictures/c0a24c04-ce1f-490c-833f-987613930eca.jpg"
               width="30"
               height="30"
@@ -45,8 +47,9 @@ const Tabs = (props) => {
 
             <span className="font-semibold">Hồ bơi tuyệt vời</span>
           </SwiperSlide>
-          <SwiperSlide className="four">
+          <SwiperSlide>
             <img
+              className="four"
               src="https://a0.muscache.com/pictures/8e507f16-4943-4be9-b707-59bd38d56309.jpg"
               width={30}
               height={30}
@@ -64,16 +67,7 @@ const Tabs = (props) => {
 
             <span className="font-semibold">Bãi biển</span>
           </SwiperSlide>
-          <SwiperSlide>
-            <img
-              className="seven"
-              src="https://a0.muscache.com/pictures/35919456-df89-4030-ad50-5fcb7a472df9.jpg"
-              width={30}
-              height={30}
-            />
-
-            <span className="font-semibold">Nhà nhỏ</span>
-          </SwiperSlide>
+         
           <SwiperSlide>
             <img
               className="eight"
@@ -164,7 +158,7 @@ const Tabs = (props) => {
 
             <span className="font-semibold">Khung nhà chữ A</span>
           </SwiperSlide>
-          <SwiperSlide className="muoi_bay" >
+          <SwiperSlide className="muoi_bay">
             <img
               src="https://a0.muscache.com/pictures/d7445031-62c4-46d0-91c3-4f29f9790f7a.jpg"
               width={30}

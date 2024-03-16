@@ -187,7 +187,7 @@ const Footer = () => {
             <span className="hover:underline text-black cursor-pointer px-2 font-semibold text-sm">
               USD
             </span>
-            <span className="font-medium hover:underline text-black font-semibold text-sm">
+            <span className="hover:underline text-black font-semibold text-sm">
               Hỗ trợ tài nguyên <i className="fa fa-angle-up"></i>
             </span>
           </div>

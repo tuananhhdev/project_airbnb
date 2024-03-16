@@ -74,12 +74,50 @@
 }
 
 /* Responsive Mobile */
-@media screen and (min-width: 375px) {
-  .box {
-    margin-left: 0px;
-    margin-right: 0px;
-  }
+@media screen and (max-width: 768px) {
+  /* .box {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+  } */
   span {
-    font-size: 10px !important;
+    font-weight: 600;
+    font-size: 12px !important;
+  }
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    padding: 10px;
+    color: rgb(143, 137, 137);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px transparent solid;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  /* .box {
+    width: 100% !important;
+    height: 100% !important;
+  } */
+  .interesting,
+  .two,
+  .three,
+  .four,
+  .five,
+  .siz,
+  .seven,
+  .eight,
+  .nine,
+  .ten,
+  .eleven,
+  .muoi_hai,
+  .muoi_ba,
+  .muoi_bon,
+  .muoi_lam,
+  .muoi_sau,
+  .muoi_bay {
+    /* width: auto !important; */
+    height: 30px !important;
   }
 }

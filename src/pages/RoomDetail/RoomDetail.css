@@ -1,0 +1,27 @@
+@media screen and (max-width: 768px) {
+  .tall {
+    height: 50px !important;
+  }
+  .box {
+    margin-right: 10px !important;
+    margin-left: 10px !important;
+  }
+  .title {
+    font-size: 18px !important;
+  }
+  .share_save {
+    margin-top: 18px;
+  }
+  img {
+    height: 300px !important;
+    margin-right: 20px !important;
+  }
+  .taki {
+    width: 50px !important;
+    height: 50px !important;
+    margin-right: 20px;
+  }
+  .booking {
+    margin-right: 20px !important;
+  }
+}

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getReviewByRooms } from "../../redux/slices/reviewSlice";
 import userReview from "../../assets/img/user-36-02.jpg";
 import moment from "moment";
+import "./Review.css"
 const Review = () => {
   //   const { roomDetails, isLoading, error } = useSelector((state) => state.room);
   const { reviewList } = useSelector((state) => state.review);
@@ -48,7 +49,7 @@ const Review = () => {
       </div>
 
       {/* đánh giá */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-20 gap-y-4">
+      <div className="danhgia grid grid-cols-1 sm:grid-cols-2 gap-x-20 gap-y-4">
         <div className="flex justify-between items-center">
           <div className="w-full text-base tracking-wide text-gray-700">
             Mức độ sạch sẽ
@@ -63,11 +64,11 @@ const Review = () => {
             <div className="ml-4">5,0</div>
           </div>
         </div>
-        <div className="flex justify-between items-center">
+        <div className=" flex justify-between items-center">
           <div className="w-full text-base tracking-wide text-gray-700">
             Độ chính xác
           </div>
-          <div className="w-1/2 flex justify-between items-center">
+          <div className="  w-1/2 flex justify-between items-center">
             <div className="w-full bg-gray-200 rounded-full h-1">
               <div
                 className="bg-gray-800 h-1 rounded-full"

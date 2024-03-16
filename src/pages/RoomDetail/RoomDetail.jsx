@@ -6,7 +6,8 @@ import { getDetailRoom } from "../../redux/slices/roomSlice";
 import Review from "../../components/Review/Review";
 import FormBooking from "../../components/FormBooking/FormBooking";
 import { setLoadingOn } from "../../redux/slices/loadingSlice";
-export default function RoomDetail(props) {
+import "./RoomDetail.css";
+export default function RoomDetail() {
   const { roomDetails } = useSelector((state) => state?.room);
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -21,8 +22,8 @@ export default function RoomDetail(props) {
   }, []);
   return (
     <div>
-      <div className="h-32"></div>
-      <div className="container mx-auto px-20">
+      <div className="tall h-32"></div>
+      <div className="box container mx-auto px-20">
         <div>
           <p>
             <button className="mr-3">
@@ -40,7 +41,7 @@ export default function RoomDetail(props) {
                 <path d="M9 0a1 1 0 0 1 .993.883L10 1v5h5a1 1 0 0 1 .993.883L16 7v8a1 1 0 0 1-.883.993L15 16H7a1 1 0 0 1-.993-.883L6 15v-5H1a1 1 0 0 1-.993-.883L0 9V1A1 1 0 0 1 .883.007L1 0h8zm1.729 7l-1.393.495.233.217.13.132c.125.127.227.245.308.352l.073.103.048.073.045.077H7.308v1.309h1.207l.166.52.09.266.112.29a6.294 6.294 0 0 0 1.109 1.789c-.495.315-1.119.607-1.87.87l-.331.112-.346.108-.445.134L7.72 15l.407-.125.386-.128c1.007-.349 1.836-.752 2.486-1.214.57.405 1.277.764 2.12 1.08l.369.134.386.128.406.125.72-1.153-.445-.134-.26-.08-.345-.115c-.783-.27-1.43-.57-1.94-.895a6.3 6.3 0 0 0 1.068-1.694l.128-.32.114-.33.165-.521h1.208V8.449H11.64l-.093-.231a3.696 3.696 0 0 0-.554-.917l-.126-.149-.14-.152zm1.35 2.758l-.042.133-.076.224-.103.264A4.985 4.985 0 0 1 11 11.76a4.952 4.952 0 0 1-.743-1.127l-.115-.254-.103-.264-.076-.224-.042-.133h2.158zM9 1H1v8h5V7c0-.057.005-.113.014-.167H3.827L3.425 8H2l2.257-6h1.486l1.504 4H9V1zM5 3.411L4.253 5.6h1.502L5 3.411z" />
               </svg>
             </button>
-            <span className="font-semibold text-4xl sm:text-3xl tracking-widest leading-relaxed text-gray-900">
+            <span className="title font-semibold text-4xl sm:text-3xl tracking-widest leading-relaxed text-gray-900">
               {roomDetails?.tenPhong}
             </span>
           </p>
@@ -57,14 +58,21 @@ export default function RoomDetail(props) {
                 <i className="fa-solid fa-award" /> Chủ nhà siêu cấp
               </span>
               <span className="underline text-sm font-normal tracking-widest mx-1">
-                {roomDetails?.locationId ? roomDetails?.locationId.tenViTri : ""},
-                {roomDetails?.locationId ? roomDetails?.locationId.tinhThanh : ""},
+                {roomDetails?.locationId
+                  ? roomDetails?.locationId.tenViTri
+                  : ""}
+                ,
+                {roomDetails?.locationId
+                  ? roomDetails?.locationId.tinhThanh
+                  : ""}
+                ,
                 {roomDetails?.locationId ? roomDetails?.locationId.quocGia : ""}
               </span>
             </div>
-            <div className="flex flex-wrap justify-center items-center">
+            <div className="share_save flex flex-wrap justify-center items-center">
               <button className="px-2 py-1 hover:bg-gray-100 rounded-md transition-all duration-150 flex justify-center items-center font-semibold text-sm text-gray-700">
                 <svg
+                  className="font-bold"
                   viewBox="0 0 32 32"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
@@ -85,7 +93,7 @@ export default function RoomDetail(props) {
                     <path d="M6 13l9.293-9.293a1 1 0 0 1 1.414 0L26 13" />
                   </g>
                 </svg>
-                <span className="ml-2">Chia sẻ</span>
+                <span className="ml-2 text-sm ">Chia sẻ</span>
               </button>
               <button className="px-2 py-1 hover:bg-gray-100 rounded-md transition-all duration-150  flex justify-center items-center font-semibold text-sm text-gray-700">
                 <svg
@@ -105,7 +113,7 @@ export default function RoomDetail(props) {
                   }}>
                   <path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z" />
                 </svg>
-                <span className="ml-2">Lưu</span>
+                <span className="ml-2 text-sm">Lưu</span>
               </button>
             </div>
           </div>
@@ -115,7 +123,7 @@ export default function RoomDetail(props) {
           <div className="rounded-l-xl rounded-r-xl sm:rounded-r-none overflow-hidden">
             <img
               src={roomDetails?.hinhAnh}
-              className=" object-cover rounded-l-xl overflow-hidden"
+              className="room object-cover rounded-l-xl overflow-hidden"
               alt=""
               style={{
                 imageRendering: "pixelated",
@@ -177,25 +185,25 @@ export default function RoomDetail(props) {
             {/* căn hộ */}
             <div className="flex flex-wrap justify-between items-center pb-5 border-b">
               <div>
-                <h1 className="font-semibold text-lg sm:text-2xl text-gray-800">
+                <h1 className="font-semibold text-lg sm:text-lg text-gray-800">
                   Toàn bộ căn hộ. Chủ nhà Tuấn Anh
                 </h1>
                 <span className="text-sm font-normal  tracking-widest text-gray-700">
-                  <span>{roomDetails?.khach} khách . </span>
-                  <span className=" mx-1">
+                  <span className="text-sm">{roomDetails?.khach} khách . </span>
+                  <span className=" mx-1 text-sm">
                     {roomDetails?.giuong} phòng ngủ .{" "}
                   </span>
-                  <span className=" mx-1">
+                  <span className=" mx-1 text-sm">
                     {roomDetails?.phongTam} phòng tắm .{" "}
                   </span>
                 </span>
               </div>
-              <div className="w-12 h-12  relative">
+              <div className="taki w-12 h-12  relative">
                 {roomDetails?.maViTri ? (
                   <img
                     src={userImg}
                     alt=""
-                    className="w-full h-full rounded-full overflow-hidden"
+                    className="user_img w-full h-full rounded-full overflow-hidden"
                   />
                 ) : (
                   <svg
@@ -640,7 +648,7 @@ export default function RoomDetail(props) {
             </div>
           </div>
           <div className="w-full sm:w-1/2 lg:w-2/5">
-            <div className="sticky top-28">{<FormBooking />}</div>
+            <div className="booking sticky top-28">{<FormBooking />}</div>
           </div>
         </div>
         {<Review />}

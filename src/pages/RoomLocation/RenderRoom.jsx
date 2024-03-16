@@ -8,6 +8,7 @@ import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "./Map.css"
 import ReactLoading from "react-loading";
 import { axiosClient, roomAPI } from "../../services/RoomServ";
 import { getRoomByLocation } from "../../redux/slices/roomSlice";
@@ -50,7 +51,7 @@ const RenderRoom = () => {
   return (
     <div>
       <div className="flex flex-wrap justify-between items-center py-5 ml-4">
-        <span className="font-semibold">Hơn 1.000 chổ ở</span>
+        <span className="title font-semibold text-lg">Hơn 1.000 chổ ở</span>
         <button
           type="button"
           className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 flex flex-wrap justify-center items-center">
@@ -68,7 +69,7 @@ const RenderRoom = () => {
             }}>
             <path d="M5 8c1.306 0 2.418.835 2.83 2H14v2H7.829A3.001 3.001 0 1 1 5 8zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6-8a3 3 0 1 1-2.829 4H2V4h6.17A3.001 3.001 0 0 1 11 2zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
           </svg>
-          <span>Bộ lọc</span>
+          <span className="filter text-lg">Bộ lọc</span>
         </button>
       </div>
       {/* {isLoading ? (
@@ -120,7 +121,7 @@ const RenderRoom = () => {
               </Swiper>
               <div className="overflow-hidden">
                 <p className="flex justify-between mt-2">
-                  <span className="font-bold  text-ellipsis overflow-hidden whitespace-nowrap">
+                  <span className="text-lg font-bold  text-ellipsis overflow-hidden whitespace-nowrap">
                     {room.tenPhong}
                   </span>
                   <span>
@@ -135,7 +136,7 @@ const RenderRoom = () => {
                   {randomNumber(1, 12)}
                 </p>
                 <p className="mt-1">
-                  <span className="font-bold">{room.giaTien} VNĐ</span> đêm
+                  <span className="font-bold text-lg">{room.giaTien} VNĐ</span> đêm
                 </p>
               </div>
             </NavLink>

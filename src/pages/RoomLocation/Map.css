@@ -1,0 +1,10 @@
+@media screen and (max-width: 768px) {
+  /* img {
+    padding-right: 15px !important;
+  } */
+  .map {
+    display: block !important;
+    margin-left: 20px;
+    padding-right: 30px !important;
+  }
+}

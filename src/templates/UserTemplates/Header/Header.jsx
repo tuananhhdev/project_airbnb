@@ -423,7 +423,7 @@ const Header = () => {
                         <i
                           class="fa-solid fa-user w-full h-full flex justify-center items-center text-lg"
                           style={{
-                            transform: "translateY(-2px)",
+                            // transform: "translateY(-2px)",
                           }}></i>
                       )}
                     </div>

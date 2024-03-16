@@ -39,7 +39,7 @@ const NearLocation = () => {
                       }}>
                       <div className=" flex items-center gap-3">
                         <img
-                          className="w-12 h-12 rounded-lg object-cover"
+                          className="w-14 h-14 rounded-lg object-cover"
                           src={item.hinhAnh}
                           alt=""
                         />
