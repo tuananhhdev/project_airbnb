@@ -10,9 +10,6 @@ input::placeholder {
   .header {
     position: relative !important;
   }
-  /* .logo {
-    display: block !important;
-  } */
 
   .header_link {
     margin-top: 5px;

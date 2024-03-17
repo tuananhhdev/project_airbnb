@@ -1,9 +1,9 @@
 import React from "react";
-import { userLocalStorage } from "../../utils/Local";
-import Profile from "./Properties/Profile";
+import { userLocalStorage } from "../../../utils/Local";
+import Profile from "../Properties/Profile";
 import { useSelector } from "react-redux";
-import { MODAL_NAME, useModal } from "../../hook/useModal";
-import BookRoomByUser from "./Properties/BookRoomByUser/BookRoomByUser";
+import { MODAL_NAME, useModal } from "../../../hook/useModal";
+import BookRoomByUser from "../Properties/BookRoomByUser/BookRoomByUser";
 
 export default function TicketByUser() {
   const { user } = useSelector((state) => state?.auth?.user || {});
@@ -19,7 +19,7 @@ export default function TicketByUser() {
   // if (!user?.id) return null;
   return (
     <div className="container mx-auto">
-      <div className="h-32"></div>
+      <div className="tall h-32"></div>
       <div className="flex flex-wrap py-4 md:py-6">
         <div className="w-full md:w-1/3">
           <Profile />

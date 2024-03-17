@@ -44,7 +44,7 @@ const NearLocation = () => {
                           alt=""
                         />
                         <div>
-                          <h2 className="font-bold">{item.tinhThanh}</h2>
+                          <h2 className="city font-bold">{item.tinhThanh}</h2>
                           <p>{createRandomNumber(1, 20)} giờ lái xe </p>
                         </div>
                       </div>

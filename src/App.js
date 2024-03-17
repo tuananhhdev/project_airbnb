@@ -16,7 +16,7 @@ import Signin from "./pages/Login/Signin";
 import DangNhap from "./pages/Register/DangNhap";
 import { Suspense } from "react";
 import LoadingPages from "./components/LoadingPages/LoadingPages";
-import TicketByUser from "./pages/TicketByUser/TicketByUser";
+import TicketByUser from "./pages/TicketByUser/TicketByUser/TicketByUser";
 
 function App() {
   return (

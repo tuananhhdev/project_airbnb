@@ -1,5 +1,5 @@
 import React from "react";
-import UploadAvatar from "./UploadAvatar";
+import UploadAvatar from "./UploadAvatar/UploadAvatar";
 import { CheckCircleOutlined } from "@ant-design/icons";
 
 const Profile = () => {

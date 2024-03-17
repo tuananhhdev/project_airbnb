@@ -4,10 +4,10 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "./Tabs.css";
-const Tabs = (props) => {
+const Tabs = () => {
   return (
     <div>
-      <div className="h-10"></div>
+      <div className="h-14"></div>
       <div className="box container mx-auto sticky top-32">
         <Swiper
           slidesPerView={5}
@@ -67,7 +67,7 @@ const Tabs = (props) => {
 
             <span className="font-semibold">Bãi biển</span>
           </SwiperSlide>
-         
+
           <SwiperSlide>
             <img
               className="eight"

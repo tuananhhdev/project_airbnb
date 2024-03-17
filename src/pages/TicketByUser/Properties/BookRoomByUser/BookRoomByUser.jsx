@@ -27,13 +27,13 @@ const BookRoomByUser = () => {
   };
   return (
     <>
-      <div className="ml-5 space-y-3 max-w-md">
+      <div className="box ml-5 space-y-3 max-w-md">
         <p className="text-3xl font-semibold">Xin chào, tôi là Tuấn Anh </p>
         <p className="text-gray-500">Bắt đầu tham gia vào 2021</p>
         <ModalUpdateProfile />
         <ModalShowProfile />
         <br />
-        <p className=" text-2xl font-bold pb-10">Phòng đã thuê</p>
+        <p className="booked_room text-2xl font-bold pb-10">Phòng đã thuê</p>
         {bookedRoom.slice(0, 5).map((room, index) => {
           return (
             <div key={index}>

@@ -217,7 +217,14 @@ const TicketUserRoom = () => {
             <p className="text-justify">
               Xác minh danh tính của bạn với huy hiệu xác minh danh tính.
             </p>
-            <Button>Nhận huy hiệu</Button>
+            <Button
+              className="p-2"
+              style={{ 
+                boxShadow:
+                  "box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;",
+              }}>
+              Nhận huy hiệu
+            </Button>
             <div className="w-full h-px bg-gray-300"></div>
             {/* <p className="text-xl font-bold">
                     {capitalizeString(userInfo.name)} đã xác nhận
