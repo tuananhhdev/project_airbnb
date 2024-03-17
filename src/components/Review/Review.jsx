@@ -186,7 +186,7 @@ const Review = () => {
             );
           }
         })}
-        <div className="sm:col-span-2">
+        <div className=" sm:col-span-2">
           <button className="btn_cmt border border-solid border-gray-900 hover:bg-gray-100 transition-all duration-200 rounded-md px-5 py-3 font-semibold text-base text-gray-800 tracking-wider">
             Hiển thị tất cả {randomNumber(50, 150)} đánh giá
           </button>

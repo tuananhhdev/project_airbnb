@@ -641,7 +641,7 @@ export default function RoomDetail() {
               </div>
 
               <div className="mt-5">
-                <button className="border border-solid border-gray-900 hover:bg-gray-100 transition-all duration-200 rounded-md px-5 py-3 font-semibold text-base text-gray-800 tracking-wider">
+                <button className="btn_tiennghi border border-solid border-gray-900 hover:bg-gray-100 transition-all duration-200 rounded-md px-5 py-3 font-semibold text-base text-gray-800 tracking-wider">
                   Hiển thị tất cả 75 tiện nghi
                 </button>
               </div>
