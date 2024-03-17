@@ -137,7 +137,7 @@ const Review = () => {
       </div>
 
       {/* review */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-20 gap-y-4 sm:w-4/5 mt-10 ">
+      <div className=" grid grid-cols-1 sm:grid-cols-2 sm:gap-x-20 gap-y-4 sm:w-4/5 mt-10 ">
         {reviewList.map((review, index) => {
           if (index < 8) {
             return (
@@ -179,7 +179,7 @@ const Review = () => {
                     </span>
                   </div>
                 </div>
-                <div className="text-gray-800 tracking-wider">
+                <div className="comment backdrop:text-gray-800 tracking-wider">
                   <p>{review.noiDung}</p>
                 </div>
               </div>
@@ -187,7 +187,7 @@ const Review = () => {
           }
         })}
         <div className="sm:col-span-2">
-          <button className="border border-solid border-gray-900 hover:bg-gray-100 transition-all duration-200 rounded-md px-5 py-3 font-semibold text-base text-gray-800 tracking-wider">
+          <button className="btn_cmt border border-solid border-gray-900 hover:bg-gray-100 transition-all duration-200 rounded-md px-5 py-3 font-semibold text-base text-gray-800 tracking-wider">
             Hiển thị tất cả {randomNumber(50, 150)} đánh giá
           </button>
         </div>

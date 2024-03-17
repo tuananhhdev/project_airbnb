@@ -3,4 +3,10 @@
     margin-right: 30px !important;
     margin-left: 18px !important;
   }
+  .comment {
+    margin-left: 10px !important;
+  }
+  .btn_cmt {
+    margin-left: 18px !important;
+  }
 }

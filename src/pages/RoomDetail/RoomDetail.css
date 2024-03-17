@@ -3,7 +3,7 @@
     height: 50px !important;
   }
   .box {
-    margin-right: 10px !important;
+    padding-right: 30px !important;
     margin-left: 10px !important;
   }
   .title {
@@ -14,14 +14,13 @@
   }
   img {
     height: 300px !important;
-    margin-right: 20px !important;
+    /* margin-right: 25px !important; */
   }
   .taki {
     width: 50px !important;
     height: 50px !important;
-    margin-right: 20px;
   }
   .booking {
-    margin-right: 20px !important;
+    margin-left: 8px !important;
   }
 }
