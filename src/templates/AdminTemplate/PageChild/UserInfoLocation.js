@@ -19,31 +19,7 @@ const UserInfoLocation = () => {
         <h1 className="text-4xl mb-5 font-semibold">
           Quản lý thông tin vị trí
         </h1>
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": { m: 1 },
-          }}
-          noValidate
-          autoComplete="off"></Box>
-        <TextField
-          id="outlined-search"
-          label="Nhập vị trí muốn tìm"
-          style={{
-            width: "890px",
-            marginRight: "20px",
-          }}
-        />
-        <Stack>
-          <Button
-            variant="contained"
-            style={{
-              height: "50px",
-              width: "100px",
-            }}>
-            Tìm kiếm
-          </Button>
-        </Stack>
+      
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-20">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

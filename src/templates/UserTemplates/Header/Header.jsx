@@ -455,7 +455,7 @@ const Header = () => {
                       </div>
                     ) : (
                       <div className="font-medium flex flex-col border-b-2">
-                        <NavLink
+                        {/* <NavLink
                           className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
                           to="/register">
                           Đăng ký
@@ -464,7 +464,7 @@ const Header = () => {
                           className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
                           to="/login">
                           Đăng nhập
-                        </NavLink>
+                        </NavLink> */}
                         <NavLink
                           className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
                           to="/tickets-by-user">
