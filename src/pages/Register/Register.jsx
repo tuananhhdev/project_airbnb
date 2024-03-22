@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
-import { Input, DatePicker, Select, message, notification, Form } from "antd";
+import { Input, DatePicker, Select, notification, Form } from "antd";
 import { NavLink, useNavigate } from "react-router-dom";
 import registerBackground from "../../assets/img/register_img.jfif";
-import dayjs from "dayjs";
-import axios, { Axios } from "axios";
+import axios from "axios";
+import loginBackground from "../../assets/img/login_house.jpg";
 import {
   MailOutlined,
   PhoneOutlined,
@@ -15,7 +15,7 @@ import {
 } from "@ant-design/icons";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-
+import "./Register.css";
 const Register = () => {
   const navigate = useNavigate();
   const {
@@ -28,20 +28,12 @@ const Register = () => {
     setFieldValue,
   } = useFormik({
     initialValues: {
-      // id: 0,
       name: "",
       email: "",
       password: "",
       phone: "",
       birthday: "",
       gender: true,
-      // role: "",
-      // birthday: "",
-      // name: "",
-      // email: "",
-      // phone: "",
-      // gender: undefined,
-      // password: "",
     },
   });
   const dispatch = useDispatch();
@@ -54,13 +46,11 @@ const Register = () => {
       .then((res) => {
         console.log(res);
         notification.success({ message: "Đăng ký thành công" });
-        // message.success("Đăng nhập thành công");
         navigate("/login");
       })
       .catch((error) => {
         console.log(error.response.data);
         notification.error({ message: "Đăng ký thất bại!" });
-        // message.error("Đăng ký thất bại!");
       });
   };
 
@@ -70,7 +60,7 @@ const Register = () => {
       <div
         className=" flex items-center justify-center h-screen"
         style={{
-          background: `url(${registerBackground})`,
+          background: `url(${loginBackground})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -222,21 +212,17 @@ const Register = () => {
                   ]}
                   hasFeedback>
                   <DatePicker
-                    // id="birthday"
                     name="birtday"
                     className="w-full"
                     format={dateFormatList}
                     size="large"
                     placeholder="Nhập ngày sinh"
                     onChange={(values) => {
-                      // setFieldValue("birthday", date);
                       setFieldValue(
                         "birthday",
                         moment(values).format("DD/MM/YYYY")
                       );
                     }}
-                    // changeOnBlur={handleBlur}
-                    // value={values.birthday ? dayjs(values.birthday) : ""}
                   />
                 </Form.Item>
               </div>
@@ -244,7 +230,7 @@ const Register = () => {
                 <Form.Item
                   label="Giới tính"
                   name="gender"
-                  className="block text-gray-700 text-sm font-semibold mb-2"
+                  className=" block text-gray-700 text-sm font-semibold mb-2"
                   rules={[
                     {
                       required: true,
@@ -253,10 +239,9 @@ const Register = () => {
                   ]}
                   hasFeedback>
                   <Select
-                    // id="gender"
                     name="gender"
                     size="large"
-                    className="w-full"
+                    className="select w-full"
                     placeholder="Chọn giới tính"
                     style={{
                       width: 120,
@@ -270,7 +255,7 @@ const Register = () => {
 
             <button
               type="submit"
-              className="w-full bg-black  text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 font-medium hover:bg-slate-900  focus:black-opacity-50">
+              className="w-full bg-black  text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 font-semibold hover:bg-slate-900  focus:black-opacity-50">
               Tiếp tục
             </button>
           </Form>

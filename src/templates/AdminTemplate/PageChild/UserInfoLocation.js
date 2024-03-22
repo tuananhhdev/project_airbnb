@@ -4,6 +4,11 @@ import img2 from "../../../assets/img/phong9.png";
 import img3 from "../../../assets/img/phong10.png";
 import img4 from "../../../assets/img/phong11.png";
 import img5 from "../../../assets/img/phong12.png";
+import userAvatar from "../../../assets/img/img.png.jfif";
+import userAvatar2 from "../../../assets/img/user-36-01.jpg";
+import userAvatar3 from "../../../assets/img/user-36-04.jpg";
+import userAvatar4 from "../../../assets/img/user-36-02.jpg";
+import userAvatar5 from "../../../assets/img/user.jpg";
 import { Box, TextField } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -164,7 +169,7 @@ const UserInfoLocation = () => {
                   }}
                 />
               </td>
-              <td className="px-6 py-4">Thành phố Hồ Chí Minh</td>
+              <td className="px-6 py-4">Thành Phố Hồ Chí Minh</td>
               <td className="px-6 py-4">
                 <a href="">
                   <i class="fa-solid fa-trash mr-5 text-lg text-red-500 hover:text-red-700 duration-200"></i>

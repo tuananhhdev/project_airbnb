@@ -17,7 +17,7 @@ const RoomInfoManage = () => {
       </a>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-20">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-white uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-xs text-white uppercase bg-gray-50 dark:bg-gray-700 ">
             <tr>
               <th scope="col" className="px-6 py-3">
                 id
@@ -29,14 +29,14 @@ const RoomInfoManage = () => {
                 hình ảnh
               </th>
               <th scope="col" className="px-6 py-3">
-                vị trí
+                ngày đi - ngày đến
               </th>
               <th scope="col" className="px-6 py-3">
                 hành động
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-white">
             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
               <th
                 scope="row"
@@ -55,7 +55,7 @@ const RoomInfoManage = () => {
                   }}
                 />
               </td>
-              <td className="px-6 py-4">Đà Nẵng</td>
+              <td className="px-6 py-4">12/02/2024 - 14/02/2024</td>
               <td className="px-6 py-4">
                 <a href="">
                   <i class="fa-solid fa-trash mr-5 text-lg text-red-500 hover:text-red-700 duration-200"></i>
@@ -83,7 +83,7 @@ const RoomInfoManage = () => {
                   }}
                 />
               </td>
-              <td className="px-6 py-4">Hà Nội</td>
+              <td className="px-6 py-4">20/04/2024 - 25/4/2024</td>
               <td className="px-6 py-4">
                 <a href="">
                   <i class="fa-solid fa-trash mr-5 text-lg text-red-500 hover:text-red-700 duration-200"></i>
@@ -111,7 +111,7 @@ const RoomInfoManage = () => {
                   }}
                 />
               </td>
-              <td className="px-6 py-4">Đà Lạt</td>
+              <td className="px-6 py-4">18/11/2024 - 22/11/2024</td>
               <td className="px-6 py-4">
                 <a href="">
                   <i class="fa-solid fa-trash mr-5 text-lg text-red-500 hover:text-red-700 duration-200"></i>
@@ -139,7 +139,7 @@ const RoomInfoManage = () => {
                   }}
                 />
               </td>
-              <td className="px-6 py-4">Thành phố Hồ Chí Minh</td>
+              <td className="px-6 py-4">30/06/2024 - 5/07/2024</td>
               <td className="px-6 py-4">
                 <a href="">
                   <i class="fa-solid fa-trash mr-5 text-lg text-red-500 hover:text-red-700 duration-200"></i>
@@ -167,7 +167,7 @@ const RoomInfoManage = () => {
                   }}
                 />
               </td>
-              <td className="px-6 py-4">Nha Trang</td>
+              <td className="px-6 py-4">20/12/2024 - 25/12/2024</td>
               <td className="px-6 py-4">
                 <a href="">
                   <i class="fa-solid fa-trash mr-5 text-lg text-red-500 hover:text-red-700 duration-200"></i>

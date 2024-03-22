@@ -1,0 +1,13 @@
+/* Responsive Mobile */
+@media only screen and (max-width: 768px) {
+  /* .box {
+    padding: 20px !important;
+  } */
+  button {
+    height: 48px !important;
+    font-size: 17px;
+  }
+  .select::placeholder {
+    color: gray !important;
+  }
+}

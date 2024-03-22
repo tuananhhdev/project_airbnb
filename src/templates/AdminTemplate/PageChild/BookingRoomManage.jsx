@@ -1,273 +1,198 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import { Input, DatePicker, Select, message, notification, Form } from "antd";
-import { NavLink, useNavigate } from "react-router-dom";
-import {
-  MailOutlined,
-  PhoneOutlined,
-  UserOutlined,
-  EyeTwoTone,
-  EyeInvisibleOutlined,
-  LockOutlined,
-} from "@ant-design/icons";
-import moment from "moment";
-import axios, { Axios } from "axios";
-import { UseDispatch, useDispatch } from "react-redux";
+import React from "react";
+import img1 from "../../../assets/img/phong5.png";
+import img2 from "../../../assets/img/phong9.png";
+import img3 from "../../../assets/img/phong10.png";
+import img4 from "../../../assets/img/phong11.png";
+import img5 from "../../../assets/img/phong12.png";
+import userAvatar from "../../../assets/img/img.png.jfif";
+import userAvatar2 from "../../../assets/img/user-36-01.jpg";
+import userAvatar3 from "../../../assets/img/user-36-04.jpg";
+import userAvatar4 from "../../../assets/img/user-36-02.jpg";
+import userAvatar5 from "../../../assets/img/user.jpg";
 const BookingRoomManage = () => {
-  const navigate = useNavigate();
-  const {
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    values,
-    errors,
-    touched,
-    setFieldValue,
-  } = useFormik({
-    initialValues: {
-      // id: 0,
-      name: "",
-      email: "",
-      password: "",
-      phone: "",
-      birthday: "",
-      gender: true,
-      // role: "",
-      // birthday: "",
-      // name: "",
-      // email: "",
-      // phone: "",
-      // gender: undefined,
-      // password: "",
-    },
-  });
-  const dispatch = useDispatch();
-  const onSubmit = (values) => {
-    axios({
-      method: "POST",
-      url: "https://airbnbnew.cybersoft.edu.vn/api/auth/signup",
-      data: values,
-    })
-      .then((res) => {
-        console.log(res);
-        notification.success({ message: "Đăng ký thành công" });
-        // message.success("Đăng nhập thành công");
-        navigate("/login");
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        notification.error({ message: "Đăng ký thất bại!" });
-        // message.error("Đăng ký thất bại!");
-      });
-  };
   return (
-    <div
-      className=" flex items-center justify-center h-screen"
-      style={{
-        background: `url(${registerBackground})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        objectFit: "cover",
-      }}>
-      <div className="bg-white p-8 rounded-2xl shadow-lg max-w-xl w-full">
-        <div className="flex justify-center mb-6">
-          <NavLink to={"/"}>
-            <span className="inline-block ">
-              <i class="fa-brands fa-airbnb text-5xl text-pink-600"></i>
-            </span>
-          </NavLink>
-        </div>
-        <h2 className="text-3xl font-semibold text-center mb-10">Đăng ký</h2>
+    <div>
+      <h1 className="text-4xl mb-5 font-semibold">Quản lí đặt phòng</h1>
 
-        {/* Form register */}
-        <Form onFinish={onSubmit} layout="vertical">
-          <div className="grid grid-cols-2 gap-x-7">
-            <div className="mb-4">
-              <Form.Item
-                label="Tài khoản"
-                name="name"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng không bỏ trống!",
-                  },
-                  {
-                    min: 6,
-                    message: "Vui lòng nhập tối thiểu 6 đến 10 ký tự!",
-                  },
-                  {
-                    max: 10,
-                    message: "Vui lòng nhập tối đa 10 ký tự!",
-                  },
-                ]}
-                hasFeedback>
-                <Input
-                  type="text"
-                  id="name"
-                  name="name"
-                  size="large"
-                  placeholder=" Nhập tài khoản"
-                  prefix={<UserOutlined className="mr-2" />}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.name}
-                />
-              </Form.Item>
-            </div>
-            <div className="mb-4">
-              <Form.Item
-                label="E-mail"
-                name="email"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng không bỏ trống!",
-                  },
-                  {
-                    type: "email",
-                    message: "E-mail không đúng định dạng!",
-                  },
-                ]}
-                hasFeedback>
-                <Input
-                  type="email"
-                  id="email"
-                  name="email"
-                  size="large"
-                  placeholder=" example@gmail.com"
-                  prefix={<MailOutlined className="mr-2" />}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.email}
-                />
-              </Form.Item>
-            </div>
-            <div className="mb-4">
-              <Form.Item
-                label="Số điện thoại"
-                name="phone"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng không bỏ trống!",
-                  },
-                  {
-                    pattern: /^[0-9]{10}$/,
-                    message: "Số điện thoại không đúng định dạng!",
-                  },
-                ]}
-                hasFeedback>
-                <Input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  pattern="^[0-9\-\+]{9,15}$"
-                  size="large"
-                  placeholder=" Nhập số điện thoại"
-                  prefix={<PhoneOutlined className="mr-2" />}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.phone}
-                />
-              </Form.Item>
-            </div>
-            <div className="mb-4">
-              <Form.Item
-                label="Mật khẩu"
-                name="password"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng không bỏ trống!",
-                  },
-                ]}
-                hasFeedback>
-                <Input.Password
-                  name="password"
-                  id="password"
-                  size="large"
-                  placeholder="**********"
-                  prefix={<LockOutlined className="mr-3" />}
-                  iconRender={(visible) =>
-                    visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                  }
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.password}
-                />
-              </Form.Item>
-            </div>
-
-            <div className="mb-4">
-              <Form.Item
-                label="Ngày sinh"
-                name="birthday"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng không bỏ trống!",
-                  },
-                ]}
-                hasFeedback>
-                <DatePicker
-                  // id="birthday"
-                  name="birtday"
-                  className="w-full"
-                  format={dateFormatList}
-                  size="large"
-                  placeholder="Nhập ngày sinh"
-                  onChange={(values) => {
-                    // setFieldValue("birthday", date);
-                    setFieldValue(
-                      "birthday",
-                      moment(values).format("DD/MM/YYYY")
-                    );
-                  }}
-                  // changeOnBlur={handleBlur}
-                  // value={values.birthday ? dayjs(values.birthday) : ""}
-                />
-              </Form.Item>
-            </div>
-            <div className="mb-4">
-              <Form.Item
-                label="Giới tính"
-                name="gender"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng không bỏ trống!",
-                  },
-                ]}
-                hasFeedback>
-                <Select
-                  // id="gender"
-                  name="gender"
-                  size="large"
-                  className="w-full"
-                  placeholder="Chọn giới tính"
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-20">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-white uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                id
+              </th>
+              <th scope="col" className="px-6 py-3">
+                tên
+              </th>
+              <th scope="col" className="px-6 py-3">
+                hình ảnh người dùng
+              </th>
+              <th scope="col" className="px-6 py-3">
+                hình ảnh phòng
+              </th>
+              <th scope="col" className="px-6 py-3">
+                hành động
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-white whitespace-nowrap ">
+                1
+              </th>
+              <td className="px-6 py-4">tuananhteves126</td>
+              <td className="px-6 py-4">
+                <img
+                  src={img1}
+                  alt=""
                   style={{
-                    width: 120,
-                  }}>
-                  <Select.Option value={true}>Nam</Select.Option>
-                  <Select.Option value={false}>Nữ</Select.Option>
-                </Select>
-              </Form.Item>
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-black  text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 font-medium hover:bg-slate-900  focus:black-opacity-50">
-            Tiếp tục
-          </button>
-        </Form>
+                    width: "300px",
+                    height: "170px",
+                    objectFit: "cover",
+                  }}
+                />
+              </td>
+              <td className="px-6 py-4">
+                {" "}
+                <img src={userAvatar} alt="" width={60} height={60} />
+              </td>
+              <td className="px-6 py-4">
+                <a href="">
+                  <i class="fa-solid fa-trash mr-5 text-lg text-red-500 hover:text-red-700 duration-200"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square text-lg text-green-500 hover:text-green-700 duration-200"></i>
+                </a>
+              </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                2
+              </th>
+              <td className="px-6 py-4">nguyennhu58</td>
+              <td className="px-6 py-4">
+                <img
+                  src={img2}
+                  alt=""
+                  style={{
+                    width: "300px",
+                    height: "170px",
+                    objectFit: "cover",
+                  }}
+                />
+              </td>
+              <td className="px-6 py-4">
+                {" "}
+                <img src={userAvatar2} alt="" width={60} height={60} />
+              </td>
+              <td className="px-6 py-4">
+                <a href="">
+                  <i class="fa-solid fa-trash mr-5 text-lg text-red-500 hover:text-red-700 duration-200"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square text-lg text-green-500 hover:text-green-700 duration-200"></i>
+                </a>
+              </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                3
+              </th>
+              <td className="px-6 py-4">tonythang61</td>
+              <td className="px-6 py-4">
+                <img
+                  src={img3}
+                  alt=""
+                  style={{
+                    width: "300px",
+                    height: "170px",
+                    objectFit: "cover",
+                  }}
+                />
+              </td>
+              <td className="px-6 py-4">
+                {" "}
+                <img src={userAvatar3} alt="" width={60} height={60} />
+              </td>
+              <td className="px-6 py-4">
+                <a href="">
+                  <i class="fa-solid fa-trash mr-5 text-lg text-red-500 hover:text-red-700 duration-200"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square text-lg text-green-500 hover:text-green-700 duration-200"></i>
+                </a>
+              </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                4
+              </th>
+              <td className="px-6 py-4">davidnguyen5</td>
+              <td className="px-6 py-4">
+                <img
+                  src={img4}
+                  alt=""
+                  style={{
+                    width: "300px",
+                    height: "170px",
+                    objectFit: "cover",
+                  }}
+                />
+              </td>
+              <td className="px-6 py-4">
+                {" "}
+                <img src={userAvatar4} alt="" width={60} height={60} />
+              </td>
+              <td className="px-6 py-4">
+                <a href="">
+                  <i class="fa-solid fa-trash mr-5 text-lg text-red-500 hover:text-red-700 duration-200"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square text-lg text-green-500 hover:text-green-700 duration-200"></i>
+                </a>
+              </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                5
+              </th>
+              <td className="px-6 py-4">nguyenthinhnee</td>
+              <td className="px-6 py-4">
+                <img
+                  src={img5}
+                  alt=""
+                  style={{
+                    width: "300px",
+                    height: "170px",
+                    objectFit: "cover",
+                  }}
+                />
+              </td>
+              <td className="px-6 py-4">
+                {" "}
+                <img src={userAvatar5} alt="" width={60} height={60} />
+              </td>
+              <td className="px-6 py-4">
+                <a href="">
+                  <i class="fa-solid fa-trash mr-5 text-lg text-red-500 hover:text-red-700 duration-200"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square text-lg text-green-500 hover:text-green-700 duration-200"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );

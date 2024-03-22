@@ -10,6 +10,7 @@ import {
   EyeInvisibleOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
+import "./Login.css"
 const Login = () => {
   const navigate = useNavigate();
   const formik =
@@ -59,9 +60,7 @@ const Login = () => {
               </span>
             </NavLink>
           </div>
-          <h2 className="text-2xl font-semibold text-center mb-4">
-            Đăng nhập{" "}
-          </h2>
+          <h2 className="text-2xl font-semibold text-center mb-4">Đăng nhập</h2>
 
           <Form layout="vertical" onFinish={formik.handleSubmit}>
             <div className="mb-4">
@@ -137,13 +136,13 @@ const Login = () => {
               Tiếp tục
             </button>
             <p
-              className=" text-center mt-4 "
+              className="no_acc font-semibold text-center mt-4 "
               style={{
                 fontSize: "16px",
               }}>
               Chưa có tài khoản ?
               <NavLink to={"/register"}>
-                <a className="ml-2 text-red-600 hover:underline">
+                <a className="register_now font-semibold ml-2 text-red-600 hover:underline">
                   Đăng ký ngay
                 </a>
               </NavLink>

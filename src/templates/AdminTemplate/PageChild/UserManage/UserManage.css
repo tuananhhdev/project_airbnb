@@ -1,0 +1,6 @@
+@media only screen and (max-width: 768px) {
+  .title {
+    font-size: 28px !important;
+    /* margin-right: 5px !important; */
+  }
+}

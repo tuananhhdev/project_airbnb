@@ -5,11 +5,12 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";
-import userAvatar from "../../../assets/img/img.png.jfif";
-import userAvatar2 from "../../../assets/img/user-36-01.jpg";
-import userAvatar3 from "../../../assets/img/user-36-04.jpg";
-import userAvatar4 from "../../../assets/img/user-36-02.jpg";
-import userAvatar5 from "../../../assets/img/user.jpg";
+import userAvatar from "../../../../assets/img/img.png.jfif";
+import userAvatar2 from "../../../../assets/img/user-36-01.jpg";
+import userAvatar3 from "../../../../assets/img/user-36-04.jpg";
+import userAvatar4 from "../../../../assets/img/user-36-02.jpg";
+import userAvatar5 from "../../../../assets/img/user.jpg";
+import "./UserManage.css";
 const columns = [
   {
     title: "ID",
@@ -56,7 +57,7 @@ const UserManage = () => {
 
   return (
     <div>
-      <h1 className="text-4xl mb-5 font-semibold">Quản lí người dùng</h1>
+      <h1 className="title text-4xl mb-5 font-semibold">Quản lí người dùng</h1>
       <a className="p-2 rounded-lg  text-lg border-2 border-gray-500 hover:text-gray-500 duration-500">
         <NavLink to={"/admin/add-user"}>
           <i class="fa-solid fa-user-plus mr-3 text-lg"></i>

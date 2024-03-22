@@ -1,4 +1,4 @@
-import { Route, Routes, useParams } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import UserTemplates from "./templates/UserTemplates/UserTemplates";
 import HomePage from "./pages/HomePage/HomePage";
 import Page404 from "./pages/Page404/Page404";
@@ -6,16 +6,12 @@ import Register from "./pages/Register/Register";
 import RoomLocation from "./pages/RoomLocation/RoomLocation";
 import RoomDetail from "./pages/RoomDetail/RoomDetail";
 import AdminTemplate from "./templates/AdminTemplate/AdminTemplate";
-import UserManage from "./templates/AdminTemplate/PageChild/UserManage";
+import UserManage from "./templates/AdminTemplate/PageChild/UserManage/UserManage";
 import UserInfoLocation from "./templates/AdminTemplate/PageChild/UserInfoLocation";
 import RoomInfoManage from "./templates/AdminTemplate/PageChild/RoomInfoManage";
 import AddUser from "./templates/AdminTemplate/PageChild/AddUser";
 import BookingRoomManage from "./templates/AdminTemplate/PageChild/BookingRoomManage";
 import Login from "./pages/Login/Login";
-import Signin from "./pages/Login/Signin";
-import DangNhap from "./pages/Register/DangNhap";
-import { Suspense } from "react";
-import LoadingPages from "./components/LoadingPages/LoadingPages";
 import TicketByUser from "./pages/TicketByUser/TicketByUser/TicketByUser";
 
 function App() {

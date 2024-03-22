@@ -146,7 +146,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="bg-gray-50 border-t fixed bottom-0 w-screen z-10  py-3 hidden md:block">
+      <div className="bg-gray-50 border-t  bottom-0 w-screen z-10  py-3 hidden md:block">
         <div className="container mx-auto px-10 flex justify-between items-center  font-semibold">
           <div>
             <span className="font-semibold text-sm">© 2022 Airbnb, Inc.</span>
