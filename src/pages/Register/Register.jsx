@@ -16,7 +16,6 @@ import {
 import "./Register.css";
 import { authAPI } from "../../services/AuthServ";
 import { format, formatDate } from "date-fns";
-import moment from "moment";
 const Register = () => {
   const navigate = useNavigate();
   const {
