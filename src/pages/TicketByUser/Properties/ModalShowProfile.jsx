@@ -1,14 +1,21 @@
 import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import { Button, Form, Modal } from "antd";
 import ProfileList from "./ProfileList";
+import { useSelector } from "react-redux";
 
 const ModalShowProfile = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const { user } = useSelector();
+  const [form] = Form.useForm();
   return (
     <div>
       <Button
         onClick={() => {
           setModalOpen(true);
+          form.setFieldValue({
+            ...user,
+            gender: user.gender ? "nam" : "nữ",
+          });
         }}
         className="flex items-center text-black">
         <i class="fa-solid fa-eye mr-2"></i>

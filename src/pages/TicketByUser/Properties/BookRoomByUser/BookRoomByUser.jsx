@@ -5,12 +5,16 @@ import "swiper/css/pagination";
 import ModalUpdateProfile from "../ModalUpdateProfile";
 import ModalShowProfile from "../ModalShowProfile";
 import { roomAPI } from "../../../../services/RoomServ";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 import "./BookRoomByUser.css";
+import { useSelector } from "react-redux";
+import { authAPI } from "../../../../services/AuthServ";
 const BookRoomByUser = () => {
+  const { user } = useSelector((state) => state.auth);
   const [bookedRoom, setBookedRoom] = useState([]);
+  const [info, setInfo] = useState({});
   useEffect(() => {
     roomAPI
       .getListRoom()
@@ -22,13 +26,28 @@ const BookRoomByUser = () => {
       });
   }, []);
 
+  const fetchUserInfo = () => {
+    if (user != null) {
+      authAPI
+        .getUserInfo(user.id)
+        .then((res) => {
+          setInfo(res.data.content);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      navigate("/");
+    }
+  };
+
   const randomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
   };
   return (
     <>
       <div className="box ml-5 space-y-3 max-w-md">
-        <p className="text-3xl font-semibold">Xin chào, tôi là Tuấn Anh </p>
+        <p className="text-3xl font-semibold">Xin chào, tôi là {user.name}</p>
         <p className="text-gray-500">Bắt đầu tham gia vào 2021</p>
         <ModalUpdateProfile />
         <ModalShowProfile />
@@ -106,16 +125,18 @@ const BookRoomByUser = () => {
                 </Swiper>
                 <div>
                   <p className="flex justify-between mt-2">
-                    <span className="room_name font-bold text-lg">{room.tenPhong}</span>
+                    <span className="room_name font-bold text-lg">
+                      {room.tenPhong}
+                    </span>
                   </p>
                   <p className="room_date text-gray-500">
                     Ngày đến - 25/10/2022
                   </p>
-                  <p className="room_date text-gray-500 pb-10
+                  <p
+                    className="room_date text-gray-500 pb-10
                   ">
                     Ngày đi - 30/11/2022
                   </p>
-                
                 </div>
               </NavLink>
             </div>

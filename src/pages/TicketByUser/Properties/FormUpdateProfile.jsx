@@ -1,39 +1,33 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProfile } from "../../../redux/slices/authSlice";
-import { Modal } from "antd";
+import { Modal, message } from "antd";
 import { Button, DatePicker, Form, Input, Select } from "antd";
 import dayjs from "dayjs";
 import { MailOutlined, PhoneOutlined, UserOutlined } from "@ant-design/icons";
 
 import { validatePhoneNumber } from "./validation/phoneNumber";
 import { NavLink } from "react-router-dom";
+import { API } from "../../../services/configSer";
+import { userLocalStorage } from "../../../utils/Local";
 const FormUpdateProfile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state?.auth);
   const [isFormDirty, setIsFormDirty] = useState(false);
   const { name, email, phone, birthday, gender, id, role } = user || {};
   const dateFormat = "DD/MM/YYYY";
-  const onFinish = (values) => {
-    const { name, email, phone, birthday, gender } = values;
-    const formattedBirthday = dayjs(birthday).format(dateFormat);
-    const data = {
-      name,
-      email,
-      phone,
-      birthday: formattedBirthday,
-      gender,
-      id: id,
-      role,
-    };
-
-    dispatch(
-      updateProfile({
-        id,
-        profileData: data,
-      })
-    );
-  };
+  // const onFinish = (values) => {
+  //   const { name, email, phone, birthday, gender } = values;
+  //   const formattedBirthday = dayjs(birthday).format(dateFormat);
+  //   const data = {
+  //     name,
+  //     email,
+  //     phone,
+  //     birthday: formattedBirthday,
+  //     gender,
+  //     id: id,
+  //     role,
+  //   };
+  // };
 
   const handleValuesChange = () => {
     if (!isFormDirty) {
@@ -54,7 +48,21 @@ const FormUpdateProfile = () => {
         birthday: dayjs(birthday || "12/06/2005", dateFormat),
         gender: gender,
       }}
-      onFinish={onFinish}
+      onFinish={async (values) => {
+        const data = {
+          ...values,
+          gender: values.gender === "nam",
+        };
+        API.put(`/api/users/${user.id}`, { ...data })
+          .then(() => {
+            userLocalStorage.set({ ...user, ...data });
+            message.success("Cập nhật thông tin thành công");
+          })
+          .catch((err) => {
+            message.error(err.response.data);
+          });
+        return true;
+      }}
       autoComplete="off"
       onValuesChange={handleValuesChange}>
       <div className="mb-4 relative">

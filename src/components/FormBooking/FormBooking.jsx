@@ -7,6 +7,7 @@ import moment from "moment";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import { message, notification } from "antd";
 const FormBooking = () => {
   const { roomDetails } = useSelector((state) => state.room);
   const { user } = useSelector((state) => state.auth);
@@ -50,54 +51,64 @@ const FormBooking = () => {
     return Math.ceil((ms2 - ms1) / (24 * 60 * 60 * 1000));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = {
-      roomId: roomDetails?.id,
-      checkIn: checkInDate,
-      checkOut: checkOutDate,
-    };
-    if (user) {
-      Swal.fire({
-        icon: "warning",
-        text: "Bạn có chắc chắn đặt phòng không!",
-        confirmButtonText: "Đồng Ý!",
-        confirmButtonColor: "#3085d6",
-        showCancelButton: true,
-        cancelButtonText: "Hủy",
-        cancelButtonColor: "#d33",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(booking(data))
-            .unwrap()
-            .then((result) => {
-              if (result.userDetail) {
-                Swal.fire({
-                  title: "Đặt phòng thành công",
-                });
-              } else {
-                Swal.fire({
-                  title: "Đặt phòng thất bại",
-                });
-              }
-            });
-        }
-      });
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const data = {
+  //     roomId: roomDetails?.id,
+  //     checkIn: checkInDate,
+  //     checkOut: checkOutDate,
+  //   };
+  //   if (user) {
+  //     Swal.fire({
+  //       icon: "warning",
+  //       text: "Bạn có chắc chắn đặt phòng không!",
+  //       confirmButtonText: "Đồng Ý!",
+  //       confirmButtonColor: "#3085d6",
+  //       showCancelButton: true,
+  //       cancelButtonText: "Hủy",
+  //       cancelButtonColor: "#d33",
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         dispatch(booking(data))
+  //           .unwrap()
+  //           .then((result) => {
+  //             if (result.userDetail) {
+  //               Swal.fire({
+  //                 title: "Đặt phòng thành công",
+  //               });
+  //             } else {
+  //               Swal.fire({
+  //                 title: "Đặt phòng thất bại",
+  //               });
+  //             }
+  //           });
+  //       }
+  //     });
+  //   } else {
+  //     Swal.fire({
+  //       icon: "warning",
+  //       text: "Bạn chưa đăng nhập! Hãy đăng nhập để tiếp tục",
+  //       confirmButtonText: "Đồng Ý!",
+  //       confirmButtonColor: "green",
+  //       showCancelButton: true,
+  //       cancelButtonColor: "#d33",
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         navigate("/login");
+  //       }
+  //     });
+  //   }
+  // };
+
+  const handleBooking = () => {
+    if (!user) {
+      notification.warning({ message: "Vui lòng đăng nhập để đặt phòng" });
     } else {
-      Swal.fire({
-        icon: "warning",
-        text: "Bạn chưa đăng nhập! Hãy đăng nhập để tiếp tục",
-        confirmButtonText: "Đồng Ý!",
-        confirmButtonColor: "green",
-        showCancelButton: true,
-        cancelButtonColor: "#d33",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/login");
-        }
-      });
+      message.success("Đặt phòng thành công");
     }
+    return;
   };
+
   return (
     <div className="bg-white shadow-xl border rounded-xl p-6 w-full lg:w-5/6 mx-auto">
       <div className="relative w-full">
@@ -160,7 +171,7 @@ const FormBooking = () => {
         {/* đặt phòng */}
         <button
           type="submit"
-          onClick={handleSubmit}
+          onClick={handleBooking}
           className="w-full py-3  mt-3 rounded-lg text-white text-lg font-semibold"
           style={{
             background:

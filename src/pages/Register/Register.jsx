@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import { Input, DatePicker, Select, notification, Form } from "antd";
+import { Input, DatePicker, Select, notification, Form, message } from "antd";
 import { NavLink, useNavigate } from "react-router-dom";
 import registerBackground from "../../assets/img/register_img.jfif";
 import axios from "axios";
@@ -16,6 +16,8 @@ import {
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import "./Register.css";
+import { authAPI } from "../../services/AuthServ";
+import { format, formatDate } from "date-fns";
 const Register = () => {
   const navigate = useNavigate();
   const {
@@ -32,25 +34,34 @@ const Register = () => {
       email: "",
       password: "",
       phone: "",
-      birthday: "",
+      birthday: new Date().toLocaleDateString("vi-VI"),
       gender: true,
     },
   });
-  const dispatch = useDispatch();
   const onSubmit = (values) => {
-    axios({
-      method: "POST",
-      url: "https://airbnbnew.cybersoft.edu.vn/api/auth/signup",
-      data: values,
-    })
+    // axios({
+    //   method: "POST",
+    //   url: "https://airbnbnew.cybersoft.edu.vn/api/auth/signup",
+    //   data: values,
+    // })
+    //   .then((res) => {
+    //     console.log(res);
+    //     notification.success({ message: "Đăng ký thành công" });
+    //     navigate("/login");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.response.data);
+    //     notification.error({ message: "Đăng ký thất bại!" });
+    //   });
+    authAPI
+      .signup(values)
       .then((res) => {
         console.log(res);
-        notification.success({ message: "Đăng ký thành công" });
+        message.success("Đăng ký thành công");
         navigate("/login");
       })
-      .catch((error) => {
-        console.log(error.response.data);
-        notification.error({ message: "Đăng ký thất bại!" });
+      .catch((err) => {
+        message.error(err.response.data.content);
       });
   };
 

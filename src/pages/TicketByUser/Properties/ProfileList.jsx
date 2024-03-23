@@ -1,26 +1,28 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const ProfileList = () => {
+  const { user } = useSelector((state) => state.auth);
   const profileData = [
     {
       label: "Tài khoản :",
-      value: "Tuấn Anh",
+      value: `${user.name}`,
     },
     {
       label: "E-mail :",
-      value: "tuananhteves126@gmail.com",
+      value: `${user.email}`,
     },
     {
       label: "Số điện thoại :",
-      value: "0332146137",
+      value: `${user.phone}`,
     },
     {
       label: "Ngày sinh :",
-      value: "12/06/2005",
+      value: `${user.birthday}`,
     },
     {
       label: "Giới tính :",
-      value: "Nam",
+      value: `${user.gender}`,
     },
   ];
   return (

@@ -25,10 +25,10 @@ const BookingRoomManage = () => {
                 tên
               </th>
               <th scope="col" className="px-6 py-3">
-                hình ảnh người dùng
+                hình ảnh phòng
               </th>
               <th scope="col" className="px-6 py-3">
-                hình ảnh phòng
+                hình ảnh người dùng
               </th>
               <th scope="col" className="px-6 py-3">
                 hành động

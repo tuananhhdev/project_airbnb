@@ -422,9 +422,11 @@ const Header = () => {
                       ) : (
                         <i
                           class="fa-solid fa-user w-full h-full flex justify-center items-center text-lg"
-                          style={{
-                            // transform: "translateY(-2px)",
-                          }}></i>
+                          style={
+                            {
+                              // transform: "translateY(-2px)",
+                            }
+                          }></i>
                       )}
                     </div>
                   </button>
@@ -444,18 +446,18 @@ const Header = () => {
                         </NavLink>
                         <NavLink
                           className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                          to={`/tickets-by-user/${user?._id}`}>
+                          to={"/tickets-by-user"}>
                           Chuyến đi
                         </NavLink>
                         <NavLink
                           className="hover:bg-gray-100 pl-5 py-2 transition-all duration-200"
-                          to={`/personal-info/${user?._id}`}>
+                          to={"/tickets-by-user"}>
                           Thông tin cá nhân
                         </NavLink>
                       </div>
                     ) : (
                       <div className="font-medium flex flex-col border-b-2">
-                        {/* <NavLink
+                        <NavLink
                           className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
                           to="/register">
                           Đăng ký
@@ -464,7 +466,7 @@ const Header = () => {
                           className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
                           to="/login">
                           Đăng nhập
-                        </NavLink> */}
+                        </NavLink>
                         <NavLink
                           className="hover:text-gray-500 pl-5 py-2 transition-all duration-200"
                           to="/tickets-by-user">

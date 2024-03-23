@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import loginBackground from "../../assets/img/login_house.jpg";
 import { useFormik } from "formik";
 import { Input, Form, notification, message } from "antd";
@@ -10,9 +10,14 @@ import {
   EyeInvisibleOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
-import "./Login.css"
+import "./Login.css";
+import { authAPI } from "../../services/AuthServ";
+import { useSelector } from "react-redux";
+import { userLocalStorage } from "../../utils/Local";
 const Login = () => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.auth);
+  const location = useLocation();
   const formik =
     // { handleSubmit, handleChange, handleBlur, values, errors, touched }
     useFormik({
@@ -21,23 +26,37 @@ const Login = () => {
         password: "",
       },
       onSubmit: (values) => {
-        console.log(values);
-        axios({
-          method: "POST",
-          url: "https://airbnbnew.cybersoft.edu.vn/api/auth/signin",
-          data: values,
-        })
+        // console.log(values);
+        // axios({
+        //   method: "POST",
+        //   url: "https://airbnbnew.cybersoft.edu.vn/api/auth/signin",
+        //   data: values,
+        // })
+        //   .then((res) => {
+        //     console.log(res);
+        //     notification.success({
+        //       message: "Chúc mừng bạn đã đăng nhập thành công",
+        //     });
+        //   })
+        //   .catch((error) => {
+        //     console.log(error.response.data);
+        //     notification.error({
+        //       message: "Rất tiếc bạn đã đăng nhập thất bại!",
+        //     });
+        //   });
+        authAPI
+          .signin(values)
           .then((res) => {
-            console.log(res);
-            notification.success({
-              message: "Chúc mừng bạn đã đăng nhập thành công",
-            });
+            message.success("Đăng nhập thành công");
+            const data = {
+              ...res.data.content.user,
+              token: res.data.content.token,
+            };
+            userLocalStorage.set({ ...data });
+           navigate("/")
           })
-          .catch((error) => {
-            console.log(error.response.data);
-            notification.error({
-              message: "Rất tiếc bạn đã đăng nhập thất bại!",
-            });
+          .catch((err) => {
+            message.error(err.response.data.content);
           });
       },
     });
