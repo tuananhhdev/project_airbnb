@@ -228,12 +228,8 @@ const Register = () => {
                     size="large"
                     placeholder="Nhập ngày sinh"
                     onChange={(values) => {
-                      setFieldValue(
-                        "birthday",
-                        moment(values).format("DD/MM/YYYY")
-                      );
+                      console.log(values);
                     }}
-                    
                   />
                 </Form.Item>
               </div>
