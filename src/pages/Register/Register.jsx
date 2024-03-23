@@ -13,11 +13,10 @@ import {
   EyeInvisibleOutlined,
   LockOutlined,
 } from "@ant-design/icons";
-import moment from "moment";
-import { useDispatch } from "react-redux";
 import "./Register.css";
 import { authAPI } from "../../services/AuthServ";
 import { format, formatDate } from "date-fns";
+import moment from "moment";
 const Register = () => {
   const navigate = useNavigate();
   const {
@@ -234,6 +233,7 @@ const Register = () => {
                         moment(values).format("DD/MM/YYYY")
                       );
                     }}
+                    
                   />
                 </Form.Item>
               </div>
