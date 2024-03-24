@@ -10,7 +10,6 @@ import {
   EyeInvisibleOutlined,
   LockOutlined,
 } from "@ant-design/icons";
-import moment from "moment";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 const AddUser = () => {
@@ -209,13 +208,12 @@ const AddUser = () => {
                     format={dateFormatList}
                     size="large"
                     placeholder="Nhập ngày sinh"
-                    onChange={(values) => {
-                      // setFieldValue("birthday", date);
-                      setFieldValue(
-                        "birthday",
-                        moment(values).format("DD/MM/YYYY")
-                      );
-                    }}
+                    // onChange={(values) => {
+                    //   setFieldValue(
+                    //     "birthday",
+                    //     moment(values).format("DD/MM/YYYY")
+                    //   );
+                    // }}
                     // changeOnBlur={handleBlur}
                     // value={values.birthday ? dayjs(values.birthday) : ""}
                   />
