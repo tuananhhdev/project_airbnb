@@ -15,7 +15,6 @@ import {
 } from "@ant-design/icons";
 import "./Register.css";
 import { authAPI } from "../../services/AuthServ";
-import { format, formatDate } from "date-fns";
 const Register = () => {
   const navigate = useNavigate();
   const {
